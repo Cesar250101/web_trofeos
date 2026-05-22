@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_tr_newsletter" name="Trofeos Newsletter">
+        <section class="s_tr_newsletter tr-newsletter" data-snippet="s_tr_newsletter">
+            <div class="tr-newsletter-inner">
+                <div class="tr-newsletter-copy">
+                    <span class="tr-eyebrow tr-eyebrow-gold">Mantente al día</span>
+                    <h2 class="tr-newsletter-title">Recibe <span class="tr-gold-word">Novedades</span></h2>
+                    <p>Ofertas exclusivas, nuevos productos y tips para tu próximo evento.</p>
+                </div>
+                <form class="tr-newsletter-form" action="/website_mass_mailing/subscribe" method="post">
+                    <input type="hidden" name="list_id" value="1"/>
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <div class="tr-newsletter-input-wrap">
+                        <input type="email" name="email" class="tr-input tr-newsletter-input" required="required" placeholder="tu@correo.cl" aria-label="Correo electrónico"/>
+                        <button type="submit" class="tr-btn tr-btn-gold">
+                            Suscribirse
+                            <span class="material-symbols-outlined">arrow_forward</span>
+                        </button>
+                    </div>
+                    <p class="tr-newsletter-fine">Sin spam. Puedes darte de baja cuando quieras.</p>
+                </form>
+            </div>
+        </section>
+    </template>
+
+</odoo>

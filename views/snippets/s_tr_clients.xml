@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_tr_clients" name="Trofeos Clientes Logos">
+        <section class="s_tr_clients tr-section" data-snippet="s_tr_clients">
+            <div class="tr-section-head">
+                <span class="tr-eyebrow">Confían en nosotros</span>
+                <h2 class="tr-section-title">Nuestros <span class="tr-gold-word">Clientes</span></h2>
+            </div>
+            <div class="tr-clients-strip">
+                <div class="tr-client-logo">
+                    <img src="/web_trofeos/static/src/img/client-placeholder.svg" alt="Cliente 1" class="o_editable_media"/>
+                </div>
+                <div class="tr-client-logo">
+                    <img src="/web_trofeos/static/src/img/client-placeholder.svg" alt="Cliente 2" class="o_editable_media"/>
+                </div>
+                <div class="tr-client-logo">
+                    <img src="/web_trofeos/static/src/img/client-placeholder.svg" alt="Cliente 3" class="o_editable_media"/>
+                </div>
+                <div class="tr-client-logo">
+                    <img src="/web_trofeos/static/src/img/client-placeholder.svg" alt="Cliente 4" class="o_editable_media"/>
+                </div>
+                <div class="tr-client-logo">
+                    <img src="/web_trofeos/static/src/img/client-placeholder.svg" alt="Cliente 5" class="o_editable_media"/>
+                </div>
+                <div class="tr-client-logo">
+                    <img src="/web_trofeos/static/src/img/client-placeholder.svg" alt="Cliente 6" class="o_editable_media"/>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

@@ -1,0 +1,61 @@
+// ============================================================
+// s_tr_b2b_benefits — B2B Benefits Grid
+// ============================================================
+
+.tr-body .s_tr_b2b_benefits.tr-section-soft {
+
+    .tr-benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--tr-space-6);
+        max-width: var(--tr-container);
+        margin: 0 auto;
+        padding: 0 var(--tr-gutter);
+    }
+
+    .tr-benefit-card {
+        padding: var(--tr-space-8) var(--tr-space-6);
+        background: var(--tr-surface);
+        border-top: 3px solid transparent;
+        display: flex;
+        flex-direction: column;
+        gap: var(--tr-space-4);
+        transition: border-color var(--tr-duration) var(--tr-ease),
+                    box-shadow var(--tr-duration) var(--tr-ease);
+
+        &:hover {
+            border-top-color: var(--tr-accent);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            font-family: var(--tr-font-heading);
+            font-size: var(--tr-fs-md);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--tr-ink);
+            margin: 0;
+        }
+
+        p {
+            font-size: var(--tr-fs-sm);
+            color: var(--tr-ink-3);
+            line-height: 1.6;
+            margin: 0;
+        }
+    }
+
+    .tr-benefit-icon {
+        font-size: 36px;
+        color: var(--tr-accent);
+    }
+
+    @media (max-width: 1024px) {
+        .tr-benefits-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+        .tr-benefits-grid { grid-template-columns: 1fr; }
+    }
+}

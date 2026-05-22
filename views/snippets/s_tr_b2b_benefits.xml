@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_tr_b2b_benefits" name="Trofeos B2B Beneficios">
+        <section class="s_tr_b2b_benefits tr-section tr-section-soft" data-snippet="s_tr_b2b_benefits">
+            <div class="tr-section-head">
+                <span class="tr-eyebrow">Por qué elegirnos</span>
+                <h2 class="tr-section-title">Beneficios <span class="tr-gold-word">Corporativos</span></h2>
+            </div>
+            <div class="tr-benefits-grid">
+                <div class="tr-benefit-card">
+                    <span class="material-symbols-outlined tr-benefit-icon">percent</span>
+                    <h3>Precios por Volumen</h3>
+                    <p>Desde 50 unidades con descuentos especiales. A mayor volumen, mejor precio.</p>
+                </div>
+                <div class="tr-benefit-card">
+                    <span class="material-symbols-outlined tr-benefit-icon">person_pin</span>
+                    <h3>Gestor Dedicado</h3>
+                    <p>Un ejecutivo de cuenta exclusivo para tu empresa. Atención directa sin esperas.</p>
+                </div>
+                <div class="tr-benefit-card">
+                    <span class="material-symbols-outlined tr-benefit-icon">calendar_month</span>
+                    <h3>Entrega Garantizada</h3>
+                    <p>Comprometemos fechas y las cumplimos. Ideal para eventos con fecha fija.</p>
+                </div>
+                <div class="tr-benefit-card">
+                    <span class="material-symbols-outlined tr-benefit-icon">palette</span>
+                    <h3>Diseño sin Costo</h3>
+                    <p>Nuestro equipo de diseño adapta tu identidad corporativa sin cobro extra.</p>
+                </div>
+                <div class="tr-benefit-card">
+                    <span class="material-symbols-outlined tr-benefit-icon">receipt_long</span>
+                    <h3>Facturación Empresa</h3>
+                    <p>Emitimos facturas electrónicas y aceptamos órdenes de compra corporativas.</p>
+                </div>
+                <div class="tr-benefit-card">
+                    <span class="material-symbols-outlined tr-benefit-icon">inventory_2</span>
+                    <h3>Stock Programado</h3>
+                    <p>Producimos y almacenamos tu stock anual para entregas just-in-time.</p>
+                </div>
+            </div>
+            <div class="tr-benefits-cta">
+                <a href="/contacto-trofeos" class="tr-btn tr-btn-primary">Solicitar propuesta corporativa</a>
+            </div>
+        </section>
+    </template>
+
+</odoo>

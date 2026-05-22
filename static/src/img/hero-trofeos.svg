@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#1a2332"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e8c84a"/>
+      <stop offset="100%" stop-color="#c9a227"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="1440" height="900" fill="url(#bg)"/>
+  <!-- Decorative rings -->
+  <circle cx="900" cy="450" r="380" fill="none" stroke="#c9a227" stroke-width="1" opacity="0.15"/>
+  <circle cx="900" cy="450" r="280" fill="none" stroke="#c9a227" stroke-width="1" opacity="0.2"/>
+  <!-- Trophy base -->
+  <g transform="translate(800,140)">
+    <!-- Cup body -->
+    <path d="M100,0 C160,0 200,60 200,140 L200,200 L160,220 L160,260 L200,260 L200,300 L0,300 L0,260 L40,260 L40,220 L0,200 L0,140 C0,60 40,0 100,0 Z" fill="url(#gold)" opacity="0.9"/>
+    <!-- Cup shine -->
+    <path d="M40,20 C60,10 80,6 100,6 C120,6 140,10 160,20 L155,80 C140,70 120,65 100,65 C80,65 60,70 45,80 Z" fill="#fffbe6" opacity="0.25"/>
+    <!-- Handles -->
+    <path d="M0,80 C-50,60 -60,140 -20,160 L0,140" fill="none" stroke="url(#gold)" stroke-width="18" stroke-linecap="round"/>
+    <path d="M200,80 C250,60 260,140 220,160 L200,140" fill="none" stroke="url(#gold)" stroke-width="18" stroke-linecap="round"/>
+    <!-- Star on top -->
+    <polygon points="100,-20 107,-6 122,-5 111,5 115,20 100,12 85,20 89,5 78,-5 93,-6" fill="#c9a227" opacity="0.85"/>
+  </g>
+  <!-- Label text -->
+  <text x="180" y="720" font-family="'Montserrat', sans-serif" font-size="11" font-weight="600" fill="#c9a227" letter-spacing="6" opacity="0.7">CALIDAD PREMIUM · ENTREGA RÁPIDA</text>
+  <text x="180" y="620" font-family="'Montserrat', sans-serif" font-size="88" font-weight="900" fill="#ffffff" letter-spacing="-2">TROFEOS</text>
+  <text x="180" y="680" font-family="'Montserrat', sans-serif" font-size="28" font-weight="400" fill="rgba(255,255,255,0.65)">que <tspan fill="#c9a227" font-weight="700">Inspiran</tspan></text>
+</svg>

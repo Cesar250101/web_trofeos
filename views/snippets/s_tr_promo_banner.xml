@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_tr_promo_banner" name="Trofeos Banner Promocional">
+        <section class="s_tr_promo_banner tr-promo-banner" data-snippet="s_tr_promo_banner"
+                 style="background-image:url('/web_trofeos/static/src/img/promo-banner.svg')">
+            <div class="tr-promo-overlay">
+                <div class="tr-promo-inner">
+                    <div class="tr-promo-content">
+                        <span class="tr-eyebrow tr-eyebrow-gold">Oferta Especial</span>
+                        <h2 class="tr-promo-title">Hasta <span class="tr-gold-word">30% dcto.</span><br/>en pedidos corporativos</h2>
+                        <p class="tr-promo-sub">Válido para pedidos de 50 unidades o más.<br/>Grabado láser incluido sin costo adicional.</p>
+                        <div class="tr-promo-ctas">
+                            <a href="/contacto-trofeos" class="tr-btn tr-btn-gold">Aprovechar Oferta</a>
+                            <a href="/empresas-trofeos" class="tr-btn tr-btn-ghost">Ver más</a>
+                        </div>
+                    </div>
+                    <div class="tr-promo-badge">
+                        <span class="tr-badge-number">30%</span>
+                        <span class="tr-badge-text">DESCUENTO</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

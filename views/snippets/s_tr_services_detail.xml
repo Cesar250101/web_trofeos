@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_tr_services_detail" name="Trofeos Detalle de Servicios">
+        <section class="s_tr_services_detail tr-section" data-snippet="s_tr_services_detail">
+            <!-- Grabado Láser -->
+            <div class="tr-service-block tr-service-block-alt">
+                <div class="tr-service-block-img">
+                    <img src="/web_trofeos/static/src/img/service-grabado.svg" alt="Grabado Láser" class="o_editable_media"/>
+                </div>
+                <div class="tr-service-block-copy">
+                    <span class="tr-eyebrow">Servicio Premium</span>
+                    <h2 class="tr-section-title">Grabado <span class="tr-gold-word">Láser</span></h2>
+                    <p>Utilizamos tecnología láser de CO₂ y fibra para grabar con precisión milimétrica en acero, aluminio, madera, acrílico, cuero y más. El resultado es permanente, sin desgaste y con una nitidez excepcional.</p>
+                    <ul class="tr-service-features">
+                        <li><span class="material-symbols-outlined">check_circle</span> Logos y textos en alta resolución</li>
+                        <li><span class="material-symbols-outlined">check_circle</span> Compatible con todos los trofeos del catálogo</li>
+                        <li><span class="material-symbols-outlined">check_circle</span> Tiempo de entrega desde 3 días hábiles</li>
+                        <li><span class="material-symbols-outlined">check_circle</span> Incluido en pedidos corporativos ≥ 50 unidades</li>
+                    </ul>
+                    <a href="/contacto-trofeos" class="tr-btn tr-btn-primary">Cotizar Grabado</a>
+                </div>
+            </div>
+
+            <!-- Personalización -->
+            <div class="tr-service-block">
+                <div class="tr-service-block-copy">
+                    <span class="tr-eyebrow">Servicio Premium</span>
+                    <h2 class="tr-section-title">Personalización <span class="tr-gold-word">Total</span></h2>
+                    <p>Llevamos tu diseño a la vida. Podemos incluir tu logo, colores corporativos, texto y cualquier elemento gráfico en trofeos, medallas y placas. Enviamos prueba digital antes de producir.</p>
+                    <ul class="tr-service-features">
+                        <li><span class="material-symbols-outlined">check_circle</span> Diseño personalizado desde cero</li>
+                        <li><span class="material-symbols-outlined">check_circle</span> Prueba digital gratuita</li>
+                        <li><span class="material-symbols-outlined">check_circle</span> Colores corporativos exactos (Pantone)</li>
+                        <li><span class="material-symbols-outlined">check_circle</span> Cajas de regalo y packaging personalizado</li>
+                    </ul>
+                    <a href="/contacto-trofeos" class="tr-btn tr-btn-primary">Empezar Diseño</a>
+                </div>
+                <div class="tr-service-block-img">
+                    <img src="/web_trofeos/static/src/img/service-personalizacion.svg" alt="Personalización" class="o_editable_media"/>
+                </div>
+            </div>
+
+            <!-- Proceso -->
+            <div class="tr-process-strip">
+                <div class="tr-section-head">
+                    <span class="tr-eyebrow">Paso a paso</span>
+                    <h2 class="tr-section-title">Cómo <span class="tr-gold-word">Trabajamos</span></h2>
+                </div>
+                <div class="tr-process-steps">
+                    <div class="tr-step">
+                        <span class="tr-step-num">01</span>
+                        <h4>Cotización</h4>
+                        <p>Cuéntanos qué necesitas. Respondemos en menos de 24 horas con precio y plazo.</p>
+                    </div>
+                    <div class="tr-step">
+                        <span class="tr-step-num">02</span>
+                        <h4>Diseño</h4>
+                        <p>Nuestro equipo crea la prueba digital con tu logo y texto. Revisas y apruebas.</p>
+                    </div>
+                    <div class="tr-step">
+                        <span class="tr-step-num">03</span>
+                        <h4>Producción</h4>
+                        <p>Fabricamos y grabamos con los más altos estándares de calidad.</p>
+                    </div>
+                    <div class="tr-step">
+                        <span class="tr-step-num">04</span>
+                        <h4>Entrega</h4>
+                        <p>Despachamos a todo Chile con embalaje seguro. También retiro en tienda.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

@@ -1,0 +1,94 @@
+// ============================================================
+// s_tr_about_hero — Quiénes Somos Hero + Stats
+// ============================================================
+
+.tr-body .s_tr_about_hero.tr-about-hero {
+    position: relative;
+    min-height: 560px;
+    background-color: var(--tr-surface-dark);
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    .tr-about-hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            to bottom,
+            rgba(13, 17, 23, 0.55) 0%,
+            rgba(13, 17, 23, 0.85) 100%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .tr-about-hero-inner {
+        max-width: 700px;
+        padding: var(--tr-space-20) var(--tr-gutter);
+    }
+
+    .tr-about-hero-title {
+        font-family: var(--tr-font-heading);
+        font-size: var(--tr-fs-5xl);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: -0.02em;
+        color: var(--tr-white);
+        line-height: 1.0;
+        margin: var(--tr-space-4) 0 var(--tr-space-6);
+    }
+
+    .tr-about-hero-sub {
+        font-size: var(--tr-fs-lg);
+        color: rgba(255, 255, 255, 0.75);
+        line-height: 1.6;
+    }
+
+    // ── Stats strip ────────────────────────────────────────
+    .tr-about-stats {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        background: var(--tr-accent);
+    }
+
+    .tr-stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: var(--tr-space-8) var(--tr-space-4);
+        border-right: 1px solid rgba(13, 17, 23, 0.15);
+
+        &:last-child { border-right: none; }
+    }
+
+    .tr-stat-number {
+        font-family: var(--tr-font-heading);
+        font-size: var(--tr-fs-3xl);
+        font-weight: 900;
+        color: var(--tr-accent-fg);
+        line-height: 1;
+    }
+
+    .tr-stat-label {
+        font-size: var(--tr-fs-xs);
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--tr-accent-fg);
+        opacity: 0.75;
+        margin-top: var(--tr-space-2);
+    }
+
+    @media (max-width: 768px) {
+        .tr-about-stats { grid-template-columns: repeat(2, 1fr); }
+        .tr-about-hero-title { font-size: var(--tr-fs-4xl); }
+    }
+}

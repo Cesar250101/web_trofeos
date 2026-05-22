@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="tr_contacto_page" name="Trofeos — Contacto" key="web_trofeos.tr_contacto_page" track="1">
+        <t t-call="website.layout">
+            <t t-set="pageName" t-value="'contacto'"/>
+            <div id="wrap" class="tr-site">
+                <main id="oe_structure_tr_contacto_main" class="oe_structure">
+
+                    <!-- Page hero -->
+                    <section class="tr-page-hero tr-bg-dark">
+                        <div class="tr-page-hero-inner">
+                            <span class="tr-eyebrow tr-eyebrow-gold">Hablemos</span>
+                            <h1 class="tr-page-title">Solicita tu <span class="tr-gold-word">Cotización</span></h1>
+                            <p class="tr-page-subtitle">Respuesta en menos de 24 horas hábiles.</p>
+                        </div>
+                    </section>
+
+                    <!-- Contact body -->
+                    <section class="tr-section tr-contacto-body">
+                        <div class="tr-contacto-grid">
+
+                            <!-- Quote form -->
+                            <div class="tr-contacto-form-wrap">
+                                <h2 class="tr-form-title">Formulario de <span class="tr-gold-word">Cotización</span></h2>
+                                <form action="/website/form/crm.lead" method="post" class="tr-form" enctype="multipart/form-data">
+                                    <input type="hidden" name="form_id" value="web_trofeos_cotizacion"/>
+                                    <input type="hidden" name="contact_name" value="Cotización Web — Trofeos"/>
+                                    <input type="hidden" id="tr_tipo_producto" name="tr_tipo_producto" t-att-value="tipo_producto"/>
+                                    <input type="hidden" id="tr_cantidad" name="tr_cantidad" t-att-value="cantidad"/>
+
+                                    <div class="tr-form-row">
+                                        <div class="tr-form-group">
+                                            <label for="tr_partner_name">Nombre completo *</label>
+                                            <input type="text" id="tr_partner_name" name="partner_name" class="tr-input" required="required" placeholder="Tu nombre"/>
+                                        </div>
+                                        <div class="tr-form-group">
+                                            <label for="tr_email">Correo electrónico *</label>
+                                            <input type="email" id="tr_email" name="email_from" class="tr-input" required="required" placeholder="correo@empresa.cl"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="tr-form-row">
+                                        <div class="tr-form-group">
+                                            <label for="tr_phone">Teléfono</label>
+                                            <input type="tel" id="tr_phone" name="phone" class="tr-input" placeholder="+56 9 XXXX XXXX"/>
+                                        </div>
+                                        <div class="tr-form-group">
+                                            <label for="tr_empresa">Empresa (opcional)</label>
+                                            <input type="text" id="tr_empresa" name="partner_company_name" class="tr-input" placeholder="Nombre de tu empresa"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="tr-form-group">
+                                        <label for="tr_tipo_select">Tipo de producto</label>
+                                        <select id="tr_tipo_select" name="tipo_producto_sel" class="tr-input tr-select">
+                                            <option value="">Selecciona un producto</option>
+                                            <option value="Trofeos Resina">Trofeos Resina</option>
+                                            <option value="Trofeos Metal">Trofeos Metal</option>
+                                            <option value="Trofeos Acrílico">Trofeos Acrílico</option>
+                                            <option value="Medallas Zinc">Medallas Zinc</option>
+                                            <option value="Medallas Acrílico">Medallas Acrílico</option>
+                                            <option value="Placas Aluminio">Placas Aluminio</option>
+                                            <option value="Placas Madera">Placas Madera</option>
+                                            <option value="Grabado Láser">Grabado Láser</option>
+                                            <option value="Corporativo / B2B">Corporativo / B2B</option>
+                                            <option value="Otro">Otro</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="tr-form-row">
+                                        <div class="tr-form-group">
+                                            <label for="tr_cantidad_input">Cantidad estimada</label>
+                                            <input type="number" id="tr_cantidad_input" name="cantidad_est" class="tr-input" min="1" placeholder="Ej: 50"/>
+                                        </div>
+                                        <div class="tr-form-group">
+                                            <label for="tr_fecha">Fecha de entrega requerida</label>
+                                            <input type="date" id="tr_fecha" name="fecha_entrega" class="tr-input"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="tr-form-group">
+                                        <label for="tr_description">Descripción del pedido *</label>
+                                        <textarea id="tr_description" name="description" class="tr-input tr-textarea" rows="4" required="required" placeholder="Describe tu pedido: tipo de grabado, texto, logo, colores..."/>
+                                    </div>
+
+                                    <button type="submit" class="tr-btn tr-btn-primary tr-btn-full">
+                                        Enviar Cotización
+                                        <span class="material-symbols-outlined">send</span>
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- Contact info -->
+                            <div class="tr-contacto-info">
+                                <h3 class="tr-info-title">Información de <span class="tr-gold-word">Contacto</span></h3>
+
+                                <div class="tr-info-items">
+                                    <div class="tr-info-item" t-if="company.street">
+                                        <span class="material-symbols-outlined">location_on</span>
+                                        <div>
+                                            <strong>Dirección</strong>
+                                            <p>
+                                                <t t-esc="company.street"/>
+                                                <t t-if="company.city"><br/><t t-esc="company.city"/></t>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="tr-info-item" t-if="company.phone">
+                                        <span class="material-symbols-outlined">phone</span>
+                                        <div>
+                                            <strong>Teléfono</strong>
+                                            <p><a t-att-href="'tel:' + company.phone" t-esc="company.phone"/></p>
+                                        </div>
+                                    </div>
+                                    <div class="tr-info-item" t-if="company.email">
+                                        <span class="material-symbols-outlined">mail</span>
+                                        <div>
+                                            <strong>Correo</strong>
+                                            <p><a t-att-href="'mailto:' + company.email" t-esc="company.email"/></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tr-info-hours">
+                                    <h4>Horario de atención</h4>
+                                    <p>Lunes a Viernes: 9:00 – 18:00</p>
+                                    <p>Sábado: 9:00 – 13:00</p>
+                                </div>
+
+                                <div class="tr-info-whatsapp" t-if="company.phone">
+                                    <a t-attf-href="https://wa.me/#{company.phone}" target="_blank" class="tr-btn tr-btn-whatsapp">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                                        </svg>
+                                        WhatsApp Directo
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <t t-call="web_trofeos.s_tr_map"/>
+                </main>
+                <t t-call="web_trofeos.s_tr_whatsapp"/>
+            </div>
+        </t>
+    </template>
+
+</odoo>

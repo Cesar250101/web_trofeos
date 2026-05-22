@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="tr_home" name="Trofeos — Home" key="web_trofeos.tr_home" track="1">
+        <t t-call="website.layout">
+            <t t-set="pageName" t-value="'homepage'"/>
+            <div id="wrap" class="tr-site">
+                <main id="oe_structure_tr_home_main" class="oe_structure">
+                    <t t-call="web_trofeos.s_tr_hero"/>
+                    <t t-call="web_trofeos.s_tr_trust_bar"/>
+                    <t t-call="web_trofeos.s_tr_featured_products"/>
+                    <t t-call="web_trofeos.s_tr_services"/>
+                    <t t-call="web_trofeos.s_tr_clients"/>
+                    <t t-call="web_trofeos.s_tr_promo_banner"/>
+                    <t t-call="web_trofeos.s_tr_bestsellers"/>
+                    <t t-call="web_trofeos.s_tr_quote_calculator"/>
+                    <t t-call="web_trofeos.s_tr_newsletter"/>
+                    <t t-call="web_trofeos.s_tr_map"/>
+                </main>
+                <t t-call="web_trofeos.s_tr_whatsapp"/>
+            </div>
+        </t>
+    </template>
+
+</odoo>

@@ -1,0 +1,113 @@
+// ============================================================
+// s_tr_promo_banner — Promotional Banner
+// ============================================================
+
+.tr-body .s_tr_promo_banner.tr-promo-banner {
+    position: relative;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    background-color: var(--tr-surface-dark);
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+
+    .tr-promo-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            135deg,
+            rgba(13, 17, 23, 0.9) 0%,
+            rgba(13, 17, 23, 0.6) 60%,
+            rgba(201, 162, 39, 0.15) 100%
+        );
+        display: flex;
+        align-items: center;
+    }
+
+    .tr-promo-inner {
+        width: 100%;
+        max-width: var(--tr-container);
+        margin: 0 auto;
+        padding: var(--tr-space-16) var(--tr-gutter);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--tr-space-12);
+    }
+
+    .tr-promo-content {
+        flex: 1;
+        max-width: 580px;
+    }
+
+    .tr-promo-title {
+        font-family: var(--tr-font-heading);
+        font-size: var(--tr-fs-4xl);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: -0.01em;
+        color: var(--tr-white);
+        line-height: 1.1;
+        margin: var(--tr-space-3) 0 var(--tr-space-4);
+    }
+
+    .tr-promo-sub {
+        color: rgba(255, 255, 255, 0.75);
+        font-size: var(--tr-fs-md);
+        line-height: 1.6;
+        margin-bottom: var(--tr-space-8);
+    }
+
+    .tr-promo-ctas {
+        display: flex;
+        gap: var(--tr-space-4);
+        flex-wrap: wrap;
+    }
+
+    // ── Promo badge ────────────────────────────────────────
+    .tr-promo-badge {
+        flex-shrink: 0;
+        width: 160px;
+        height: 160px;
+        background: var(--tr-accent);
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 60px rgba(201, 162, 39, 0.4);
+        animation: tr-badge-pulse 3s ease-in-out infinite;
+    }
+
+    .tr-badge-number {
+        font-family: var(--tr-font-heading);
+        font-size: 52px;
+        font-weight: 900;
+        color: var(--tr-accent-fg);
+        line-height: 1;
+    }
+
+    .tr-badge-text {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        color: var(--tr-accent-fg);
+        text-transform: uppercase;
+    }
+
+    @keyframes tr-badge-pulse {
+        0%, 100% { transform: scale(1); }
+        50%       { transform: scale(1.04); }
+    }
+
+    // ── Responsive ─────────────────────────────────────────
+    @media (max-width: 900px) {
+        .tr-promo-badge { display: none; }
+        .tr-promo-title { font-size: var(--tr-fs-3xl); }
+    }
+
+    @media (max-width: 600px) {
+        .tr-promo-title { font-size: var(--tr-fs-2xl); }
+    }
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_tr_b2b_hero" name="Trofeos B2B Hero">
+        <section class="s_tr_b2b_hero tr-b2b-hero tr-bg-dark" data-snippet="s_tr_b2b_hero">
+            <div class="tr-b2b-hero-inner">
+                <div class="tr-b2b-hero-copy">
+                    <span class="tr-eyebrow tr-eyebrow-gold">Soluciones Corporativas</span>
+                    <h1 class="tr-b2b-hero-title">Tu Partner en<br/><span class="tr-gold-word">Reconocimientos</span></h1>
+                    <p class="tr-b2b-hero-sub">Diseñamos programas de reconocimiento a medida para empresas. Desde 50 unidades con precios especiales, gestor dedicado y entrega puntual garantizada.</p>
+                    <div class="tr-b2b-hero-ctas">
+                        <a href="/contacto-trofeos" class="tr-btn tr-btn-gold">Hablar con un ejecutivo</a>
+                        <a href="/shop" class="tr-btn tr-btn-ghost">Ver catálogo B2B</a>
+                    </div>
+                </div>
+                <div class="tr-b2b-hero-img">
+                    <img src="/web_trofeos/static/src/img/b2b-hero.svg" alt="Soluciones corporativas" class="o_editable_media"/>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="tr_category_page" name="Trofeos — Categoría">
+        <t t-call="website.layout">
+            <div id="wrap" class="tr-site">
+                <main>
+                    <!-- Category hero -->
+                    <section class="tr-cat-hero tr-bg-dark">
+                        <div t-if="category.image_1920" class="tr-cat-hero-bg"
+                             t-attf-style="background-image:url('/web/image/product.public.category/#{category.id}/image_1920')"/>
+                        <div class="tr-cat-hero-inner">
+                            <span class="tr-eyebrow tr-eyebrow-gold">Categoría</span>
+                            <h1 class="tr-page-title"><t t-esc="category.name"/></h1>
+                        </div>
+                    </section>
+
+                    <!-- Subcategory filter pills -->
+                    <div t-if="subcategories" class="tr-section tr-cat-filters">
+                        <div class="tr-cat-pills">
+                            <a href="#" class="tr-pill is-active">Todos</a>
+                            <t t-foreach="subcategories" t-as="sub">
+                                <a t-attf-href="/shop?category=#{sub.id}" class="tr-pill">
+                                    <t t-esc="sub.name"/>
+                                </a>
+                            </t>
+                        </div>
+                    </div>
+
+                    <!-- Products grid -->
+                    <section class="tr-section tr-cat-products">
+                        <t t-if="products">
+                            <div class="tr-grid">
+                                <t t-foreach="products" t-as="product">
+                                    <div class="tr-card">
+                                        <a t-att-href="product.website_url" class="tr-card-link">
+                                            <div class="tr-card-img">
+                                                <img t-if="product.image_1920"
+                                                     t-attf-src="/web/image/product.template/#{product.id}/image_1920"
+                                                     t-att-alt="product.name" loading="lazy"/>
+                                                <div t-else="" class="tr-card-img-placeholder">
+                                                    <span class="material-symbols-outlined">emoji_events</span>
+                                                </div>
+                                            </div>
+                                            <div class="tr-card-body">
+                                                <span class="tr-card-brand" t-if="product.categ_id">
+                                                    <t t-esc="product.categ_id.name"/>
+                                                </span>
+                                                <h3 class="tr-card-title"><t t-esc="product.name"/></h3>
+                                                <div class="tr-card-cta">
+                                                    <a href="/contacto-trofeos" class="tr-btn tr-btn-ghost tr-btn-sm">Cotizar</a>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </t>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <div class="tr-empty-state">
+                                <span class="material-symbols-outlined">emoji_events</span>
+                                <p>No hay productos disponibles en esta categoría.</p>
+                                <a href="/shop" class="tr-btn tr-btn-primary">Ver todo el catálogo</a>
+                            </div>
+                        </t>
+                    </section>
+                </main>
+                <t t-call="web_trofeos.s_tr_whatsapp"/>
+            </div>
+        </t>
+    </template>
+
+</odoo>

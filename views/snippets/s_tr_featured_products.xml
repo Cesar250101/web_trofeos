@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_tr_featured_products" name="Trofeos Productos Destacados">
+        <t t-set="tr_featured" t-value="request.env['product.template'].sudo().search([('is_published','=',True)], limit=8, order='create_date desc')"/>
+        <section class="s_tr_featured tr-section" data-snippet="s_tr_featured_products">
+            <div class="tr-section-head">
+                <span class="tr-eyebrow">Colección Destacada</span>
+                <h2 class="tr-section-title">Nuevos <span class="tr-gold-word">Productos</span></h2>
+                <a href="/shop" class="tr-section-link">Ver catálogo completo
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </a>
+            </div>
+            <div class="tr-grid">
+                <t t-foreach="tr_featured" t-as="product">
+                    <div class="tr-card">
+                        <a t-att-href="product.website_url" class="tr-card-link">
+                            <div class="tr-card-img">
+                                <img t-if="product.image_1920"
+                                     t-attf-src="/web/image/product.template/#{product.id}/image_1920"
+                                     t-att-alt="product.name" loading="lazy"/>
+                                <div t-else="" class="tr-card-img-placeholder">
+                                    <span class="material-symbols-outlined">emoji_events</span>
+                                </div>
+                                <div class="tr-card-hover">
+                                    <a href="/contacto-trofeos" class="tr-btn tr-btn-primary tr-btn-sm">Cotizar</a>
+                                </div>
+                            </div>
+                            <div class="tr-card-body">
+                                <h3 class="tr-card-title"><t t-esc="product.name"/></h3>
+                                <span class="tr-card-action">Solicitar cotización →</span>
+                            </div>
+                        </a>
+                    </div>
+                </t>
+            </div>
+            <t t-if="not tr_featured">
+                <div class="tr-empty-state">
+                    <p>Los productos aparecerán aquí cuando sean publicados.</p>
+                    <a href="/shop" class="tr-btn tr-btn-primary">Ir a la tienda</a>
+                </div>
+            </t>
+        </section>
+    </template>
+
+</odoo>

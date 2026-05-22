@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_tr_quote_calculator" name="Trofeos Calculadora de Cotización">
+        <section class="s_tr_quote_calc tr-section tr-section-dark" data-snippet="s_tr_quote_calculator">
+            <div class="tr-calc-wrap">
+                <div class="tr-section-head tr-section-head-light">
+                    <span class="tr-eyebrow tr-eyebrow-gold">Precio Referencial</span>
+                    <h2 class="tr-section-title tr-title-light">Calcula tu <span class="tr-gold-word">Cotización</span></h2>
+                    <p class="tr-calc-subtitle">Obtén un precio estimado al instante. Para una cotización formal, usa el formulario de contacto.</p>
+                </div>
+                <div class="tr-calc-body">
+                    <div class="tr-calc-controls">
+                        <div class="tr-calc-field">
+                            <label class="tr-calc-label">Tipo de producto</label>
+                            <select class="tr-calc-product tr-calc-input">
+                                <option value="trofeo_resina">Trofeo Resina</option>
+                                <option value="trofeo_metal">Trofeo Metal</option>
+                                <option value="medalla_zinc">Medalla Zinc</option>
+                                <option value="medalla_acrilico">Medalla Acrílico</option>
+                                <option value="placa_aluminio">Placa Aluminio</option>
+                                <option value="placa_madera">Placa Madera</option>
+                            </select>
+                        </div>
+                        <div class="tr-calc-field">
+                            <label class="tr-calc-label">Cantidad</label>
+                            <input type="number" class="tr-calc-quantity tr-calc-input" min="1" max="9999" value="10"/>
+                        </div>
+                        <div class="tr-calc-field tr-calc-check-wrap">
+                            <label class="tr-calc-check-label">
+                                <input type="checkbox" class="tr-calc-engraving"/>
+                                <span>Incluir grabado láser</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="tr-calc-result">
+                        <div class="tr-calc-price-wrap">
+                            <span class="tr-calc-price-label">Precio estimado (sin IVA)</span>
+                            <span class="tr-calc-output">$ 35.000</span>
+                            <span class="tr-calc-discount"/>
+                        </div>
+                        <p class="tr-calc-fine">* Precio referencial. Descuentos por volumen: 10% desde 50 unidades, 15% desde 100.</p>
+                        <a href="/contacto-trofeos" class="tr-btn tr-btn-gold tr-calc-cta">
+                            Solicitar Cotización Formal
+                            <span class="material-symbols-outlined">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

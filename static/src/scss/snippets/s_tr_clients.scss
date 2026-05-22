@@ -1,0 +1,49 @@
+// ============================================================
+// s_tr_clients — Client Logos Strip
+// ============================================================
+
+.tr-body .s_tr_clients.tr-section {
+
+    .tr-clients-strip {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: var(--tr-space-8);
+        max-width: var(--tr-container);
+        margin: 0 auto;
+        padding: 0 var(--tr-gutter);
+    }
+
+    .tr-client-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--tr-space-4) var(--tr-space-6);
+        border: 1px solid var(--tr-line);
+        min-width: 140px;
+        height: 80px;
+        transition: border-color var(--tr-duration) var(--tr-ease),
+                    box-shadow var(--tr-duration) var(--tr-ease);
+
+        img {
+            max-width: 100%;
+            max-height: 48px;
+            object-fit: contain;
+            filter: grayscale(1);
+            opacity: 0.55;
+            transition: filter var(--tr-duration) var(--tr-ease),
+                        opacity var(--tr-duration) var(--tr-ease);
+        }
+
+        &:hover {
+            border-color: var(--tr-accent);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+
+            img {
+                filter: grayscale(0);
+                opacity: 1;
+            }
+        }
+    }
+}

@@ -1,0 +1,21 @@
+// ============================================================
+// s_tr_featured_products — Featured Products Grid
+// ============================================================
+
+.tr-body .s_tr_featured.tr-section {
+    max-width: var(--tr-container);
+    margin: 0 auto;
+
+    .tr-section-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        text-align: left;
+        padding: 0 var(--tr-gutter);
+        margin-bottom: var(--tr-space-10);
+        max-width: none;
+
+        .tr-section-title { margin: 0 0 0 var(--tr-space-4); }
+        .tr-eyebrow { flex-shrink: 0; }
+    }
+}

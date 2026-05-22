@@ -1,0 +1,66 @@
+// ============================================================
+// s_tr_b2b_hero — B2B / Empresas Hero
+// ============================================================
+
+.tr-body .s_tr_b2b_hero.tr-b2b-hero {
+    padding: var(--tr-space-20) 0;
+
+    &.tr-bg-dark {
+        background: var(--tr-surface-dark);
+    }
+
+    .tr-b2b-hero-inner {
+        max-width: var(--tr-container);
+        margin: 0 auto;
+        padding: 0 var(--tr-gutter);
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: var(--tr-space-16);
+        align-items: center;
+    }
+
+    .tr-b2b-hero-title {
+        font-family: var(--tr-font-heading);
+        font-size: var(--tr-fs-5xl);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: -0.02em;
+        color: var(--tr-white);
+        line-height: 1.0;
+        margin: var(--tr-space-4) 0 var(--tr-space-6);
+    }
+
+    .tr-b2b-hero-sub {
+        font-size: var(--tr-fs-md);
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.7;
+        max-width: 520px;
+        margin-bottom: var(--tr-space-10);
+    }
+
+    .tr-b2b-hero-ctas {
+        display: flex;
+        gap: var(--tr-space-4);
+        flex-wrap: wrap;
+    }
+
+    .tr-b2b-hero-img {
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .tr-b2b-hero-inner {
+            grid-template-columns: 1fr;
+        }
+
+        .tr-b2b-hero-img { display: none; }
+
+        .tr-b2b-hero-title {
+            font-size: var(--tr-fs-4xl);
+        }
+    }
+}

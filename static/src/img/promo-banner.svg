@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 600">
+  <defs>
+    <linearGradient id="promo-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#1a2332"/>
+    </linearGradient>
+  </defs>
+  <rect width="1440" height="600" fill="url(#promo-bg)"/>
+  <!-- Diagonal stripes -->
+  <g opacity="0.04" fill="#c9a227">
+    <rect x="-100" y="0" width="80" height="800" transform="rotate(-30 0 300)"/>
+    <rect x="100" y="0" width="80" height="800" transform="rotate(-30 0 300)"/>
+    <rect x="300" y="0" width="80" height="800" transform="rotate(-30 0 300)"/>
+    <rect x="500" y="0" width="80" height="800" transform="rotate(-30 0 300)"/>
+    <rect x="700" y="0" width="80" height="800" transform="rotate(-30 0 300)"/>
+    <rect x="900" y="0" width="80" height="800" transform="rotate(-30 0 300)"/>
+    <rect x="1100" y="0" width="80" height="800" transform="rotate(-30 0 300)"/>
+    <rect x="1300" y="0" width="80" height="800" transform="rotate(-30 0 300)"/>
+  </g>
+  <!-- Trophy silhouette right side -->
+  <g transform="translate(1080,60)" opacity="0.12">
+    <path d="M100,0 C160,0 200,60 200,140 L200,200 L160,220 L160,260 L200,260 L200,300 L0,300 L0,260 L40,260 L40,220 L0,200 L0,140 C0,60 40,0 100,0 Z" fill="#c9a227"/>
+    <path d="M0,80 C-50,60 -60,140 -20,160 L0,140" fill="none" stroke="#c9a227" stroke-width="18" stroke-linecap="round"/>
+    <path d="M200,80 C250,60 260,140 220,160 L200,140" fill="none" stroke="#c9a227" stroke-width="18" stroke-linecap="round"/>
+  </g>
+</svg>

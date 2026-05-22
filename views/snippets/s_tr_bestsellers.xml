@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_tr_bestsellers" name="Trofeos Más Vendidos">
+        <t t-set="tr_bestsellers" t-value="request.env['product.template'].sudo().search([('is_published','=',True)], limit=4, order='website_published_datetime desc')"/>
+        <section class="s_tr_bestsellers tr-section tr-section-soft" data-snippet="s_tr_bestsellers">
+            <div class="tr-section-head">
+                <span class="tr-eyebrow">Los favoritos</span>
+                <h2 class="tr-section-title">Más <span class="tr-gold-word">Vendidos</span></h2>
+                <a href="/shop" class="tr-section-link">Ver todos <span class="material-symbols-outlined">arrow_forward</span></a>
+            </div>
+            <div class="tr-grid tr-grid-4">
+                <t t-foreach="tr_bestsellers" t-as="product">
+                    <div class="tr-card">
+                        <a t-attf-href="/shop/#{product.id}" class="tr-card-link">
+                            <div class="tr-card-img">
+                                <img t-if="product.image_1920"
+                                     t-attf-src="/web/image/product.template/#{product.id}/image_1920"
+                                     t-att-alt="product.name" loading="lazy"/>
+                                <div t-else="" class="tr-card-img-placeholder">
+                                    <span class="material-symbols-outlined">emoji_events</span>
+                                </div>
+                                <span class="tr-card-badge">Popular</span>
+                                <div class="tr-card-hover">
+                                    <a href="/contacto-trofeos" class="tr-btn tr-btn-primary tr-btn-sm">Cotizar</a>
+                                </div>
+                            </div>
+                            <div class="tr-card-body">
+                                <h3 class="tr-card-title"><t t-esc="product.name"/></h3>
+                                <span class="tr-card-action">Solicitar cotización →</span>
+                            </div>
+                        </a>
+                    </div>
+                </t>
+                <t t-if="not tr_bestsellers">
+                    <div class="tr-empty-state">
+                        <p>Los productos aparecerán aquí cuando sean publicados.</p>
+                    </div>
+                </t>
+            </div>
+        </section>
+    </template>
+
+</odoo>

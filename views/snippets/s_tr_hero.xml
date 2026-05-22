@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_tr_hero" name="Trofeos Hero">
+        <section class="s_tr_hero tr-hero" data-snippet="s_tr_hero">
+            <!-- Slide 1 -->
+            <div class="tr-hero-slide is-active" style="background-image:url('/web_trofeos/static/src/img/hero-trofeos.svg')">
+                <div class="tr-hero-overlay">
+                    <span class="tr-eyebrow tr-eyebrow-light">Calidad Premium · Entrega Rápida</span>
+                    <h1 class="tr-hero-title">Trofeos que<br/><span class="tr-gold-word">Inspiran</span></h1>
+                    <p class="tr-hero-sub">Especialistas en trofeos, medallas y grabado láser<br/>para empresas y deportistas.</p>
+                    <div class="tr-hero-ctas">
+                        <a href="/shop" class="tr-btn tr-btn-primary">Ver Catálogo</a>
+                        <a href="/contacto-trofeos" class="tr-btn tr-btn-ghost">Cotizar Ahora</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="tr-hero-slide" style="background-image:url('/web_trofeos/static/src/img/hero-medallas.svg')">
+                <div class="tr-hero-overlay">
+                    <span class="tr-eyebrow tr-eyebrow-light">Medallas para Campeones</span>
+                    <h1 class="tr-hero-title">Medallas de<br/><span class="tr-gold-word">Alto Impacto</span></h1>
+                    <p class="tr-hero-sub">Zinc, acrílico y acabados premium para eventos deportivos y corporativos.</p>
+                    <div class="tr-hero-ctas">
+                        <a href="/shop" class="tr-btn tr-btn-primary">Ver Medallas</a>
+                        <a href="/contacto-trofeos" class="tr-btn tr-btn-ghost">Solicitar Muestra</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="tr-hero-slide" style="background-image:url('/web_trofeos/static/src/img/hero-grabado.svg')">
+                <div class="tr-hero-overlay">
+                    <span class="tr-eyebrow tr-eyebrow-light">Tecnología Láser de Precisión</span>
+                    <h1 class="tr-hero-title">Grabado<br/><span class="tr-gold-word">Personalizado</span></h1>
+                    <p class="tr-hero-sub">Tu logo, texto y diseño grabado con precisión milimétrica en cualquier material.</p>
+                    <div class="tr-hero-ctas">
+                        <a href="/servicios-trofeos" class="tr-btn tr-btn-primary">Nuestros Servicios</a>
+                        <a href="/contacto-trofeos" class="tr-btn tr-btn-ghost">Cotizar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation arrows -->
+            <button class="tr-hero-arrow tr-hero-prev" data-hero-prev="" aria-label="Anterior">
+                <span class="material-symbols-outlined">chevron_left</span>
+            </button>
+            <button class="tr-hero-arrow tr-hero-next" data-hero-next="" aria-label="Siguiente">
+                <span class="material-symbols-outlined">chevron_right</span>
+            </button>
+
+            <!-- Dots -->
+            <div class="tr-hero-dots">
+                <button class="tr-hero-dot is-active" data-hero-dot="0" aria-label="Slide 1"/>
+                <button class="tr-hero-dot" data-hero-dot="1" aria-label="Slide 2"/>
+                <button class="tr-hero-dot" data-hero-dot="2" aria-label="Slide 3"/>
+            </div>
+        </section>
+    </template>
+
+</odoo>

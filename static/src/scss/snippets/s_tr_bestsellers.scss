@@ -1,0 +1,13 @@
+// ============================================================
+// s_tr_bestsellers — Best Sellers
+// ============================================================
+
+.tr-body .s_tr_bestsellers.tr-section-soft {
+    padding: var(--tr-space-20) 0;
+
+    .tr-grid-4 {
+        max-width: var(--tr-container);
+        margin: 0 auto;
+        padding: 0 var(--tr-gutter);
+    }
+}

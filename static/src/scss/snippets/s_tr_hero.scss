@@ -1,0 +1,138 @@
+// ============================================================
+// s_tr_hero — Hero Slider
+// ============================================================
+
+.tr-body .s_tr_hero.tr-hero {
+    position: relative;
+    height: 90vh;
+    min-height: 560px;
+    overflow: hidden;
+
+    // ── Slide ──────────────────────────────────────────────
+    .tr-hero-slide {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        transition: opacity 0.8s var(--tr-ease);
+        pointer-events: none;
+
+        &.is-active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    }
+
+    // ── Dark overlay ───────────────────────────────────────
+    .tr-hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            to right,
+            rgba(13, 17, 23, 0.72) 0%,
+            rgba(13, 17, 23, 0.35) 60%,
+            transparent 100%
+        );
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 calc(var(--tr-gutter) * 2);
+        max-width: var(--tr-container);
+        margin: 0 auto;
+    }
+
+    // ── Text content ───────────────────────────────────────
+    .tr-hero-title {
+        font-family: var(--tr-font-heading);
+        font-size: var(--tr-fs-hero);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: -0.02em;
+        color: var(--tr-white);
+        line-height: 1.0;
+        margin: var(--tr-space-4) 0 var(--tr-space-6);
+    }
+
+    .tr-hero-sub {
+        font-size: var(--tr-fs-lg);
+        color: rgba(255, 255, 255, 0.85);
+        line-height: var(--tr-lh-snug, 1.4);
+        max-width: 480px;
+        margin-bottom: var(--tr-space-10);
+    }
+
+    // ── CTAs ───────────────────────────────────────────────
+    .tr-hero-ctas {
+        display: flex;
+        gap: var(--tr-space-4);
+        flex-wrap: wrap;
+    }
+
+    // ── Navigation arrows ──────────────────────────────────
+    .tr-hero-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: var(--tr-white);
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background var(--tr-duration) var(--tr-ease);
+
+        &:hover { background: rgba(201, 162, 39, 0.8); }
+
+        &.tr-hero-prev { left: var(--tr-space-8); }
+        &.tr-hero-next { right: var(--tr-space-8); }
+
+        .material-symbols-outlined { font-size: 28px; }
+    }
+
+    // ── Dots ───────────────────────────────────────────────
+    .tr-hero-dots {
+        position: absolute;
+        bottom: var(--tr-space-8);
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: var(--tr-space-2);
+        z-index: 10;
+    }
+
+    .tr-hero-dot {
+        width: 8px;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.35);
+        border: none;
+        cursor: pointer;
+        transition: background var(--tr-duration) var(--tr-ease), width var(--tr-duration) var(--tr-ease);
+
+        &.is-active {
+            background: var(--tr-accent);
+            width: 24px;
+        }
+    }
+
+    // ── Responsive ─────────────────────────────────────────
+    @media (max-width: 768px) {
+        height: 70vh;
+
+        .tr-hero-overlay {
+            padding: 0 var(--tr-gutter);
+        }
+
+        .tr-hero-title {
+            font-size: clamp(36px, 10vw, 64px);
+        }
+
+        .tr-hero-sub {
+            font-size: var(--tr-fs-base);
+        }
+    }
+}

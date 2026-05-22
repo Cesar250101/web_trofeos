@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="snippets_trofeos" inherit_id="website.snippets" name="Trofeos Snippets">
+        <xpath expr="//div[@id='snippet_content']" position="before">
+            <div id="snippet_trofeos" class="o_panel">
+                <div class="o_panel_header">Trofeos</div>
+                <div class="o_panel_body">
+
+                    <t t-snippet="web_trofeos.s_tr_hero"
+                       t-thumbnail="/web_trofeos/static/src/img/snippets/thumb_hero.svg">
+                        <keywords>hero banner portada trofeos slide</keywords>
+                    </t>
+
+                    <t t-snippet="web_trofeos.s_tr_trust_bar"
+                       t-thumbnail="/web_trofeos/static/src/img/snippets/thumb_trust.svg">
+                        <keywords>trust confianza envio garantia calidad</keywords>
+                    </t>
+
+                    <t t-snippet="web_trofeos.s_tr_featured_products"
+                       t-thumbnail="/web_trofeos/static/src/img/snippets/thumb_featured.svg">
+                        <keywords>productos destacados featured nuevos trofeos</keywords>
+                    </t>
+
+                    <t t-snippet="web_trofeos.s_tr_services"
+                       t-thumbnail="/web_trofeos/static/src/img/snippets/thumb_services.svg">
+                        <keywords>servicios grabado personalizacion trofeos medallas</keywords>
+                    </t>
+
+                    <t t-snippet="web_trofeos.s_tr_clients"
+                       t-thumbnail="/web_trofeos/static/src/img/snippets/thumb_clients.svg">
+                        <keywords>clientes logos empresas marcas b2b</keywords>
+                    </t>
+
+                    <t t-snippet="web_trofeos.s_tr_quote_calculator"
+                       t-thumbnail="/web_trofeos/static/src/img/snippets/thumb_calculator.svg">
+                        <keywords>calculadora cotizacion precio presupuesto</keywords>
+                    </t>
+
+                    <t t-snippet="web_trofeos.s_tr_promo_banner"
+                       t-thumbnail="/web_trofeos/static/src/img/snippets/thumb_promo.svg">
+                        <keywords>promo oferta descuento banner promocional</keywords>
+                    </t>
+
+                    <t t-snippet="web_trofeos.s_tr_bestsellers"
+                       t-thumbnail="/web_trofeos/static/src/img/snippets/thumb_bestsellers.svg">
+                        <keywords>bestsellers mas vendidos top populares</keywords>
+                    </t>
+
+                    <t t-snippet="web_trofeos.s_tr_newsletter"
+                       t-thumbnail="/web_trofeos/static/src/img/snippets/thumb_newsletter.svg">
+                        <keywords>newsletter suscripcion email novedades</keywords>
+                    </t>
+
+                    <t t-snippet="web_trofeos.s_tr_map"
+                       t-thumbnail="/web_trofeos/static/src/img/snippets/thumb_map.svg">
+                        <keywords>mapa ubicacion contacto direccion google maps</keywords>
+                    </t>
+
+                    <t t-snippet="web_trofeos.s_tr_about_hero"
+                       t-thumbnail="/web_trofeos/static/src/img/snippets/thumb_about.svg">
+                        <keywords>nosotros quienes somos hero about estadisticas</keywords>
+                    </t>
+
+                    <t t-snippet="web_trofeos.s_tr_about_team"
+                       t-thumbnail="/web_trofeos/static/src/img/snippets/thumb_team.svg">
+                        <keywords>equipo team nosotros personas</keywords>
+                    </t>
+
+                    <t t-snippet="web_trofeos.s_tr_services_detail"
+                       t-thumbnail="/web_trofeos/static/src/img/snippets/thumb_services_detail.svg">
+                        <keywords>servicios detalle grabado laser personalizacion proceso</keywords>
+                    </t>
+
+                    <t t-snippet="web_trofeos.s_tr_b2b_hero"
+                       t-thumbnail="/web_trofeos/static/src/img/snippets/thumb_b2b_hero.svg">
+                        <keywords>b2b empresas corporativo hero</keywords>
+                    </t>
+
+                    <t t-snippet="web_trofeos.s_tr_b2b_benefits"
+                       t-thumbnail="/web_trofeos/static/src/img/snippets/thumb_b2b.svg">
+                        <keywords>b2b beneficios empresas corporativo ventajas</keywords>
+                    </t>
+
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

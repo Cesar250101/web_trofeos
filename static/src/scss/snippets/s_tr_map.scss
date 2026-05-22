@@ -1,0 +1,82 @@
+// ============================================================
+// s_tr_map — Map + Contact Info Section
+// ============================================================
+
+.tr-body .s_tr_map.tr-map-section {
+    padding: var(--tr-space-20) 0;
+
+    .tr-map-inner {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        gap: var(--tr-space-12);
+        max-width: var(--tr-container);
+        margin: 0 auto;
+        padding: 0 var(--tr-gutter);
+        align-items: start;
+    }
+
+    .tr-map-info {
+        display: flex;
+        flex-direction: column;
+        gap: var(--tr-space-6);
+    }
+
+    .tr-map-details {
+        display: flex;
+        flex-direction: column;
+        gap: var(--tr-space-6);
+        margin-bottom: var(--tr-space-2);
+    }
+
+    .tr-map-detail {
+        display: flex;
+        gap: var(--tr-space-4);
+        align-items: flex-start;
+
+        .material-symbols-outlined {
+            font-size: 22px;
+            color: var(--tr-accent);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        strong {
+            display: block;
+            font-family: var(--tr-font-heading);
+            font-size: var(--tr-fs-sm);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--tr-ink);
+            margin-bottom: 4px;
+        }
+
+        p, a {
+            font-size: var(--tr-fs-sm);
+            color: var(--tr-ink-3);
+            margin: 0;
+            text-decoration: none;
+
+            &:hover { color: var(--tr-accent); }
+        }
+    }
+
+    .tr-map-embed {
+        iframe {
+            width: 100%;
+            height: 450px;
+            display: block;
+            border: 1px solid var(--tr-line);
+        }
+    }
+
+    @media (max-width: 900px) {
+        .tr-map-inner {
+            grid-template-columns: 1fr;
+        }
+
+        .tr-map-embed iframe {
+            height: 300px;
+        }
+    }
+}

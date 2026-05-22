@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="tr_servicios_page" name="Trofeos — Servicios" key="web_trofeos.tr_servicios_page" track="1">
+        <t t-call="website.layout">
+            <t t-set="pageName" t-value="'servicios'"/>
+            <div id="wrap" class="tr-site">
+                <main id="oe_structure_tr_servicios_main" class="oe_structure">
+                    <!-- Page hero -->
+                    <section class="tr-page-hero tr-bg-dark">
+                        <div class="tr-page-hero-inner">
+                            <span class="tr-eyebrow tr-eyebrow-gold">Nuestros Servicios</span>
+                            <h1 class="tr-page-title">Grabado &amp; <span class="tr-gold-word">Personalización</span></h1>
+                            <p class="tr-page-subtitle">Tecnología láser de precisión para cada reconocimiento.</p>
+                        </div>
+                    </section>
+                    <t t-call="web_trofeos.s_tr_services_detail"/>
+                    <t t-call="web_trofeos.s_tr_quote_calculator"/>
+                    <t t-call="web_trofeos.s_tr_clients"/>
+                </main>
+                <t t-call="web_trofeos.s_tr_whatsapp"/>
+            </div>
+        </t>
+    </template>
+
+</odoo>

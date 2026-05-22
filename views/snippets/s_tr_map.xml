@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_tr_map" name="Trofeos Mapa Ubicación">
+        <t t-set="tr_company" t-value="request.env.company.sudo()"/>
+        <section class="s_tr_map tr-map-section" data-snippet="s_tr_map">
+            <div class="tr-map-inner">
+                <div class="tr-map-info">
+                    <span class="tr-eyebrow">Dónde encontrarnos</span>
+                    <h2 class="tr-section-title">Nuestra <span class="tr-gold-word">Ubicación</span></h2>
+                    <div class="tr-map-details">
+                        <div class="tr-map-detail" t-if="tr_company.street or tr_company.city">
+                            <span class="material-symbols-outlined">location_on</span>
+                            <div>
+                                <strong><t t-esc="tr_company.name"/></strong>
+                                <p>
+                                    <t t-if="tr_company.street"><t t-esc="tr_company.street"/><br/></t>
+                                    <t t-if="tr_company.city"><t t-esc="tr_company.city"/></t>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="tr-map-detail" t-if="tr_company.phone">
+                            <span class="material-symbols-outlined">phone</span>
+                            <div>
+                                <strong>Teléfono</strong>
+                                <p><a t-att-href="'tel:' + tr_company.phone" t-esc="tr_company.phone"/></p>
+                            </div>
+                        </div>
+                        <div class="tr-map-detail" t-if="tr_company.email">
+                            <span class="material-symbols-outlined">mail</span>
+                            <div>
+                                <strong>Correo</strong>
+                                <p><a t-att-href="'mailto:' + tr_company.email" t-esc="tr_company.email"/></p>
+                            </div>
+                        </div>
+                        <div class="tr-map-detail">
+                            <span class="material-symbols-outlined">schedule</span>
+                            <div>
+                                <strong>Horario</strong>
+                                <p>Lun – Vie: 9:00 – 18:00<br/>Sáb: 9:00 – 13:00</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="/contacto-trofeos" class="tr-btn tr-btn-primary">Contáctanos</a>
+                </div>
+                <div class="tr-map-embed">
+                    <!-- iframe editable via website editor (src attribute) -->
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.9!2d-70.6483!3d-33.4569!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzPCsDI3JzI0LjgiUyA3MMKwMzgnNTMuOSJX!5e0!3m2!1ses!2scl!4v1620000000000"
+                        width="100%" height="450" style="border:0;" allowfullscreen=""
+                        loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                        title="Ubicación en mapa"/>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

@@ -1,0 +1,86 @@
+// ============================================================
+// Web Trofeos — Design Tokens (CSS Custom Properties)
+// ============================================================
+
+:root {
+    // Brand palette
+    --tr-navy:       #0d1117;
+    --tr-navy-soft:  #1a2332;
+    --tr-gold:       #c9a227;
+    --tr-gold-dark:  #a07d18;
+    --tr-gold-light: #e8c84a;
+    --tr-gold-soft:  #f5e9c0;
+    --tr-white:      #ffffff;
+
+    // UI surfaces
+    --tr-surface:       #ffffff;
+    --tr-surface-dark:  #0d1117;
+    --tr-surface-navy:  #1a2332;
+    --tr-surface-soft:  #f4f4f4;
+    --tr-surface-muted: #f9f9f9;
+
+    // Inks
+    --tr-ink:    #0d1117;
+    --tr-ink-2:  #2c2c2c;
+    --tr-ink-3:  #5a5a5a;
+    --tr-ink-4:  #9a9a9a;
+    --tr-ink-5:  #cccccc;
+
+    // Lines / borders
+    --tr-line:      #e0e0e0;
+    --tr-line-soft: #f0f0f0;
+    --tr-line-dark: rgba(255, 255, 255, 0.12);
+
+    // Semantic
+    --tr-primary:   #0d1117;
+    --tr-accent:    #c9a227;
+    --tr-accent-fg: #0d1117;
+
+    // Typography
+    --tr-font-heading: "Montserrat", "Inter", system-ui, sans-serif;
+    --tr-font-body:    "Inter", system-ui, -apple-system, sans-serif;
+
+    // Font sizes
+    --tr-fs-xs:   11px;
+    --tr-fs-sm:   13px;
+    --tr-fs-base: 15px;
+    --tr-fs-md:   17px;
+    --tr-fs-lg:   20px;
+    --tr-fs-xl:   24px;
+    --tr-fs-2xl:  32px;
+    --tr-fs-3xl:  clamp(32px, 4vw, 42px);
+    --tr-fs-4xl:  clamp(40px, 5vw, 56px);
+    --tr-fs-5xl:  clamp(48px, 7vw, 80px);
+    --tr-fs-hero: clamp(52px, 9vw, 100px);
+
+    // Spacing
+    --tr-space-1:  4px;
+    --tr-space-2:  8px;
+    --tr-space-3:  12px;
+    --tr-space-4:  16px;
+    --tr-space-6:  24px;
+    --tr-space-8:  32px;
+    --tr-space-10: 40px;
+    --tr-space-12: 48px;
+    --tr-space-16: 64px;
+    --tr-space-20: 80px;
+    --tr-space-24: 96px;
+    --tr-gutter:   32px;
+    --tr-container: 1440px;
+
+    // Motion
+    --tr-ease:          cubic-bezier(0.4, 0, 0.2, 1);
+    --tr-ease-out:      cubic-bezier(0, 0, 0.2, 1);
+    --tr-duration:      200ms;
+    --tr-duration-slow: 320ms;
+    --tr-duration-fast: 120ms;
+
+    // Z-index
+    --tr-z-header:   100;
+    --tr-z-dropdown: 200;
+    --tr-z-overlay:   10;
+    --tr-z-whatsapp: 999;
+
+    // Header
+    --tr-header-h: 72px;
+}

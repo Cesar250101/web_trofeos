@@ -1,0 +1,91 @@
+// ============================================================
+// s_tr_services — Services Overview Grid
+// ============================================================
+
+.tr-body .s_tr_services.tr-section {
+
+    .tr-services-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--tr-space-6);
+        max-width: var(--tr-container);
+        margin: 0 auto;
+        padding: 0 var(--tr-gutter);
+    }
+
+    .tr-service-card {
+        padding: var(--tr-space-8) var(--tr-space-6);
+        background: var(--tr-surface);
+        border: 1px solid var(--tr-line);
+        transition: border-color var(--tr-duration) var(--tr-ease),
+                    box-shadow var(--tr-duration) var(--tr-ease),
+                    transform var(--tr-duration) var(--tr-ease);
+        display: flex;
+        flex-direction: column;
+
+        &:hover {
+            border-color: var(--tr-accent);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+    }
+
+    .tr-service-icon {
+        width: 56px;
+        height: 56px;
+        background: var(--tr-surface-soft);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: var(--tr-space-6);
+        transition: background var(--tr-duration) var(--tr-ease);
+
+        .material-symbols-outlined {
+            font-size: 28px;
+            color: var(--tr-accent);
+        }
+    }
+
+    .tr-service-card:hover .tr-service-icon {
+        background: var(--tr-accent);
+
+        .material-symbols-outlined { color: var(--tr-accent-fg); }
+    }
+
+    .tr-service-title {
+        font-family: var(--tr-font-heading);
+        font-size: var(--tr-fs-md);
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--tr-ink);
+        margin: 0 0 var(--tr-space-4);
+    }
+
+    .tr-service-desc {
+        font-size: var(--tr-fs-sm);
+        color: var(--tr-ink-3);
+        line-height: 1.6;
+        flex: 1;
+        margin-bottom: var(--tr-space-6);
+    }
+
+    .tr-service-link {
+        font-size: var(--tr-fs-xs);
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--tr-accent);
+        text-decoration: none;
+
+        &:hover { color: var(--tr-gold-dark); }
+    }
+
+    @media (max-width: 1024px) {
+        .tr-services-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+        .tr-services-grid { grid-template-columns: 1fr; }
+    }
+}

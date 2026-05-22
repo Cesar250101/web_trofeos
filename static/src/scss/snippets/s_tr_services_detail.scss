@@ -1,0 +1,164 @@
+// ============================================================
+// s_tr_services_detail — Services Detail + Process
+// ============================================================
+
+.tr-body .s_tr_services_detail.tr-section {
+
+    // ── Service block (image + copy) ───────────────────────
+    .tr-service-block {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--tr-space-16);
+        align-items: center;
+        max-width: var(--tr-container);
+        margin: 0 auto;
+        padding: var(--tr-space-16) var(--tr-gutter);
+        border-bottom: 1px solid var(--tr-line-soft, #f0f0f0);
+
+        &:last-child { border-bottom: none; }
+
+        &-alt {
+            direction: rtl;
+
+            > * { direction: ltr; }
+        }
+    }
+
+    .tr-service-block-img {
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+            max-height: 420px;
+            object-fit: cover;
+            border: 1px solid var(--tr-line);
+        }
+    }
+
+    .tr-service-block-copy {
+        display: flex;
+        flex-direction: column;
+        gap: var(--tr-space-6);
+
+        p {
+            font-size: var(--tr-fs-base);
+            color: var(--tr-ink-3);
+            line-height: 1.7;
+            margin: 0;
+        }
+    }
+
+    // ── Feature list ───────────────────────────────────────
+    .tr-service-features {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--tr-space-3);
+
+        li {
+            display: flex;
+            align-items: center;
+            gap: var(--tr-space-3);
+            font-size: var(--tr-fs-sm);
+            color: var(--tr-ink-2);
+
+            .material-symbols-outlined {
+                font-size: 18px;
+                color: var(--tr-accent);
+                flex-shrink: 0;
+            }
+        }
+    }
+
+    // ── Process strip ──────────────────────────────────────
+    .tr-process-strip {
+        background: var(--tr-surface-dark);
+        padding: var(--tr-space-20) 0;
+        color: var(--tr-white);
+
+        .tr-section-head {
+            .tr-section-title { color: var(--tr-white); }
+        }
+    }
+
+    .tr-process-steps {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--tr-space-8);
+        max-width: var(--tr-container);
+        margin: 0 auto;
+        padding: 0 var(--tr-gutter);
+        position: relative;
+
+        // Connecting line
+        &::before {
+            content: '';
+            position: absolute;
+            top: 28px;
+            left: calc(var(--tr-gutter) + 28px);
+            right: calc(var(--tr-gutter) + 28px);
+            height: 1px;
+            background: rgba(201, 162, 39, 0.3);
+        }
+    }
+
+    .tr-step {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: var(--tr-space-4);
+        padding-top: var(--tr-space-16);
+
+        h4 {
+            font-family: var(--tr-font-heading);
+            font-size: var(--tr-fs-md);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--tr-white);
+            margin: 0;
+        }
+
+        p {
+            font-size: var(--tr-fs-sm);
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+            margin: 0;
+        }
+    }
+
+    .tr-step-num {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 56px;
+        height: 56px;
+        background: var(--tr-accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--tr-font-heading);
+        font-size: var(--tr-fs-lg);
+        font-weight: 900;
+        color: var(--tr-accent-fg);
+    }
+
+    @media (max-width: 900px) {
+        .tr-service-block,
+        .tr-service-block-alt {
+            grid-template-columns: 1fr;
+            direction: ltr;
+        }
+
+        .tr-process-steps {
+            grid-template-columns: repeat(2, 1fr);
+            &::before { display: none; }
+        }
+    }
+
+    @media (max-width: 560px) {
+        .tr-process-steps { grid-template-columns: 1fr; }
+    }
+}

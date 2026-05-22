@@ -1,0 +1,78 @@
+// ============================================================
+// s_tr_about_team — Team Grid
+// ============================================================
+
+.tr-body .s_tr_about_team.tr-section {
+
+    .tr-team-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--tr-space-8);
+        max-width: var(--tr-container);
+        margin: 0 auto;
+        padding: 0 var(--tr-gutter);
+    }
+
+    .tr-team-card {
+        text-align: center;
+        padding: var(--tr-space-8);
+        border: 1px solid var(--tr-line);
+        transition: border-color var(--tr-duration) var(--tr-ease),
+                    box-shadow var(--tr-duration) var(--tr-ease);
+
+        &:hover {
+            border-color: var(--tr-accent);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+    }
+
+    .tr-team-photo {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: 0 auto var(--tr-space-6);
+        border: 3px solid var(--tr-accent);
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .tr-team-name {
+        font-family: var(--tr-font-heading);
+        font-size: var(--tr-fs-md);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--tr-ink);
+        margin: 0 0 var(--tr-space-1);
+    }
+
+    .tr-team-role {
+        display: block;
+        font-size: var(--tr-fs-xs);
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--tr-accent);
+        margin-bottom: var(--tr-space-4);
+    }
+
+    .tr-team-bio {
+        font-size: var(--tr-fs-sm);
+        color: var(--tr-ink-3);
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    @media (max-width: 900px) {
+        .tr-team-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 560px) {
+        .tr-team-grid { grid-template-columns: 1fr; }
+    }
+}

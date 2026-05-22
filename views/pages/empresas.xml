@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="tr_empresas_page" name="Trofeos — Empresas B2B" key="web_trofeos.tr_empresas_page" track="1">
+        <t t-call="website.layout">
+            <t t-set="pageName" t-value="'empresas'"/>
+            <div id="wrap" class="tr-site">
+                <main id="oe_structure_tr_empresas_main" class="oe_structure">
+                    <t t-call="web_trofeos.s_tr_b2b_hero"/>
+                    <t t-call="web_trofeos.s_tr_b2b_benefits"/>
+                    <t t-call="web_trofeos.s_tr_clients"/>
+                    <t t-call="web_trofeos.s_tr_quote_calculator"/>
+                    <t t-call="web_trofeos.s_tr_newsletter"/>
+                </main>
+                <t t-call="web_trofeos.s_tr_whatsapp"/>
+            </div>
+        </t>
+    </template>
+
+</odoo>

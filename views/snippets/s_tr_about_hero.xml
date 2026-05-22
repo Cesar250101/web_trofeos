@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_tr_about_hero" name="Trofeos About Hero">
+        <section class="s_tr_about_hero tr-about-hero" data-snippet="s_tr_about_hero"
+                 style="background-image:url('/web_trofeos/static/src/img/about-hero.svg')">
+            <div class="tr-about-hero-overlay">
+                <div class="tr-about-hero-inner">
+                    <span class="tr-eyebrow tr-eyebrow-gold">Nuestra Historia</span>
+                    <h1 class="tr-about-hero-title">Quiénes <span class="tr-gold-word">Somos</span></h1>
+                    <p class="tr-about-hero-sub">Más de una década creando reconocimientos que perduran.<br/>Pasión por la excelencia en cada trofeo, medalla y grabado.</p>
+                </div>
+            </div>
+
+            <!-- Stats strip -->
+            <div class="tr-about-stats">
+                <div class="tr-stat">
+                    <span class="tr-stat-number">+10</span>
+                    <span class="tr-stat-label">Años de experiencia</span>
+                </div>
+                <div class="tr-stat">
+                    <span class="tr-stat-number">+5.000</span>
+                    <span class="tr-stat-label">Eventos realizados</span>
+                </div>
+                <div class="tr-stat">
+                    <span class="tr-stat-number">+200</span>
+                    <span class="tr-stat-label">Clientes corporativos</span>
+                </div>
+                <div class="tr-stat">
+                    <span class="tr-stat-number">100%</span>
+                    <span class="tr-stat-label">Satisfacción garantizada</span>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

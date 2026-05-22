@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_tr_trust_bar" name="Trofeos Trust Bar">
+        <section class="s_tr_trust_bar tr-trust-bar" data-snippet="s_tr_trust_bar">
+            <div class="tr-trust-inner">
+                <div class="tr-pillar">
+                    <span class="material-symbols-outlined tr-pillar-icon">local_shipping</span>
+                    <div class="tr-pillar-text">
+                        <strong>Envío a todo Chile</strong>
+                        <span>Despacho rápido y seguro</span>
+                    </div>
+                </div>
+                <div class="tr-pillar">
+                    <span class="material-symbols-outlined tr-pillar-icon">verified</span>
+                    <div class="tr-pillar-text">
+                        <strong>Calidad Garantizada</strong>
+                        <span>Materiales premium certificados</span>
+                    </div>
+                </div>
+                <div class="tr-pillar">
+                    <span class="material-symbols-outlined tr-pillar-icon">draw</span>
+                    <div class="tr-pillar-text">
+                        <strong>100% Personalizable</strong>
+                        <span>Tu diseño, tu mensaje</span>
+                    </div>
+                </div>
+                <div class="tr-pillar">
+                    <span class="material-symbols-outlined tr-pillar-icon">support_agent</span>
+                    <div class="tr-pillar-text">
+                        <strong>Asesoría Experta</strong>
+                        <span>Te ayudamos a elegir lo mejor</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

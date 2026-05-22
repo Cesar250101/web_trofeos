@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="tr_header" name="Trofeos — Header">
+        <t t-set="tr_categories" t-value="request.env['product.public.category'].sudo().search([('parent_id','=',False),('website_id','=',website.id)], order='sequence asc')"/>
+        <header id="top" class="tr-header">
+            <nav class="tr-nav container-fluid">
+                <!-- Logo / Wordmark -->
+                <a class="tr-wordmark" href="/trofeos" aria-label="Trofeos Home">
+                    <span class="tr-wordmark-main">TROFEOS</span>
+                    <span class="tr-wordmark-sub">trofeos · grabado · personalización</span>
+                </a>
+
+                <!-- Mobile toggle -->
+                <button class="tr-nav-toggle d-lg-none" data-bs-toggle="collapse" data-bs-target="#trNavMenu" aria-expanded="false" aria-label="Menú">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+
+                <!-- Nav links -->
+                <div class="collapse navbar-collapse tr-nav-menu" id="trNavMenu">
+                    <ul class="tr-nav-list">
+                        <li class="tr-nav-item">
+                            <a class="tr-nav-link" href="/trofeos">Inicio</a>
+                        </li>
+                        <!-- Categories with dropdowns -->
+                        <t t-foreach="tr_categories" t-as="cat">
+                            <t t-set="cat_children" t-value="request.env['product.public.category'].sudo().search([('parent_id','=',cat.id),('website_id','=',website.id)], order='sequence asc')"/>
+                            <li t-attf-class="tr-nav-item #{cat_children and 'tr-has-dropdown' or ''}">
+                                <a t-attf-class="tr-nav-link #{request.httprequest.path.startswith('/coleccion-trofeos') and 'is-active' or ''}"
+                                   t-attf-href="/coleccion-trofeos/#{cat.id}">
+                                    <t t-esc="cat.name"/>
+                                    <span t-if="cat_children" class="material-symbols-outlined tr-nav-arrow">expand_more</span>
+                                </a>
+                                <ul t-if="cat_children" class="tr-dropdown">
+                                    <li t-foreach="cat_children" t-as="sub">
+                                        <a t-attf-href="/shop?category=#{sub.id}" class="tr-dropdown-link">
+                                            <t t-esc="sub.name"/>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </t>
+                        <li class="tr-nav-item">
+                            <a t-attf-class="tr-nav-link #{request.httprequest.path == '/servicios-trofeos' and 'is-active' or ''}" href="/servicios-trofeos">Servicios</a>
+                        </li>
+                        <li class="tr-nav-item">
+                            <a t-attf-class="tr-nav-link #{request.httprequest.path == '/empresas-trofeos' and 'is-active' or ''}" href="/empresas-trofeos">Empresas</a>
+                        </li>
+                        <li class="tr-nav-item">
+                            <a t-attf-class="tr-nav-link #{request.httprequest.path == '/quienes-somos-trofeos' and 'is-active' or ''}" href="/quienes-somos-trofeos">Nosotros</a>
+                        </li>
+                        <li class="tr-nav-item">
+                            <a t-attf-class="tr-nav-link #{request.httprequest.path == '/contacto-trofeos' and 'is-active' or ''}" href="/contacto-trofeos">Contacto</a>
+                        </li>
+                    </ul>
+
+                    <!-- Header actions -->
+                    <div class="tr-nav-actions">
+                        <a href="/shop" class="tr-nav-icon" aria-label="Catálogo">
+                            <span class="material-symbols-outlined">search</span>
+                        </a>
+                        <a href="/web/login" class="tr-nav-icon" aria-label="Mi cuenta">
+                            <span class="material-symbols-outlined">person</span>
+                        </a>
+                        <a href="/contacto-trofeos" class="tr-btn tr-btn-primary tr-nav-cta">Cotizar</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    </template>
+
+    <!-- Override native header when on Trofeos website -->
+    <template id="tr_header_override" inherit_id="website.layout" name="Trofeos — Header Override">
+        <xpath expr="//header[@id='top']" position="replace">
+            <t t-if="website.name == 'Trofeos'">
+                <t t-call="web_trofeos.tr_header"/>
+            </t>
+            <t t-else="">
+                <header id="top" t-att-class="'o_header_standard' + (not website.header_visible and ' o_header_hidden' or '') + (website.header_overlay and ' o_header_overlay' or '') + (website.header_color and (' ' + website.header_color) or '')">
+                    <div id="o_main_nav" class="o_navbar">
+                        <t t-call="website.navbar_content"/>
+                    </div>
+                    <div id="o_header_affix" class="o_affix_enabled">
+                        <div id="o_main_nav_clone" class="o_navbar">
+                            <t t-call="website.navbar_content"/>
+                        </div>
+                    </div>
+                </header>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>

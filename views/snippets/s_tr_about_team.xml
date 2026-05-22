@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_tr_about_team" name="Trofeos Equipo">
+        <section class="s_tr_about_team tr-section" data-snippet="s_tr_about_team">
+            <div class="tr-section-head">
+                <span class="tr-eyebrow">Las personas detrás</span>
+                <h2 class="tr-section-title">Nuestro <span class="tr-gold-word">Equipo</span></h2>
+            </div>
+            <div class="tr-team-grid">
+                <div class="tr-team-card">
+                    <div class="tr-team-photo">
+                        <img src="/web_trofeos/static/src/img/team-placeholder.svg" alt="Miembro del equipo" class="o_editable_media"/>
+                    </div>
+                    <h3 class="tr-team-name">Nombre Apellido</h3>
+                    <span class="tr-team-role">Director Comercial</span>
+                    <p class="tr-team-bio">Experto en reconocimientos corporativos con más de 10 años en el sector.</p>
+                </div>
+                <div class="tr-team-card">
+                    <div class="tr-team-photo">
+                        <img src="/web_trofeos/static/src/img/team-placeholder.svg" alt="Miembro del equipo" class="o_editable_media"/>
+                    </div>
+                    <h3 class="tr-team-name">Nombre Apellido</h3>
+                    <span class="tr-team-role">Diseñadora y Grabadora</span>
+                    <p class="tr-team-bio">Especialista en grabado láser y diseño de reconocimientos personalizados.</p>
+                </div>
+                <div class="tr-team-card">
+                    <div class="tr-team-photo">
+                        <img src="/web_trofeos/static/src/img/team-placeholder.svg" alt="Miembro del equipo" class="o_editable_media"/>
+                    </div>
+                    <h3 class="tr-team-name">Nombre Apellido</h3>
+                    <span class="tr-team-role">Producción y Calidad</span>
+                    <p class="tr-team-bio">Responsable de que cada producto salga perfecto antes de llegar a tus manos.</p>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

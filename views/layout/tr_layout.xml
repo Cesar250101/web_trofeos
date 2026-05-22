@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Google Fonts + Material Symbols -->
+    <template id="tr_google_fonts" inherit_id="website.layout" name="Trofeos — Google Fonts">
+        <xpath expr="//head" position="inside">
+            <t t-if="website.name == 'Trofeos'">
+                <link rel="preconnect" href="https://fonts.googleapis.com"/>
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+                <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- Body class for SCSS scoping -->
+    <template id="tr_body_class" inherit_id="website.layout" name="Trofeos — Body Class">
+        <xpath expr="//div[@id='wrapwrap']" position="attributes">
+            <attribute name="t-attf-class" add="#{website.name == 'Trofeos' and 'tr-body' or ''}" separator=" "/>
+        </xpath>
+    </template>
+
+</odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_tr_services" name="Trofeos Servicios Overview">
+        <section class="s_tr_services tr-section tr-section-soft" data-snippet="s_tr_services">
+            <div class="tr-section-head">
+                <span class="tr-eyebrow">Lo que hacemos</span>
+                <h2 class="tr-section-title">Nuestros <span class="tr-gold-word">Servicios</span></h2>
+            </div>
+            <div class="tr-services-grid">
+                <div class="tr-service-card">
+                    <div class="tr-service-icon">
+                        <span class="material-symbols-outlined">emoji_events</span>
+                    </div>
+                    <h3 class="tr-service-title">Trofeos</h3>
+                    <p class="tr-service-desc">Trofeos en resina, metal y acrílico para todo tipo de evento. Diseños clásicos y modernos con acabados premium.</p>
+                    <a href="/coleccion-trofeos/1" class="tr-service-link">Explorar →</a>
+                </div>
+                <div class="tr-service-card">
+                    <div class="tr-service-icon">
+                        <span class="material-symbols-outlined">military_tech</span>
+                    </div>
+                    <h3 class="tr-service-title">Medallas</h3>
+                    <p class="tr-service-desc">Medallas deportivas y corporativas en zinc y acrílico. Personalizables con logo, texto y cintas en tus colores.</p>
+                    <a href="/coleccion-trofeos/2" class="tr-service-link">Explorar →</a>
+                </div>
+                <div class="tr-service-card">
+                    <div class="tr-service-icon">
+                        <span class="material-symbols-outlined">flash_on</span>
+                    </div>
+                    <h3 class="tr-service-title">Grabado Láser</h3>
+                    <p class="tr-service-desc">Tecnología láser de alta precisión para grabar tu logo o texto en trofeos, placas, maderas y metales.</p>
+                    <a href="/servicios-trofeos" class="tr-service-link">Ver detalle →</a>
+                </div>
+                <div class="tr-service-card">
+                    <div class="tr-service-icon">
+                        <span class="material-symbols-outlined">business</span>
+                    </div>
+                    <h3 class="tr-service-title">Corporativo</h3>
+                    <p class="tr-service-desc">Soluciones B2B para empresas: reconocimientos, premios anuales, kits para eventos y programas de fidelización.</p>
+                    <a href="/empresas-trofeos" class="tr-service-link">Ver planes →</a>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

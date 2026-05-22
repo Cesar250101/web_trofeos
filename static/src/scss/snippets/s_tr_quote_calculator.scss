@@ -1,0 +1,160 @@
+// ============================================================
+// s_tr_quote_calculator — Quote Calculator Section
+// ============================================================
+
+.tr-body .s_tr_quote_calc.tr-section-dark {
+    padding: var(--tr-space-20) 0;
+
+    .tr-calc-wrap {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 0 var(--tr-gutter);
+    }
+
+    .tr-calc-subtitle {
+        color: rgba(255, 255, 255, 0.65);
+        font-size: var(--tr-fs-base);
+        margin-top: var(--tr-space-2);
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    // ── Controls + Result ──────────────────────────────────
+    .tr-calc-body {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: var(--tr-space-8);
+        display: flex;
+        gap: var(--tr-space-8);
+        flex-wrap: wrap;
+        margin-top: var(--tr-space-10);
+    }
+
+    .tr-calc-controls {
+        flex: 1;
+        min-width: 240px;
+        display: flex;
+        flex-direction: column;
+        gap: var(--tr-space-6);
+    }
+
+    .tr-calc-field {
+        display: flex;
+        flex-direction: column;
+        gap: var(--tr-space-2);
+    }
+
+    .tr-calc-label {
+        font-size: var(--tr-fs-xs);
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .tr-calc-input {
+        padding: 12px 16px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: var(--tr-white);
+        font-family: var(--tr-font-body);
+        font-size: var(--tr-fs-base);
+        outline: none;
+        border-radius: 0;
+        transition: border-color var(--tr-duration) var(--tr-ease);
+        -webkit-appearance: none;
+
+        option { color: var(--tr-ink); background: var(--tr-surface); }
+
+        &:focus { border-color: var(--tr-accent); }
+    }
+
+    // Checkbox wrapper
+    .tr-calc-check-wrap {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--tr-space-3);
+    }
+
+    .tr-calc-check-label {
+        display: flex;
+        align-items: center;
+        gap: var(--tr-space-3);
+        cursor: pointer;
+        font-size: var(--tr-fs-sm);
+        color: rgba(255, 255, 255, 0.85);
+        margin: 0;
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--tr-accent);
+            cursor: pointer;
+        }
+    }
+
+    // ── Result panel ───────────────────────────────────────
+    .tr-calc-result {
+        flex: 1;
+        min-width: 240px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: var(--tr-space-4);
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        padding-left: var(--tr-space-8);
+    }
+
+    .tr-calc-price-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: var(--tr-space-1);
+    }
+
+    .tr-calc-price-label {
+        font-size: var(--tr-fs-xs);
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.55);
+    }
+
+    .tr-calc-output {
+        font-family: var(--tr-font-heading);
+        font-size: var(--tr-fs-4xl);
+        font-weight: 900;
+        color: var(--tr-accent);
+        line-height: 1;
+        transition: color var(--tr-duration) var(--tr-ease);
+    }
+
+    .tr-calc-discount {
+        font-size: var(--tr-fs-sm);
+        color: var(--tr-gold-light, #e8c84a);
+        font-weight: 600;
+        min-height: 20px;
+    }
+
+    .tr-calc-fine {
+        font-size: var(--tr-fs-xs);
+        color: rgba(255, 255, 255, 0.4);
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    .tr-calc-cta {
+        align-self: flex-start;
+    }
+
+    // ── Responsive ─────────────────────────────────────────
+    @media (max-width: 700px) {
+        .tr-calc-body { flex-direction: column; }
+        .tr-calc-result {
+            border-left: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-left: 0;
+            padding-top: var(--tr-space-6);
+        }
+    }
+}

@@ -1,0 +1,173 @@
+// ============================================================
+// Web Trofeos — Website Sale overrides
+// Style the native Odoo shop/product pages within .tr-body
+// ============================================================
+
+.tr-body {
+
+    // --------------------------------------------------------
+    // Shop page
+    // --------------------------------------------------------
+    #products_grid {
+        .oe_product {
+            border: none;
+            border-radius: 0;
+            transition: box-shadow var(--tr-duration) var(--tr-ease);
+
+            &:hover {
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            }
+        }
+
+        .oe_product_image_link {
+            aspect-ratio: 1;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform var(--tr-duration-slow) var(--tr-ease);
+            }
+        }
+
+        .oe_product:hover .oe_product_image_link img {
+            transform: scale(1.04);
+        }
+
+        .product_price {
+            .oe_currency_value {
+                font-family: var(--tr-font-heading);
+                font-weight: 700;
+            }
+        }
+    }
+
+    // --------------------------------------------------------
+    // Product detail page
+    // --------------------------------------------------------
+    #product_detail {
+        max-width: var(--tr-container);
+        margin: 0 auto;
+        padding: var(--tr-space-12) var(--tr-gutter);
+
+        .product_detail_main {
+            gap: var(--tr-space-12);
+        }
+
+        #product_summary {
+            h1 {
+                font-family: var(--tr-font-heading);
+                font-size: var(--tr-fs-3xl);
+                font-weight: 800;
+                text-transform: uppercase;
+                color: var(--tr-ink);
+            }
+        }
+
+        // Hide add to cart, replace with cotizar CTA
+        #add_to_cart {
+            background: var(--tr-ink);
+            color: var(--tr-white);
+            border: 2px solid var(--tr-ink);
+            font-family: var(--tr-font-heading);
+            font-size: var(--tr-fs-sm);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-radius: 0;
+            padding: 14px 32px;
+            transition: background var(--tr-duration) var(--tr-ease);
+
+            &:hover {
+                background: var(--tr-accent);
+                border-color: var(--tr-accent);
+                color: var(--tr-accent-fg);
+            }
+        }
+
+        // Cotizar button appended by JS
+        .tr-cotizar-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--tr-space-2);
+            padding: 14px 32px;
+            background: var(--tr-accent);
+            color: var(--tr-accent-fg);
+            border: 2px solid var(--tr-accent);
+            font-family: var(--tr-font-heading);
+            font-size: var(--tr-fs-sm);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background var(--tr-duration) var(--tr-ease);
+
+            &:hover {
+                background: var(--tr-gold-dark);
+                border-color: var(--tr-gold-dark);
+            }
+        }
+    }
+
+    // --------------------------------------------------------
+    // Breadcrumb
+    // --------------------------------------------------------
+    .tr-breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: var(--tr-space-2);
+        padding: var(--tr-space-4) var(--tr-gutter);
+        max-width: var(--tr-container);
+        margin: 0 auto;
+        font-size: var(--tr-fs-xs);
+        color: var(--tr-ink-3);
+
+        a {
+            color: var(--tr-ink-3);
+            text-decoration: none;
+
+            &:hover { color: var(--tr-accent); }
+        }
+
+        .tr-bc-sep {
+            color: var(--tr-ink-5);
+            font-size: 14px;
+        }
+
+        .tr-bc-current {
+            color: var(--tr-ink);
+            font-weight: 500;
+        }
+    }
+
+    // --------------------------------------------------------
+    // Cart page overrides
+    // --------------------------------------------------------
+    #cart_products {
+        .td-img img {
+            border-radius: 0;
+        }
+    }
+
+    // --------------------------------------------------------
+    // Category page hero
+    // --------------------------------------------------------
+    .tr-cat-hero {
+        background: var(--tr-surface-dark);
+        color: var(--tr-white);
+        padding: var(--tr-space-16) var(--tr-gutter) var(--tr-space-12);
+        text-align: center;
+
+        .tr-cat-title {
+            font-family: var(--tr-font-heading);
+            font-size: var(--tr-fs-4xl);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+            color: var(--tr-white);
+            margin: var(--tr-space-3) 0 0;
+        }
+    }
+}

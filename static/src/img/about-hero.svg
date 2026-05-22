@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 700">
+  <defs>
+    <linearGradient id="about-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#1a2332"/>
+    </linearGradient>
+  </defs>
+  <rect width="1440" height="700" fill="url(#about-bg)"/>
+  <!-- Circular decorative elements -->
+  <circle cx="720" cy="320" r="280" fill="none" stroke="#c9a227" stroke-width="1" opacity="0.12"/>
+  <circle cx="720" cy="320" r="200" fill="none" stroke="#c9a227" stroke-width="1" opacity="0.18"/>
+  <!-- Trophy collection silhouettes -->
+  <g transform="translate(450,80)" opacity="0.08" fill="#c9a227">
+    <!-- Small trophy -->
+    <path d="M60,0 C90,0 110,30 110,70 L110,100 L90,110 L90,130 L110,130 L110,150 L10,150 L10,130 L30,130 L30,110 L10,100 L10,70 C10,30 30,0 60,0 Z"/>
+    <!-- Big trophy center -->
+    <path d="M220,0 C300,0 350,60 350,140 L350,200 L310,220 L310,260 L350,260 L350,300 L90,300 L90,260 L130,260 L130,220 L90,200 L90,140 C90,60 140,0 220,0 Z" transform="translate(100,0)"/>
+    <!-- Small trophy right -->
+    <path d="M60,0 C90,0 110,30 110,70 L110,100 L90,110 L90,130 L110,130 L110,150 L10,150 L10,130 L30,130 L30,110 L10,100 L10,70 C10,30 30,0 60,0 Z" transform="translate(480,0)"/>
+  </g>
+  <!-- Stars scattered -->
+  <g fill="#c9a227" opacity="0.15">
+    <polygon points="200,150 204,162 218,162 207,170 211,183 200,175 189,183 193,170 182,162 196,162"/>
+    <polygon points="1200,200 1204,212 1218,212 1207,220 1211,233 1200,225 1189,233 1193,220 1182,212 1196,212"/>
+    <polygon points="1050,100 1053,108 1062,108 1055,113 1058,122 1050,117 1042,122 1045,113 1038,108 1047,108"/>
+    <polygon points="350,500 353,508 362,508 355,513 358,522 350,517 342,522 345,513 338,508 347,508"/>
+  </g>
+</svg>
