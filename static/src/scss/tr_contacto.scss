@@ -1,0 +1,323 @@
+// ============================================================
+// Web Trofeos — Contacto / Cotización page
+// Dark heraldic form (left) + cream info card (right).
+// ============================================================
+
+.tr-body {
+
+    // Page hero (shared across inner pages)
+    .tr-page-hero {
+        background:
+            radial-gradient(ellipse at 50% 0%, rgba(212, 164, 55, 0.20) 0%, rgba(10, 10, 10, 0) 60%),
+            var(--tr-onyx);
+        color: var(--tr-white);
+        padding: 64px 32px 72px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .tr-page-hero-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+
+        .tr-eyebrow,
+        .tr-eyebrow-gold {
+            color: var(--tr-gold-300);
+            margin-bottom: 14px;
+        }
+    }
+
+    .tr-page-title {
+        font-family: var(--tr-font-display);
+        font-size: clamp(48px, 7vw, 96px);
+        line-height: 0.93;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+        margin: 0 0 16px;
+        color: var(--tr-white);
+    }
+
+    .tr-page-subtitle {
+        font-family: var(--tr-font-body);
+        font-size: 18px;
+        line-height: 1.55;
+        max-width: 620px;
+        color: var(--tr-platinum);
+        margin: 0;
+    }
+
+    // Contacto body
+    .tr-contacto-body {
+        padding: 80px 32px;
+        max-width: var(--tr-container);
+        margin: 0 auto;
+    }
+
+    .tr-contacto-grid {
+        display: grid;
+        grid-template-columns: 1.15fr 1fr;
+        gap: 48px;
+        align-items: start;
+
+        @media (max-width: 992px) {
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+    }
+
+    .tr-form-title,
+    .tr-info-title {
+        font-family: var(--tr-font-heading);
+        font-weight: 800;
+        font-size: 28px;
+        letter-spacing: -0.005em;
+        text-transform: uppercase;
+        margin: 0 0 24px;
+        color: var(--tr-white);
+    }
+
+    // Dark form panel (left)
+    .tr-contacto-form-wrap {
+        background: var(--tr-onyx);
+        color: var(--tr-white);
+        border: 1px solid rgba(212, 164, 55, 0.18);
+        border-radius: 12px;
+        padding: 36px;
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--tr-grad-gold);
+        }
+
+        @media (max-width: 600px) {
+            padding: 24px;
+        }
+    }
+
+    .tr-form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .tr-form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+
+        @media (max-width: 600px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .tr-form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        label {
+            font-family: var(--tr-font-heading);
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--tr-platinum);
+        }
+    }
+
+    .tr-form .tr-input,
+    .tr-form .tr-select,
+    .tr-form .tr-textarea {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(212, 164, 55, 0.25);
+        color: var(--tr-white);
+        padding: 12px 14px;
+        border-radius: 6px;
+        font-family: var(--tr-font-body);
+        font-size: 14px;
+        font-weight: 400;
+        letter-spacing: 0;
+        text-transform: none;
+        outline: none;
+        transition: border-color 200ms;
+
+        &:focus {
+            border-color: var(--tr-gold-400);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        &::placeholder {
+            color: rgba(201, 201, 201, 0.5);
+        }
+    }
+
+    .tr-form .tr-textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    .tr-form .tr-select {
+        appearance: none;
+        background-image:
+            linear-gradient(45deg, transparent 50%, var(--tr-gold-300) 50%),
+            linear-gradient(135deg, var(--tr-gold-300) 50%, transparent 50%);
+        background-position:
+            calc(100% - 18px) 50%,
+            calc(100% - 13px) 50%;
+        background-size: 5px 5px, 5px 5px;
+        background-repeat: no-repeat;
+        padding-right: 36px;
+
+        // The dropdown popup renders with the browser's native palette.
+        // Force a readable dark-on-light treatment for the options.
+        option {
+            background-color: var(--tr-white);
+            color: var(--tr-black);
+            font-family: var(--tr-font-body);
+            padding: 8px 12px;
+        }
+
+        option:checked,
+        option:hover {
+            background-color: var(--tr-bone);
+            color: var(--tr-black);
+        }
+
+        option[value=""] {
+            color: #6a6a6a;
+        }
+    }
+
+    .tr-btn-full {
+        width: 100%;
+        justify-content: center;
+        margin-top: 6px;
+    }
+
+    // Info card (right)
+    .tr-contacto-info {
+        background: var(--tr-white);
+        border: 1px solid rgba(10, 10, 10, 0.08);
+        border-radius: 12px;
+        padding: 36px;
+
+        .tr-info-title {
+            color: var(--tr-black);
+        }
+
+        @media (max-width: 600px) {
+            padding: 24px;
+        }
+    }
+
+    .tr-info-items {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-bottom: 24px;
+    }
+
+    .tr-info-item {
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+        padding: 16px 18px;
+        background: var(--tr-bone);
+        border: 1px solid rgba(10, 10, 10, 0.06);
+        border-radius: 8px;
+
+        > .material-symbols-outlined {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: var(--tr-onyx);
+            color: var(--tr-gold-300);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex: none;
+        }
+
+        strong {
+            display: block;
+            font-family: var(--tr-font-heading);
+            font-weight: 700;
+            font-size: 12px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            margin: 0 0 4px;
+            color: var(--tr-gold-700);
+        }
+
+        p {
+            font-family: var(--tr-font-body);
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 0;
+            color: var(--tr-black);
+        }
+
+        a {
+            color: var(--tr-black);
+            text-decoration: none;
+
+            &:hover { color: var(--tr-gold-600); }
+        }
+    }
+
+    .tr-info-hours {
+        padding: 18px 0;
+        border-top: 1px solid rgba(10, 10, 10, 0.08);
+        margin-bottom: 18px;
+
+        h4 {
+            font-family: var(--tr-font-heading);
+            font-weight: 700;
+            font-size: 12px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            margin: 0 0 8px;
+            color: var(--tr-gold-700);
+        }
+
+        p {
+            font-family: var(--tr-font-body);
+            font-size: 14px;
+            margin: 0 0 4px;
+            color: var(--tr-black);
+        }
+    }
+
+    .tr-btn-whatsapp {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 22px;
+        background: #25d366;
+        color: var(--tr-white);
+        font-family: var(--tr-font-heading);
+        font-weight: 700;
+        font-size: 14px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: all 200ms;
+
+        &:hover {
+            background: #1ebe57;
+            color: var(--tr-white);
+            transform: translateY(-1px);
+            text-decoration: none;
+        }
+    }
+}

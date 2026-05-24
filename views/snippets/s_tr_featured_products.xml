@@ -2,7 +2,8 @@
 <odoo>
 
     <template id="s_tr_featured_products" name="Trofeos Productos Destacados">
-        <t t-set="tr_featured" t-value="request.env['product.template'].sudo().search([('is_published','=',True)], limit=8, order='create_date desc')"/>
+        <t t-set="tr_featured" t-value="request.env['product.template'].sudo().search([('is_published','=',True),('website_ribbon_id.html','ilike','¡Nuevo!')], limit=12, order='create_date desc')"/>
+        <t t-set="tr_per_page" t-value="4"/>
         <section class="s_tr_featured tr-section" data-snippet="s_tr_featured_products">
             <div class="tr-section-head">
                 <span class="tr-eyebrow">Colección Destacada</span>
@@ -11,29 +12,69 @@
                     <span class="material-symbols-outlined">arrow_forward</span>
                 </a>
             </div>
-            <div class="tr-grid">
-                <t t-foreach="tr_featured" t-as="product">
-                    <div class="tr-card">
-                        <a t-att-href="product.website_url" class="tr-card-link">
-                            <div class="tr-card-img">
-                                <img t-if="product.image_1920"
-                                     t-attf-src="/web/image/product.template/#{product.id}/image_1920"
-                                     t-att-alt="product.name" loading="lazy"/>
-                                <div t-else="" class="tr-card-img-placeholder">
-                                    <span class="material-symbols-outlined">emoji_events</span>
-                                </div>
-                                <div class="tr-card-hover">
-                                    <a href="/contacto-trofeos" class="tr-btn tr-btn-primary tr-btn-sm">Cotizar</a>
+
+            <t t-if="tr_featured">
+                <div class="tr-new-carousel carousel slide" id="trNewProductsCarousel" data-bs-ride="false">
+
+                    <!-- Slides: un grupo de 4 productos por slide -->
+                    <div class="carousel-inner">
+                        <t t-foreach="range(0, len(tr_featured), tr_per_page)" t-as="group_start">
+                            <div t-attf-class="carousel-item #{'active' if group_start_first else ''}">
+                                <div class="row gx-4">
+                                    <t t-foreach="tr_featured[group_start:group_start + tr_per_page]" t-as="product">
+                                        <div class="col-6 col-md-3">
+                                            <div class="tr-card">
+                                                <a t-att-href="product.website_url" class="tr-card-link">
+                                                    <div class="tr-card-img">
+                                                        <img t-if="product.image_1920"
+                                                             t-attf-src="/web/image/product.template/#{product.id}/image_1920"
+                                                             t-att-alt="product.name" loading="lazy"/>
+                                                        <div t-else="" class="tr-card-img-placeholder">
+                                                            <span class="material-symbols-outlined">emoji_events</span>
+                                                        </div>
+                                                        <div class="tr-card-hover">
+                                                            <a href="/contacto-trofeos" class="tr-btn tr-btn-primary tr-btn-sm">Cotizar</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tr-card-body">
+                                                        <h3 class="tr-card-title"><t t-esc="product.name"/></h3>
+                                                        <span class="tr-card-action">Solicitar cotización →</span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </t>
                                 </div>
                             </div>
-                            <div class="tr-card-body">
-                                <h3 class="tr-card-title"><t t-esc="product.name"/></h3>
-                                <span class="tr-card-action">Solicitar cotización →</span>
-                            </div>
-                        </a>
+                        </t>
                     </div>
-                </t>
-            </div>
+
+                    <!-- Flechas prev / next -->
+                    <button class="carousel-control-prev tr-npc-prev" type="button"
+                            data-bs-target="#trNewProductsCarousel" data-bs-slide="prev">
+                        <span class="material-symbols-outlined tr-npc-icon">chevron_left</span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next tr-npc-next" type="button"
+                            data-bs-target="#trNewProductsCarousel" data-bs-slide="next">
+                        <span class="material-symbols-outlined tr-npc-icon">chevron_right</span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+
+                    <!-- Puntos indicadores: clase propia (sin carousel-indicators para evitar gestión Bootstrap) -->
+                    <div class="tr-npc-dots">
+                        <t t-foreach="range(0, len(tr_featured), tr_per_page)" t-as="group_start">
+                            <button type="button"
+                                    data-bs-target="#trNewProductsCarousel"
+                                    t-att-data-bs-slide-to="group_start_index"
+                                    t-att-aria-label="'Página %d' % (group_start_index + 1)"
+                                    t-att-class="'active' if group_start_first else None"/>
+                        </t>
+                    </div>
+
+                </div>
+            </t>
+
             <t t-if="not tr_featured">
                 <div class="tr-empty-state">
                     <p>Los productos aparecerán aquí cuando sean publicados.</p>

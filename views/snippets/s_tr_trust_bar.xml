@@ -5,31 +5,31 @@
         <section class="s_tr_trust_bar tr-trust-bar" data-snippet="s_tr_trust_bar">
             <div class="tr-trust-inner">
                 <div class="tr-pillar">
-                    <span class="material-symbols-outlined tr-pillar-icon">local_shipping</span>
+                    <span class="tr-pillar-icon"><span class="material-symbols-outlined">local_shipping</span></span>
                     <div class="tr-pillar-text">
-                        <strong>Envío a todo Chile</strong>
-                        <span>Despacho rápido y seguro</span>
+                        <div class="tr-pillar-title">Despacho 24-72 h</div>
+                        <div class="tr-pillar-desc">Stock real en bodega. A todo Chile con transportistas asociados.</div>
                     </div>
                 </div>
                 <div class="tr-pillar">
-                    <span class="material-symbols-outlined tr-pillar-icon">verified</span>
+                    <span class="tr-pillar-icon"><span class="material-symbols-outlined">verified</span></span>
                     <div class="tr-pillar-text">
-                        <strong>Calidad Garantizada</strong>
-                        <span>Materiales premium certificados</span>
+                        <div class="tr-pillar-title">Importadores directos</div>
+                        <div class="tr-pillar-desc">Sin intermediarios. Precio mayorista para clubes, colegios y empresas.</div>
                     </div>
                 </div>
                 <div class="tr-pillar">
-                    <span class="material-symbols-outlined tr-pillar-icon">draw</span>
+                    <span class="tr-pillar-icon"><span class="material-symbols-outlined">auto_awesome</span></span>
                     <div class="tr-pillar-text">
-                        <strong>100% Personalizable</strong>
-                        <span>Tu diseño, tu mensaje</span>
+                        <div class="tr-pillar-title">Grabado láser</div>
+                        <div class="tr-pillar-desc">Personalizamos plaquetas, medallas y galvanos en planta propia.</div>
                     </div>
                 </div>
                 <div class="tr-pillar">
-                    <span class="material-symbols-outlined tr-pillar-icon">support_agent</span>
+                    <span class="tr-pillar-icon"><span class="material-symbols-outlined">emoji_events</span></span>
                     <div class="tr-pillar-text">
-                        <strong>Asesoría Experta</strong>
-                        <span>Te ayudamos a elegir lo mejor</span>
+                        <div class="tr-pillar-title">Cotización en 24 h</div>
+                        <div class="tr-pillar-desc">Envíanos tu requerimiento y recibes propuesta formal al día siguiente.</div>
                     </div>
                 </div>
             </div>

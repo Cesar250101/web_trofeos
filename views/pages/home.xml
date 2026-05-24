@@ -9,6 +9,7 @@
                     <t t-call="web_trofeos.s_tr_hero"/>
                     <t t-call="web_trofeos.s_tr_trust_bar"/>
                     <t t-call="web_trofeos.s_tr_featured_products"/>
+                    <t t-call="web_trofeos.s_tr_categories"/>
                     <t t-call="web_trofeos.s_tr_services"/>
                     <t t-call="web_trofeos.s_tr_clients"/>
                     <t t-call="web_trofeos.s_tr_promo_banner"/>

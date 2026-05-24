@@ -2,7 +2,7 @@
 <odoo>
 
     <template id="s_tr_bestsellers" name="Trofeos Más Vendidos">
-        <t t-set="tr_bestsellers" t-value="request.env['product.template'].sudo().search([('is_published','=',True)], limit=4, order='website_published_datetime desc')"/>
+        <t t-set="tr_bestsellers" t-value="request.env['product.template'].sudo().search([('is_published','=',True)], limit=4, order='website_sequence asc')"/>
         <section class="s_tr_bestsellers tr-section tr-section-soft" data-snippet="s_tr_bestsellers">
             <div class="tr-section-head">
                 <span class="tr-eyebrow">Los favoritos</span>

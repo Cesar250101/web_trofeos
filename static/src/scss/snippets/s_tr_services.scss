@@ -1,91 +1,99 @@
 // ============================================================
-// s_tr_services — Services Overview Grid
+// Web Trofeos — Services Grid (s_tr_services)
+// Light bone surface · onyx icon tiles · gold star bullets.
 // ============================================================
 
-.tr-body .s_tr_services.tr-section {
+.tr-body .s_tr_services {
+    background: var(--tr-bone);
+    padding: 80px 32px;
+
+    .tr-section-head {
+        max-width: var(--tr-container);
+        margin: 0 auto 32px;
+    }
 
     .tr-services-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: var(--tr-space-6);
         max-width: var(--tr-container);
         margin: 0 auto;
-        padding: 0 var(--tr-gutter);
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+
+        @media (max-width: 1100px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (max-width: 600px) {
+            grid-template-columns: 1fr;
+        }
     }
 
     .tr-service-card {
-        padding: var(--tr-space-8) var(--tr-space-6);
-        background: var(--tr-surface);
-        border: 1px solid var(--tr-line);
-        transition: border-color var(--tr-duration) var(--tr-ease),
-                    box-shadow var(--tr-duration) var(--tr-ease),
-                    transform var(--tr-duration) var(--tr-ease);
+        background: var(--tr-white);
+        border: 1px solid rgba(10, 10, 10, 0.08);
+        border-radius: 8px;
+        padding: 28px;
+        transition: all 200ms var(--tr-ease);
+        position: relative;
+        overflow: hidden;
         display: flex;
         flex-direction: column;
+        gap: 12px;
 
         &:hover {
-            border-color: var(--tr-accent);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            transform: translateY(-4px);
+            transform: translateY(-2px);
+            border-color: var(--tr-gold-400);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
         }
     }
 
     .tr-service-icon {
         width: 56px;
         height: 56px;
-        background: var(--tr-surface-soft);
-        display: flex;
+        border-radius: 8px;
+        background: var(--tr-onyx);
+        color: var(--tr-gold-300);
+        display: inline-flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: var(--tr-space-6);
-        transition: background var(--tr-duration) var(--tr-ease);
+        margin-bottom: 6px;
 
-        .material-symbols-outlined {
-            font-size: 28px;
-            color: var(--tr-accent);
-        }
-    }
-
-    .tr-service-card:hover .tr-service-icon {
-        background: var(--tr-accent);
-
-        .material-symbols-outlined { color: var(--tr-accent-fg); }
+        .material-symbols-outlined { font-size: 28px; }
     }
 
     .tr-service-title {
         font-family: var(--tr-font-heading);
-        font-size: var(--tr-fs-md);
-        font-weight: 800;
+        font-weight: 700;
+        font-size: 22px;
+        letter-spacing: -0.005em;
         text-transform: uppercase;
-        letter-spacing: 0.04em;
-        color: var(--tr-ink);
-        margin: 0 0 var(--tr-space-4);
+        margin: 0 0 6px;
+        color: var(--tr-black);
     }
 
     .tr-service-desc {
-        font-size: var(--tr-fs-sm);
-        color: var(--tr-ink-3);
-        line-height: 1.6;
-        flex: 1;
-        margin-bottom: var(--tr-space-6);
+        font-family: var(--tr-font-body);
+        font-size: 14px;
+        line-height: 1.55;
+        color: #4a4a4a;
+        margin: 0 0 8px;
     }
 
     .tr-service-link {
-        font-size: var(--tr-fs-xs);
+        margin-top: auto;
+        font-family: var(--tr-font-heading);
         font-weight: 700;
-        letter-spacing: 0.08em;
+        font-size: 12px;
+        letter-spacing: 0.16em;
         text-transform: uppercase;
-        color: var(--tr-accent);
+        color: var(--tr-gold-700);
         text-decoration: none;
+        transition: color 200ms;
 
-        &:hover { color: var(--tr-gold-dark); }
+        &:hover { color: var(--tr-gold-500); text-decoration: none; }
     }
 
-    @media (max-width: 1024px) {
-        .tr-services-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    @media (max-width: 600px) {
-        .tr-services-grid { grid-template-columns: 1fr; }
+    @media (max-width: 992px) {
+        padding: 60px 24px;
     }
 }

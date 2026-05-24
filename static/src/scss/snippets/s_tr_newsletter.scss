@@ -1,74 +1,96 @@
 // ============================================================
-// s_tr_newsletter — Newsletter Section
+// Web Trofeos — Newsletter (s_tr_newsletter)
+// Dark onyx with gold stage-light radial. Two-column.
 // ============================================================
 
-.tr-body .s_tr_newsletter.tr-newsletter {
-    background: var(--tr-surface-navy, #1a2332);
-    padding: var(--tr-space-16) 0;
+.tr-body .s_tr_newsletter,
+.tr-body .tr-newsletter {
+    background:
+        radial-gradient(ellipse at 80% 50%, rgba(212, 164, 55, 0.20) 0%, rgba(10, 10, 10, 0) 60%),
+        var(--tr-onyx);
+    color: var(--tr-white);
+    padding: 56px 32px;
+    border-top: 1px solid rgba(212, 164, 55, 0.18);
 
     .tr-newsletter-inner {
-        max-width: 860px;
+        max-width: 1280px;
         margin: 0 auto;
-        padding: 0 var(--tr-gutter);
-        display: flex;
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        gap: 56px;
         align-items: center;
-        gap: var(--tr-space-16);
+
+        @media (max-width: 992px) {
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
     }
 
     .tr-newsletter-copy {
-        flex: 1;
-
-        p {
-            color: rgba(255, 255, 255, 0.65);
-            font-size: var(--tr-fs-base);
-            margin: var(--tr-space-3) 0 0;
+        .tr-eyebrow {
+            color: var(--tr-gold-300);
+            margin-bottom: 10px;
         }
     }
 
     .tr-newsletter-title {
         font-family: var(--tr-font-heading);
-        font-size: var(--tr-fs-2xl);
         font-weight: 800;
+        font-size: clamp(24px, 2.8vw, 36px);
+        line-height: 1;
+        letter-spacing: -0.01em;
         text-transform: uppercase;
+        margin: 0 0 8px;
         color: var(--tr-white);
-        margin: var(--tr-space-2) 0 0;
-        line-height: 1.1;
+    }
+
+    .tr-newsletter-copy p {
+        font-family: var(--tr-font-body);
+        font-size: 14px;
+        color: var(--tr-platinum);
+        margin: 0;
+        line-height: 1.55;
     }
 
     .tr-newsletter-form {
-        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
 
     .tr-newsletter-input-wrap {
         display: flex;
-        gap: 0;
+        gap: 10px;
+        background: var(--tr-graphite);
+        padding: 8px;
+        border-radius: 8px;
+        border: 1px solid rgba(212, 164, 55, 0.25);
+
+        @media (max-width: 600px) {
+            flex-direction: column;
+        }
     }
 
     .tr-newsletter-input {
         flex: 1;
-        border-right: none;
-        background: rgba(255, 255, 255, 0.08);
-        border-color: rgba(255, 255, 255, 0.15);
-        color: var(--tr-white);
+        background: transparent !important;
+        border: 0 !important;
+        color: var(--tr-white) !important;
+        padding: 12px 16px !important;
+        outline: none;
+        font-family: var(--tr-font-body);
+        font-size: 15px;
 
-        &::placeholder { color: rgba(255, 255, 255, 0.4); }
-        &:focus { border-color: var(--tr-accent); }
+        &::placeholder { color: rgba(201, 201, 201, 0.5); }
+
+        &:focus { border: 0 !important; }
     }
 
     .tr-newsletter-fine {
-        margin-top: var(--tr-space-3);
-        font-size: var(--tr-fs-xs);
-        color: rgba(255, 255, 255, 0.35);
-    }
-
-    @media (max-width: 768px) {
-        .tr-newsletter-inner {
-            flex-direction: column;
-            gap: var(--tr-space-8);
-        }
-
-        .tr-newsletter-input-wrap {
-            flex-direction: column;
-        }
+        font-family: var(--tr-font-body);
+        font-size: 11px;
+        color: var(--tr-platinum);
+        margin: 0;
+        opacity: 0.7;
     }
 }

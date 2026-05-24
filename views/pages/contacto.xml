@@ -75,7 +75,13 @@
                                         </div>
                                         <div class="tr-form-group">
                                             <label for="tr_fecha">Fecha de entrega requerida</label>
-                                            <input type="date" id="tr_fecha" name="fecha_entrega" class="tr-input"/>
+                                            <input type="text" id="tr_fecha" name="fecha_entrega" class="tr-input tr-date-input"
+                                                   placeholder="dd/mm/aaaa"
+                                                   pattern="\d{2}/\d{2}/\d{4}"
+                                                   inputmode="numeric"
+                                                   maxlength="10"
+                                                   autocomplete="off"
+                                                   title="Formato: dd/mm/aaaa"/>
                                         </div>
                                     </div>
 

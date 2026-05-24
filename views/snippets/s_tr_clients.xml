@@ -2,29 +2,24 @@
 <odoo>
 
     <template id="s_tr_clients" name="Trofeos Clientes Logos">
-        <section class="s_tr_clients tr-section" data-snippet="s_tr_clients">
-            <div class="tr-section-head">
-                <span class="tr-eyebrow">Confían en nosotros</span>
-                <h2 class="tr-section-title">Nuestros <span class="tr-gold-word">Clientes</span></h2>
-            </div>
-            <div class="tr-clients-strip">
-                <div class="tr-client-logo">
-                    <img src="/web_trofeos/static/src/img/client-placeholder.svg" alt="Cliente 1" class="o_editable_media"/>
+        <section class="s_tr_clients" data-snippet="s_tr_clients">
+            <div class="tr-clients-inner">
+                <div class="tr-clients-head">
+                    <span class="tr-clients-line"></span>
+                    <span class="tr-clients-title">Confían en nosotros</span>
+                    <span class="tr-clients-line"></span>
                 </div>
-                <div class="tr-client-logo">
-                    <img src="/web_trofeos/static/src/img/client-placeholder.svg" alt="Cliente 2" class="o_editable_media"/>
-                </div>
-                <div class="tr-client-logo">
-                    <img src="/web_trofeos/static/src/img/client-placeholder.svg" alt="Cliente 3" class="o_editable_media"/>
-                </div>
-                <div class="tr-client-logo">
-                    <img src="/web_trofeos/static/src/img/client-placeholder.svg" alt="Cliente 4" class="o_editable_media"/>
-                </div>
-                <div class="tr-client-logo">
-                    <img src="/web_trofeos/static/src/img/client-placeholder.svg" alt="Cliente 5" class="o_editable_media"/>
-                </div>
-                <div class="tr-client-logo">
-                    <img src="/web_trofeos/static/src/img/client-placeholder.svg" alt="Cliente 6" class="o_editable_media"/>
+                <div class="tr-clients-grid">
+                    <div class="tr-clients-logo" title="Liga Amateur Ñuñoa">L · AMATEUR ÑUÑOA</div>
+                    <div class="tr-clients-logo" title="Colegio San Patricio">COLEGIO SAN PATRICIO</div>
+                    <div class="tr-clients-logo" title="Club Deportivo UC">CD · UC</div>
+                    <div class="tr-clients-logo" title="Falabella RRHH">FALABELLA</div>
+                    <div class="tr-clients-logo" title="Municipalidad de Macul">I · MACUL</div>
+                    <div class="tr-clients-logo" title="ANFP">ANFP</div>
+                    <div class="tr-clients-logo" title="Sodimac">SODIMAC</div>
+                    <div class="tr-clients-logo" title="Universidad de Chile">U DE CHILE</div>
+                    <div class="tr-clients-logo" title="Codelco">CODELCO</div>
+                    <div class="tr-clients-logo" title="Banco de Chile">BCO · CHILE</div>
                 </div>
             </div>
         </section>

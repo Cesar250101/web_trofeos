@@ -22,6 +22,11 @@
                         <keywords>productos destacados featured nuevos trofeos</keywords>
                     </t>
 
+                    <t t-snippet="web_trofeos.s_tr_categories"
+                       t-thumbnail="/web_trofeos/static/src/img/snippets/thumb_featured.svg">
+                        <keywords>categorias publicas product category coleccion familias</keywords>
+                    </t>
+
                     <t t-snippet="web_trofeos.s_tr_services"
                        t-thumbnail="/web_trofeos/static/src/img/snippets/thumb_services.svg">
                         <keywords>servicios grabado personalizacion trofeos medallas</keywords>

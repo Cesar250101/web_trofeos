@@ -1,45 +1,105 @@
 // ============================================================
 // Web Trofeos — Website Sale overrides
-// Style the native Odoo shop/product pages within .tr-body
+// Style native Odoo shop / product pages with heraldic look.
 // ============================================================
 
 .tr-body {
 
     // --------------------------------------------------------
-    // Shop page
+    // Shop page — product grid
     // --------------------------------------------------------
+    #wrapwrap.tr-site,
+    #wrap {
+        background: var(--tr-bone);
+    }
+
     #products_grid {
         .oe_product {
-            border: none;
-            border-radius: 0;
-            transition: box-shadow var(--tr-duration) var(--tr-ease);
+            background: var(--tr-white);
+            border: 1px solid rgba(10, 10, 10, 0.08);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 200ms var(--tr-ease);
 
             &:hover {
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+                transform: translateY(-2px);
+                box-shadow: 0 12px 28px rgba(0, 0, 0, 0.10);
+                border-color: rgba(212, 164, 55, 0.4);
             }
         }
 
         .oe_product_image_link {
-            aspect-ratio: 1;
+            display: block;
+            aspect-ratio: 1 / 0.98;
             overflow: hidden;
+            background:
+                radial-gradient(ellipse at 50% 30%, rgba(212, 164, 55, 0.10) 0%, rgba(10, 10, 10, 0) 50%),
+                linear-gradient(180deg, #1f1f1f, #0a0a0a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
             img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                transition: transform var(--tr-duration-slow) var(--tr-ease);
+                max-width: 80%;
+                max-height: 80%;
+                object-fit: contain;
+                transition: transform 360ms var(--tr-ease);
+                filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.4));
             }
         }
 
         .oe_product:hover .oe_product_image_link img {
-            transform: scale(1.04);
+            transform: scale(1.05);
+        }
+
+        .o_wsale_product_information_text {
+            padding: 14px 16px 18px;
+
+            h6, h5, .o_wsale_product_information_name {
+                font-family: var(--tr-font-heading);
+                font-weight: 700;
+                font-size: 17px;
+                line-height: 1.1;
+                text-transform: uppercase;
+                letter-spacing: -0.005em;
+                color: var(--tr-black);
+                margin: 0 0 6px;
+            }
         }
 
         .product_price {
+            font-family: var(--tr-font-display);
+            font-size: 24px;
+            line-height: 1;
+            color: var(--tr-black);
+
             .oe_currency_value {
-                font-family: var(--tr-font-heading);
-                font-weight: 700;
+                font-family: var(--tr-font-display);
+                font-weight: 400;
             }
+        }
+    }
+
+    // --------------------------------------------------------
+    // Shop / catalog header
+    // --------------------------------------------------------
+    .tr-cat-hero {
+        background:
+            radial-gradient(ellipse at 50% 0%, rgba(212, 164, 55, 0.18) 0%, rgba(10, 10, 10, 0) 60%),
+            var(--tr-onyx);
+        color: var(--tr-white);
+        padding: 48px 32px;
+        text-align: center;
+
+        .tr-cat-title {
+            font-family: var(--tr-font-display);
+            font-size: clamp(48px, 6vw, 80px);
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+            line-height: 0.95;
+            color: var(--tr-white);
+            margin: 8px 0 0;
         }
     }
 
@@ -47,66 +107,80 @@
     // Product detail page
     // --------------------------------------------------------
     #product_detail {
-        max-width: var(--tr-container);
+        max-width: 1280px;
         margin: 0 auto;
-        padding: var(--tr-space-12) var(--tr-gutter);
+        padding: 48px 32px;
 
         .product_detail_main {
-            gap: var(--tr-space-12);
+            gap: 56px;
         }
 
         #product_summary {
-            h1 {
+            h1, .product_name {
                 font-family: var(--tr-font-heading);
-                font-size: var(--tr-fs-3xl);
+                font-size: clamp(32px, 4vw, 48px);
                 font-weight: 800;
+                line-height: 1;
+                letter-spacing: -0.01em;
                 text-transform: uppercase;
-                color: var(--tr-ink);
+                color: var(--tr-black);
             }
         }
 
-        // Hide add to cart, replace with cotizar CTA
+        .product_price,
+        .oe_price {
+            font-family: var(--tr-font-display);
+            font-size: clamp(40px, 5vw, 64px);
+            line-height: 1;
+            background: var(--tr-grad-gold);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
         #add_to_cart {
-            background: var(--tr-ink);
-            color: var(--tr-white);
-            border: 2px solid var(--tr-ink);
+            background: var(--tr-grad-gold);
+            color: var(--tr-gold-800);
+            border: 0;
             font-family: var(--tr-font-heading);
-            font-size: var(--tr-fs-sm);
             font-weight: 700;
-            letter-spacing: 0.1em;
+            font-size: 14px;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            border-radius: 0;
-            padding: 14px 32px;
-            transition: background var(--tr-duration) var(--tr-ease);
+            border-radius: 6px;
+            padding: 14px 28px;
+            box-shadow: var(--tr-sh-inset-gold), 0 6px 16px rgba(212, 164, 55, 0.25);
+            transition: transform 200ms;
 
             &:hover {
-                background: var(--tr-accent);
-                border-color: var(--tr-accent);
-                color: var(--tr-accent-fg);
+                transform: translateY(-1px);
+                color: var(--tr-gold-800);
+                background: var(--tr-grad-gold);
             }
         }
 
-        // Cotizar button appended by JS
         .tr-cotizar-btn {
             display: inline-flex;
             align-items: center;
-            gap: var(--tr-space-2);
-            padding: 14px 32px;
-            background: var(--tr-accent);
-            color: var(--tr-accent-fg);
-            border: 2px solid var(--tr-accent);
+            gap: 8px;
+            padding: 14px 28px;
+            background: var(--tr-black);
+            color: var(--tr-white);
+            border: 1.5px solid var(--tr-black);
             font-family: var(--tr-font-heading);
-            font-size: var(--tr-fs-sm);
             font-weight: 700;
-            letter-spacing: 0.1em;
+            font-size: 14px;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
+            border-radius: 6px;
             text-decoration: none;
             cursor: pointer;
-            transition: background var(--tr-duration) var(--tr-ease);
+            transition: all 200ms;
 
             &:hover {
-                background: var(--tr-gold-dark);
-                border-color: var(--tr-gold-dark);
+                background: var(--tr-graphite);
+                color: var(--tr-white);
+                text-decoration: none;
             }
         }
     }
@@ -117,57 +191,146 @@
     .tr-breadcrumb {
         display: flex;
         align-items: center;
-        gap: var(--tr-space-2);
-        padding: var(--tr-space-4) var(--tr-gutter);
+        gap: 8px;
+        padding: 16px 32px;
         max-width: var(--tr-container);
         margin: 0 auto;
-        font-size: var(--tr-fs-xs);
-        color: var(--tr-ink-3);
+        font-family: var(--tr-font-heading);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--tr-fg-subtle);
 
         a {
-            color: var(--tr-ink-3);
+            color: var(--tr-fg-subtle);
             text-decoration: none;
+            transition: color 200ms;
 
-            &:hover { color: var(--tr-accent); }
+            &:hover { color: var(--tr-gold-600); }
         }
 
         .tr-bc-sep {
-            color: var(--tr-ink-5);
+            color: var(--tr-gold-400);
             font-size: 14px;
         }
 
         .tr-bc-current {
-            color: var(--tr-ink);
-            font-weight: 500;
+            color: var(--tr-black);
+            font-weight: 700;
         }
     }
 
     // --------------------------------------------------------
-    // Cart page overrides
+    // Cart / order page
     // --------------------------------------------------------
     #cart_products {
         .td-img img {
-            border-radius: 0;
+            border-radius: 6px;
+            background:
+                radial-gradient(ellipse at 50% 30%, rgba(212, 164, 55, 0.10) 0%, rgba(10, 10, 10, 0) 50%),
+                linear-gradient(180deg, #1f1f1f, #0a0a0a);
         }
     }
 
     // --------------------------------------------------------
-    // Category page hero
+    // Category page filter pills
     // --------------------------------------------------------
-    .tr-cat-hero {
-        background: var(--tr-surface-dark);
-        color: var(--tr-white);
-        padding: var(--tr-space-16) var(--tr-gutter) var(--tr-space-12);
-        text-align: center;
+    .tr-cat-filters {
+        background: var(--tr-white);
+        border-bottom: 1px solid rgba(10, 10, 10, 0.08);
+        padding: 20px 32px;
+        max-width: none;
+        margin: 0;
+    }
 
-        .tr-cat-title {
-            font-family: var(--tr-font-heading);
-            font-size: var(--tr-fs-4xl);
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: -0.01em;
+    .tr-cat-pills {
+        max-width: var(--tr-container);
+        margin: 0 auto;
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .tr-pill {
+        font-family: var(--tr-font-heading);
+        font-weight: 600;
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 8px 16px;
+        border-radius: 999px;
+        border: 1px solid rgba(10, 10, 10, 0.15);
+        background: var(--tr-white);
+        color: #3a3a3a;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 200ms;
+
+        &:hover {
+            border-color: var(--tr-gold-400);
+            color: var(--tr-gold-700);
+            text-decoration: none;
+        }
+
+        &.is-active {
+            background: var(--tr-onyx);
             color: var(--tr-white);
-            margin: var(--tr-space-3) 0 0;
+            border-color: var(--tr-onyx);
+
+            &:hover { color: var(--tr-gold-300); }
+        }
+    }
+
+    .tr-cat-products {
+        padding: 32px;
+        max-width: var(--tr-container);
+        margin: 0 auto;
+
+        .tr-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            padding: 0;
+
+            @media (max-width: 1100px) {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            @media (max-width: 768px) {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            @media (max-width: 480px) {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tr-card-brand {
+            font-family: var(--tr-font-mono);
+            font-size: 10px;
+            color: #8a8a8a;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .tr-card-cta {
+            margin-top: 8px;
+        }
+    }
+
+    // Filter sidebar
+    .o_wsale_products_searchbar_form,
+    #wsale_products_attributes_collapse {
+        font-family: var(--tr-font-body);
+
+        .h6, h6 {
+            font-family: var(--tr-font-heading);
+            font-weight: 700;
+            font-size: 12px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--tr-gold-700);
         }
     }
 }

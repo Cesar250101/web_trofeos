@@ -1,22 +1,33 @@
 // ============================================================
 // Web Trofeos — Section Common Styles
-// Shared patterns across all sections / snippets
+// Shared patterns: section, buttons, badges, grid, cards, inputs.
+// Heraldic luxury · gold gradients · deep black.
 // ============================================================
 
 .tr-body {
+    background: var(--tr-bone);
+    color: var(--tr-black);
+    font-family: var(--tr-font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
 
     // --------------------------------------------------------
-    // Generic section wrapper
+    // Section wrapper
     // --------------------------------------------------------
     .tr-section {
-        padding: var(--tr-space-20) 0;
+        padding: 80px 32px;
+        max-width: var(--tr-container);
+        margin: 0 auto;
 
         &-soft {
-            background: var(--tr-surface-soft);
+            background: var(--tr-bone);
         }
 
         &-dark {
-            background: var(--tr-surface-dark);
+            background: var(--tr-onyx);
             color: var(--tr-white);
         }
     }
@@ -25,48 +36,53 @@
     // Section header (title block)
     // --------------------------------------------------------
     .tr-section-head {
-        text-align: center;
-        max-width: 640px;
-        margin: 0 auto var(--tr-space-12);
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 32px;
+        gap: 32px;
+        max-width: var(--tr-container);
+        margin-left: auto;
+        margin-right: auto;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            align-items: flex-start;
+        }
 
         &-light {
             .tr-section-title,
-            p {
-                color: var(--tr-white);
-            }
+            p { color: var(--tr-white); }
         }
     }
 
     .tr-section-title {
         font-family: var(--tr-font-heading);
-        font-size: var(--tr-fs-3xl);
+        font-size: clamp(32px, 4vw, 52px);
         font-weight: 800;
-        text-transform: uppercase;
+        line-height: 0.95;
         letter-spacing: -0.01em;
-        margin: var(--tr-space-2) 0 var(--tr-space-4);
-        color: var(--tr-ink);
-        line-height: 1.1;
+        text-transform: uppercase;
+        margin: 0;
+        color: var(--tr-black);
     }
 
     .tr-section-link {
         display: inline-flex;
         align-items: center;
-        gap: 4px;
-        font-size: var(--tr-fs-sm);
-        font-weight: 600;
-        letter-spacing: 0.06em;
+        gap: 6px;
+        font-family: var(--tr-font-heading);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
         text-transform: uppercase;
-        color: var(--tr-accent);
+        color: var(--tr-gold-700);
         text-decoration: none;
-        margin-top: var(--tr-space-2);
-        transition: gap var(--tr-duration) var(--tr-ease);
+        transition: color var(--tr-duration) var(--tr-ease);
 
         .material-symbols-outlined { font-size: 16px; }
 
-        &:hover {
-            gap: 8px;
-            color: var(--tr-gold-dark);
-        }
+        &:hover { color: var(--tr-gold-500); }
     }
 
     // --------------------------------------------------------
@@ -75,35 +91,153 @@
     .tr-eyebrow {
         display: inline-block;
         font-family: var(--tr-font-body);
-        font-size: var(--tr-fs-xs);
-        font-weight: 600;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--tr-gold-600);
+        margin-bottom: 12px;
+
+        &-gold { color: var(--tr-gold-300); }
+        &-light { color: rgba(255, 255, 255, 0.7); }
+    }
+
+    // --------------------------------------------------------
+    // Gold word / accent text effect
+    // --------------------------------------------------------
+    .tr-gold-word,
+    .tr-gold {
+        background: var(--tr-grad-gold);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        -webkit-text-stroke: 0.4px rgba(61, 44, 4, 0.4);
+        display: inline-block;
+    }
+
+    // --------------------------------------------------------
+    // Buttons — heraldic gold + dark + ghost
+    // --------------------------------------------------------
+    .tr-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 22px;
+        font-family: var(--tr-font-heading);
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        text-decoration: none;
+        border: 0;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 200ms var(--tr-ease);
+
+        .material-symbols-outlined { font-size: 18px; }
+
+        &-sm { padding: 8px 14px; font-size: 11px; letter-spacing: 0.14em; }
+        &-lg { padding: 16px 28px; font-size: 15px; }
+
+        &-primary {
+            background: var(--tr-grad-gold);
+            color: var(--tr-gold-800);
+            box-shadow: var(--tr-sh-inset-gold), 0 6px 16px rgba(212, 164, 55, 0.25);
+
+            &:hover {
+                transform: translateY(-1px);
+                box-shadow: var(--tr-sh-inset-gold), 0 10px 22px rgba(212, 164, 55, 0.35);
+                color: var(--tr-gold-800);
+            }
+        }
+
+        &-secondary {
+            background: transparent;
+            color: var(--tr-gold-300);
+            border: 1.5px solid var(--tr-gold-400);
+
+            &:hover {
+                background: rgba(212, 164, 55, 0.08);
+                color: var(--tr-gold-200);
+            }
+        }
+
+        &-dark {
+            background: var(--tr-black);
+            color: var(--tr-white);
+
+            &:hover { background: var(--tr-graphite); color: var(--tr-white); }
+        }
+
+        &-gold { // alias used by older snippets
+            background: var(--tr-grad-gold);
+            color: var(--tr-gold-800);
+            box-shadow: var(--tr-sh-inset-gold);
+
+            &:hover { color: var(--tr-gold-800); }
+        }
+
+        &-ghost {
+            background: transparent;
+            color: var(--tr-black);
+
+            &:hover { background: rgba(10, 10, 10, 0.06); }
+        }
+
+        &-outline {
+            background: transparent;
+            color: var(--tr-black);
+            border: 1.5px solid var(--tr-black);
+
+            &:hover {
+                background: var(--tr-black);
+                color: var(--tr-white);
+            }
+        }
+
+        &[disabled] { opacity: 0.5; cursor: not-allowed; filter: saturate(0.6); }
+    }
+
+    // --------------------------------------------------------
+    // Badges
+    // --------------------------------------------------------
+    .tr-bd {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: var(--tr-font-heading);
+        font-weight: 700;
+        font-size: 11px;
         letter-spacing: 0.14em;
         text-transform: uppercase;
-        color: var(--tr-ink-3);
+        padding: 4px 10px;
+        border-radius: 4px;
 
         &-gold {
-            color: var(--tr-accent);
+            background: var(--tr-grad-gold);
+            color: var(--tr-gold-800);
+            box-shadow: var(--tr-sh-inset-gold);
+            border-radius: 999px;
+            padding: 4px 12px;
         }
 
-        &-light {
-            color: rgba(255, 255, 255, 0.7);
-        }
+        &-neutral { background: var(--tr-onyx); color: var(--tr-white); }
+        &-outline { background: transparent; color: #3a3a3a; border: 1px solid rgba(10, 10, 10, 0.2); }
+        &-victory { background: var(--tr-victory); color: var(--tr-white); }
+        &-emerald { background: var(--tr-emerald); color: var(--tr-white); }
+        &-amber   { background: var(--tr-amber); color: var(--tr-gold-800); }
+
+        &-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
     }
 
     // --------------------------------------------------------
-    // Gold accent word
-    // --------------------------------------------------------
-    .tr-gold-word {
-        color: var(--tr-accent);
-    }
-
-    // --------------------------------------------------------
-    // Product / content grid
+    // Grid system
     // --------------------------------------------------------
     .tr-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: var(--tr-space-6);
+        gap: 18px;
         max-width: var(--tr-container);
         margin: 0 auto;
         padding: 0 var(--tr-gutter);
@@ -112,14 +246,14 @@
         &-3 { grid-template-columns: repeat(3, 1fr); }
         &-2 { grid-template-columns: repeat(2, 1fr); }
 
-        @media (max-width: 1200px) {
+        @media (max-width: 1100px) {
             grid-template-columns: repeat(3, 1fr);
             &-4 { grid-template-columns: repeat(3, 1fr); }
         }
 
         @media (max-width: 768px) {
             grid-template-columns: repeat(2, 1fr);
-            gap: var(--tr-space-4);
+            gap: 14px;
             &-4, &-3 { grid-template-columns: repeat(2, 1fr); }
         }
 
@@ -130,11 +264,23 @@
     }
 
     // --------------------------------------------------------
-    // Product card
+    // Card — heraldic product / content card
     // --------------------------------------------------------
     .tr-card {
         position: relative;
-        background: var(--tr-surface);
+        background: var(--tr-white);
+        border: 1px solid rgba(10, 10, 10, 0.08);
+        border-radius: 8px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: all 200ms var(--tr-ease);
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.10);
+            border-color: rgba(212, 164, 55, 0.4);
+        }
 
         &-link {
             display: block;
@@ -144,9 +290,14 @@
 
         &-img {
             position: relative;
-            aspect-ratio: 1;
+            aspect-ratio: 1 / 0.98;
             overflow: hidden;
-            background: var(--tr-surface-soft);
+            background:
+                radial-gradient(ellipse at 50% 30%, rgba(212, 164, 55, 0.10) 0%, rgba(10, 10, 10, 0) 50%),
+                linear-gradient(180deg, #1f1f1f, #0a0a0a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
             img {
                 width: 100%;
@@ -161,8 +312,7 @@
                 justify-content: center;
                 width: 100%;
                 height: 100%;
-                background: var(--tr-surface-soft);
-                color: var(--tr-ink-4);
+                color: var(--tr-gold-300);
 
                 .material-symbols-outlined { font-size: 56px; }
             }
@@ -174,8 +324,8 @@
             display: flex;
             align-items: flex-end;
             justify-content: center;
-            padding-bottom: var(--tr-space-6);
-            background: rgba(13, 17, 23, 0.35);
+            padding-bottom: 24px;
+            background: rgba(10, 17, 23, 0.35);
             opacity: 0;
             transition: opacity var(--tr-duration) var(--tr-ease);
         }
@@ -185,108 +335,75 @@
 
         &-badge {
             position: absolute;
-            top: var(--tr-space-3);
-            left: var(--tr-space-3);
-            background: var(--tr-accent);
-            color: var(--tr-accent-fg);
-            font-size: 10px;
+            top: 10px;
+            left: 10px;
+            font-family: var(--tr-font-heading);
             font-weight: 700;
-            letter-spacing: 0.1em;
+            font-size: 10px;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            padding: 3px 8px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: var(--tr-grad-gold);
+            color: var(--tr-gold-800);
+            box-shadow: var(--tr-sh-inset-gold);
         }
 
         &-body {
-            padding: var(--tr-space-4) var(--tr-space-2) var(--tr-space-2);
+            padding: 14px 16px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        &-sku {
+            font-family: var(--tr-font-mono);
+            font-size: 10px;
+            color: #8a8a8a;
+            letter-spacing: 0.04em;
         }
 
         &-title {
             font-family: var(--tr-font-heading);
-            font-size: var(--tr-fs-base);
+            font-size: 18px;
             font-weight: 700;
+            line-height: 1.05;
             text-transform: uppercase;
-            letter-spacing: 0.04em;
-            margin: 0 0 var(--tr-space-1);
-            color: var(--tr-ink);
+            letter-spacing: -0.005em;
+            margin: 0;
+            color: var(--tr-black);
+        }
+
+        &-price {
+            font-family: var(--tr-font-display);
+            font-size: 26px;
+            line-height: 1;
+            color: var(--tr-black);
+
+            small {
+                font-size: 10px;
+                font-family: var(--tr-font-body);
+                font-weight: 600;
+                color: #8a8a8a;
+                letter-spacing: 0.16em;
+                margin-left: 4px;
+            }
         }
 
         &-action {
-            display: block;
-            font-size: var(--tr-fs-xs);
-            color: var(--tr-accent);
-            font-weight: 600;
-        }
-    }
-
-    // --------------------------------------------------------
-    // Buttons
-    // --------------------------------------------------------
-    .tr-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: var(--tr-space-2);
-        padding: 12px 28px;
-        font-family: var(--tr-font-heading);
-        font-size: var(--tr-fs-sm);
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        text-decoration: none;
-        border: 2px solid transparent;
-        cursor: pointer;
-        transition: background var(--tr-duration) var(--tr-ease),
-                    border-color var(--tr-duration) var(--tr-ease),
-                    color var(--tr-duration) var(--tr-ease);
-
-        .material-symbols-outlined { font-size: 18px; }
-
-        &-primary {
-            background: var(--tr-ink);
-            color: var(--tr-white);
-            border-color: var(--tr-ink);
-
-            &:hover {
-                background: var(--tr-accent);
-                border-color: var(--tr-accent);
-                color: var(--tr-accent-fg);
-            }
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--tr-gold-700);
         }
 
-        &-gold {
-            background: var(--tr-accent);
-            color: var(--tr-accent-fg);
-            border-color: var(--tr-accent);
-
-            &:hover {
-                background: var(--tr-gold-dark);
-                border-color: var(--tr-gold-dark);
-            }
-        }
-
-        &-ghost {
-            background: transparent;
-            color: var(--tr-white);
-            border-color: rgba(255, 255, 255, 0.5);
-
-            &:hover {
-                border-color: var(--tr-white);
-            }
-        }
-
-        &-outline {
-            background: transparent;
-            color: var(--tr-ink);
-            border-color: var(--tr-ink);
-
-            &:hover {
-                background: var(--tr-ink);
-                color: var(--tr-white);
-            }
-        }
-
-        &-sm {
-            padding: 8px 18px;
-            font-size: 11px;
+        &-foot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 6px;
         }
     }
 
@@ -297,21 +414,17 @@
         width: 100%;
         padding: 12px 16px;
         font-family: var(--tr-font-body);
-        font-size: var(--tr-fs-base);
-        color: var(--tr-ink);
-        background: var(--tr-surface);
-        border: 1px solid var(--tr-line);
+        font-size: 15px;
+        color: var(--tr-black);
+        background: var(--tr-white);
+        border: 1px solid rgba(10, 10, 10, 0.15);
         outline: none;
+        border-radius: 6px;
         transition: border-color var(--tr-duration) var(--tr-ease);
-        border-radius: 0;
 
-        &:focus {
-            border-color: var(--tr-accent);
-        }
+        &:focus { border-color: var(--tr-gold-400); }
 
-        &::placeholder {
-            color: var(--tr-ink-4);
-        }
+        &::placeholder { color: #8a8a8a; }
     }
 
     // --------------------------------------------------------
@@ -320,20 +433,27 @@
     .tr-empty-state {
         grid-column: 1 / -1;
         text-align: center;
-        padding: var(--tr-space-16);
-        color: var(--tr-ink-3);
+        padding: 64px;
+        color: #6a6a6a;
     }
 
     // --------------------------------------------------------
     // BG utilities
     // --------------------------------------------------------
     .tr-bg-dark {
-        background: var(--tr-surface-dark);
+        background: var(--tr-onyx);
         color: var(--tr-white);
     }
 
-    .tr-bg-navy {
-        background: var(--tr-surface-navy);
-        color: var(--tr-white);
+    .tr-bg-navy { background: var(--tr-onyx); color: var(--tr-white); }
+    .tr-bg-bone { background: var(--tr-bone); color: var(--tr-black); }
+
+    // Display headings utility
+    .tr-display {
+        font-family: var(--tr-font-display);
+        font-size: clamp(72px, 10vw, 128px);
+        line-height: 0.95;
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
     }
 }

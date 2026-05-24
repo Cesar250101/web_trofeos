@@ -1,94 +1,98 @@
 // ============================================================
-// s_tr_about_hero — Quiénes Somos Hero + Stats
+// Web Trofeos — About Hero (s_tr_about_hero)
+// Inner-page hero with gold display title + stats strip.
 // ============================================================
 
-.tr-body .s_tr_about_hero.tr-about-hero {
+.tr-body .s_tr_about_hero,
+.tr-body .tr-about-hero {
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(212, 164, 55, 0.20) 0%, rgba(10, 10, 10, 0) 60%),
+        var(--tr-onyx) !important;
+    color: var(--tr-white);
+    padding: 64px 32px 0;
     position: relative;
-    min-height: 560px;
-    background-color: var(--tr-surface-dark);
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    overflow: hidden;
 
     .tr-about-hero-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-            to bottom,
-            rgba(13, 17, 23, 0.55) 0%,
-            rgba(13, 17, 23, 0.85) 100%
-        );
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
+        background: transparent;
     }
 
     .tr-about-hero-inner {
-        max-width: 700px;
-        padding: var(--tr-space-20) var(--tr-gutter);
+        max-width: 1280px;
+        margin: 0 auto;
+        padding-bottom: 72px;
+
+        .tr-eyebrow,
+        .tr-eyebrow-gold {
+            color: var(--tr-gold-300);
+            margin-bottom: 14px;
+        }
     }
 
     .tr-about-hero-title {
-        font-family: var(--tr-font-heading);
-        font-size: var(--tr-fs-5xl);
-        font-weight: 900;
+        font-family: var(--tr-font-display);
+        font-size: clamp(48px, 7vw, 96px);
+        line-height: 0.93;
+        letter-spacing: -0.01em;
         text-transform: uppercase;
-        letter-spacing: -0.02em;
+        margin: 0 0 16px;
         color: var(--tr-white);
-        line-height: 1.0;
-        margin: var(--tr-space-4) 0 var(--tr-space-6);
+
+        .tr-gold-word {
+            display: block;
+        }
     }
 
     .tr-about-hero-sub {
-        font-size: var(--tr-fs-lg);
-        color: rgba(255, 255, 255, 0.75);
-        line-height: 1.6;
+        font-family: var(--tr-font-body);
+        font-size: 18px;
+        line-height: 1.55;
+        max-width: 620px;
+        color: var(--tr-platinum);
+        margin: 0;
     }
 
-    // ── Stats strip ────────────────────────────────────────
     .tr-about-stats {
-        position: relative;
-        z-index: 2;
+        max-width: 1280px;
+        margin: 0 auto;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        background: var(--tr-accent);
+        gap: 32px;
+        padding: 32px 0;
+        border-top: 1px solid rgba(212, 164, 55, 0.18);
+
+        @media (max-width: 992px) {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 480px) {
+            grid-template-columns: 1fr;
+        }
     }
 
     .tr-stat {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: var(--tr-space-8) var(--tr-space-4);
-        border-right: 1px solid rgba(13, 17, 23, 0.15);
-
-        &:last-child { border-right: none; }
+        gap: 4px;
     }
 
     .tr-stat-number {
-        font-family: var(--tr-font-heading);
-        font-size: var(--tr-fs-3xl);
-        font-weight: 900;
-        color: var(--tr-accent-fg);
+        font-family: var(--tr-font-display);
+        font-size: 48px;
         line-height: 1;
+        background: var(--tr-grad-gold);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
     }
 
     .tr-stat-label {
-        font-size: var(--tr-fs-xs);
+        font-family: var(--tr-font-heading);
         font-weight: 600;
-        letter-spacing: 0.08em;
+        font-size: 11px;
+        letter-spacing: 0.2em;
         text-transform: uppercase;
-        color: var(--tr-accent-fg);
-        opacity: 0.75;
-        margin-top: var(--tr-space-2);
-    }
-
-    @media (max-width: 768px) {
-        .tr-about-stats { grid-template-columns: repeat(2, 1fr); }
-        .tr-about-hero-title { font-size: var(--tr-fs-4xl); }
+        color: var(--tr-platinum);
     }
 }

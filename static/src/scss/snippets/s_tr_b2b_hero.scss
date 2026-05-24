@@ -1,66 +1,84 @@
 // ============================================================
-// s_tr_b2b_hero — B2B / Empresas Hero
+// Web Trofeos — B2B Hero (s_tr_b2b_hero)
+// Dark heraldic split: pitch copy + product photo / SVG.
 // ============================================================
 
-.tr-body .s_tr_b2b_hero.tr-b2b-hero {
-    padding: var(--tr-space-20) 0;
-
-    &.tr-bg-dark {
-        background: var(--tr-surface-dark);
-    }
+.tr-body .s_tr_b2b_hero,
+.tr-body .tr-b2b-hero {
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(212, 164, 55, 0.22) 0%, rgba(10, 10, 10, 0) 55%),
+        var(--tr-onyx) !important;
+    color: var(--tr-white);
+    padding: 80px 32px;
 
     .tr-b2b-hero-inner {
         max-width: var(--tr-container);
         margin: 0 auto;
-        padding: 0 var(--tr-gutter);
         display: grid;
-        grid-template-columns: 1.2fr 1fr;
-        gap: var(--tr-space-16);
+        grid-template-columns: 1.1fr 1fr;
+        gap: 56px;
         align-items: center;
+
+        @media (max-width: 1100px) {
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+    }
+
+    .tr-b2b-hero-copy {
+        .tr-eyebrow,
+        .tr-eyebrow-gold {
+            color: var(--tr-gold-300);
+            margin-bottom: 14px;
+        }
     }
 
     .tr-b2b-hero-title {
-        font-family: var(--tr-font-heading);
-        font-size: var(--tr-fs-5xl);
-        font-weight: 900;
+        font-family: var(--tr-font-display);
+        font-size: clamp(48px, 7vw, 96px);
+        line-height: 0.93;
+        letter-spacing: -0.01em;
         text-transform: uppercase;
-        letter-spacing: -0.02em;
+        margin: 0 0 20px;
         color: var(--tr-white);
-        line-height: 1.0;
-        margin: var(--tr-space-4) 0 var(--tr-space-6);
+
+        .tr-gold-word { display: block; }
     }
 
     .tr-b2b-hero-sub {
-        font-size: var(--tr-fs-md);
-        color: rgba(255, 255, 255, 0.7);
-        line-height: 1.7;
+        font-family: var(--tr-font-body);
+        font-size: 18px;
+        line-height: 1.55;
         max-width: 520px;
-        margin-bottom: var(--tr-space-10);
+        color: var(--tr-platinum);
+        margin: 0 0 28px;
     }
 
     .tr-b2b-hero-ctas {
         display: flex;
-        gap: var(--tr-space-4);
+        gap: 12px;
         flex-wrap: wrap;
+
+        .tr-btn-ghost {
+            color: var(--tr-white);
+            border: 1.5px solid rgba(212, 164, 55, 0.5);
+
+            &:hover { background: rgba(212, 164, 55, 0.08); color: var(--tr-gold-200); }
+        }
     }
 
     .tr-b2b-hero-img {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 32px;
+        background:
+            radial-gradient(ellipse at 50% 50%, rgba(212, 164, 55, 0.18) 0%, rgba(10, 10, 10, 0) 65%);
+
         img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-    }
-
-    @media (max-width: 900px) {
-        .tr-b2b-hero-inner {
-            grid-template-columns: 1fr;
-        }
-
-        .tr-b2b-hero-img { display: none; }
-
-        .tr-b2b-hero-title {
-            font-size: var(--tr-fs-4xl);
+            max-width: 100%;
+            filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.5));
         }
     }
 }

@@ -1,66 +1,139 @@
 // ============================================================
 // Web Trofeos — Design Tokens (CSS Custom Properties)
+// Heraldic luxury · gold gradients · deep black · athletic type
+// Based on the Trofeos Premium design system.
 // ============================================================
 
 :root {
-    // Brand palette
-    --tr-navy:       #0d1117;
-    --tr-navy-soft:  #1a2332;
-    --tr-gold:       #c9a227;
-    --tr-gold-dark:  #a07d18;
-    --tr-gold-light: #e8c84a;
-    --tr-gold-soft:  #f5e9c0;
-    --tr-white:      #ffffff;
+    // ---------- BRAND CORE ----------
+    --tr-black:       #0a0a0a;
+    --tr-onyx:        #141414;
+    --tr-graphite:    #1f1f1f;
+    --tr-charcoal:    #2a2a2a;
+    --tr-steel:       #4a4a4a;
+    --tr-pewter:      #8a8a8a;
+    --tr-platinum:    #c9c9c9;
+    --tr-ivory:       #f5ecd7;
+    --tr-bone:        #faf6ec;
+    --tr-white:       #ffffff;
 
-    // UI surfaces
-    --tr-surface:       #ffffff;
-    --tr-surface-dark:  #0d1117;
-    --tr-surface-navy:  #1a2332;
-    --tr-surface-soft:  #f4f4f4;
-    --tr-surface-muted: #f9f9f9;
+    // ---------- GOLD SCALE (the soul of the brand) ----------
+    --tr-gold-50:     #fbf2d4;
+    --tr-gold-100:    #f7e29a;
+    --tr-gold-200:    #f1cf6a;
+    --tr-gold-300:    #e8b948;
+    --tr-gold-400:    #d4a437;   // CORE GOLD — primary brand
+    --tr-gold-500:    #b8861f;
+    --tr-gold-600:    #8b6914;
+    --tr-gold-700:    #614809;
+    --tr-gold-800:    #3d2c04;
 
-    // Inks
-    --tr-ink:    #0d1117;
-    --tr-ink-2:  #2c2c2c;
-    --tr-ink-3:  #5a5a5a;
-    --tr-ink-4:  #9a9a9a;
-    --tr-ink-5:  #cccccc;
+    // ---------- METAL ACCENTS ----------
+    --tr-silver-light: #e6e6e6;
+    --tr-silver:       #b5b5b5;
+    --tr-silver-dark:  #7d7d7d;
+    --tr-copper-light: #d49a6a;
+    --tr-copper:       #b06a35;
+    --tr-copper-dark:  #7a4419;
 
-    // Lines / borders
-    --tr-line:      #e0e0e0;
-    --tr-line-soft: #f0f0f0;
-    --tr-line-dark: rgba(255, 255, 255, 0.12);
+    // ---------- SEMANTIC ACCENTS ----------
+    --tr-victory:     #c8102e;
+    --tr-emerald:     #1a7a3e;
+    --tr-amber:       #e8a31a;
+    --tr-info:        #1f6fb2;
 
-    // Semantic
-    --tr-primary:   #0d1117;
-    --tr-accent:    #c9a227;
-    --tr-accent-fg: #0d1117;
+    // ---------- GRADIENTS (gold is never flat) ----------
+    --tr-grad-gold:
+        linear-gradient(180deg, #fbf2d4 0%, #e8b948 22%, #d4a437 48%, #8b6914 76%, #b8861f 100%);
+    --tr-grad-gold-shine:
+        linear-gradient(135deg, #f7e29a 0%, #d4a437 35%, #8b6914 65%, #e8b948 100%);
+    --tr-grad-gold-soft:
+        linear-gradient(180deg, #e8b948 0%, #b8861f 100%);
+    --tr-grad-bronze:
+        linear-gradient(180deg, #d49a6a 0%, #b06a35 50%, #7a4419 100%);
+    --tr-grad-shield:
+        radial-gradient(ellipse at 50% 30%, #2a2a2a 0%, #0a0a0a 70%);
+    --tr-grad-onyx:
+        linear-gradient(180deg, #1f1f1f 0%, #0a0a0a 100%);
+    --tr-grad-stage:
+        radial-gradient(ellipse at 50% 0%, rgba(212,164,55,0.18) 0%, rgba(10,10,10,0) 55%);
 
-    // Typography
-    --tr-font-heading: "Montserrat", "Inter", system-ui, sans-serif;
-    --tr-font-body:    "Inter", system-ui, -apple-system, sans-serif;
+    // ---------- SEMANTIC TOKENS (light surfaces) ----------
+    --tr-bg:           var(--tr-bone);
+    --tr-bg-elevated:  var(--tr-white);
+    --tr-bg-inverse:   var(--tr-black);
+    --tr-fg:           var(--tr-black);
+    --tr-fg-muted:     #4a4a4a;
+    --tr-fg-subtle:    #6a6a6a;
+    --tr-fg-inverse:   var(--tr-white);
+    --tr-border:       rgba(10,10,10,0.10);
+    --tr-border-strong: rgba(10,10,10,0.20);
+    --tr-accent:       var(--tr-gold-400);
+    --tr-accent-deep:  var(--tr-gold-600);
+
+    // ---------- DARK SEMANTIC ----------
+    --tr-dark-bg:      var(--tr-onyx);
+    --tr-dark-surface: var(--tr-graphite);
+    --tr-dark-fg:      var(--tr-white);
+    --tr-dark-fg-muted: var(--tr-platinum);
+    --tr-dark-border:  rgba(212,164,55,0.18);
+
+    // ---------- TYPOGRAPHY ----------
+    --tr-font-display: "Anton", "Oswald", "Impact", sans-serif;
+    --tr-font-heading: "Barlow Condensed", "Oswald", "Inter", sans-serif;
+    --tr-font-body:    "Barlow", "Inter", system-ui, sans-serif;
+    --tr-font-serif:   "Cinzel", "Trajan Pro", "Times New Roman", serif;
+    --tr-font-mono:    ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
     // Font sizes
-    --tr-fs-xs:   11px;
-    --tr-fs-sm:   13px;
-    --tr-fs-base: 15px;
-    --tr-fs-md:   17px;
-    --tr-fs-lg:   20px;
-    --tr-fs-xl:   24px;
-    --tr-fs-2xl:  32px;
-    --tr-fs-3xl:  clamp(32px, 4vw, 42px);
-    --tr-fs-4xl:  clamp(40px, 5vw, 56px);
-    --tr-fs-5xl:  clamp(48px, 7vw, 80px);
-    --tr-fs-hero: clamp(52px, 9vw, 100px);
+    --tr-fs-xs:   12px;
+    --tr-fs-sm:   14px;
+    --tr-fs-md:   16px;
+    --tr-fs-lg:   18px;
+    --tr-fs-xl:   22px;
+    --tr-fs-2xl:  28px;
+    --tr-fs-3xl:  36px;
+    --tr-fs-4xl:  48px;
+    --tr-fs-5xl:  64px;
+    --tr-fs-6xl:  88px;
+    --tr-fs-display: 128px;
+    --tr-fs-base: 16px;
+    --tr-fs-hero: clamp(56px, 8vw, 116px);
 
-    // Spacing
+    // Weight
+    --tr-fw-light: 300;
+    --tr-fw-regular: 400;
+    --tr-fw-medium: 500;
+    --tr-fw-semibold: 600;
+    --tr-fw-bold: 700;
+    --tr-fw-black: 800;
+
+    // Line height
+    --tr-lh-tight: 0.95;
+    --tr-lh-snug:  1.15;
+    --tr-lh-normal: 1.45;
+    --tr-lh-relaxed: 1.7;
+
+    // Tracking
+    --tr-tr-tight:   -0.02em;
+    --tr-tr-normal:  0;
+    --tr-tr-wide:    0.06em;
+    --tr-tr-wider:   0.14em;
+    --tr-tr-widest:  0.24em;
+
+    // ---------- SPACING (8pt rhythm + heraldic stops) ----------
+    --tr-space-0:  0;
     --tr-space-1:  4px;
     --tr-space-2:  8px;
     --tr-space-3:  12px;
     --tr-space-4:  16px;
-    --tr-space-6:  24px;
-    --tr-space-8:  32px;
-    --tr-space-10: 40px;
+    --tr-space-5:  24px;
+    --tr-space-6:  32px;
+    --tr-space-7:  48px;
+    --tr-space-8:  64px;
+    --tr-space-9:  96px;
+    --tr-space-10: 128px;
+    // Legacy aliases (kept for older snippet SCSS)
     --tr-space-12: 48px;
     --tr-space-16: 64px;
     --tr-space-20: 80px;
@@ -68,19 +141,63 @@
     --tr-gutter:   32px;
     --tr-container: 1440px;
 
-    // Motion
-    --tr-ease:          cubic-bezier(0.4, 0, 0.2, 1);
+    // ---------- RADII (sharp — trophies have edges) ----------
+    --tr-r-0: 0;
+    --tr-r-1: 2px;
+    --tr-r-2: 4px;
+    --tr-r-3: 8px;
+    --tr-r-4: 12px;
+    --tr-r-pill: 999px;
+
+    // ---------- SHADOWS ----------
+    --tr-sh-hairline: 0 0 0 1px rgba(10,10,10,0.06);
+    --tr-sh-sm: 0 1px 2px rgba(0,0,0,0.08), 0 1px 1px rgba(0,0,0,0.04);
+    --tr-sh-md: 0 4px 12px rgba(0,0,0,0.10), 0 2px 4px rgba(0,0,0,0.06);
+    --tr-sh-lg: 0 12px 32px rgba(0,0,0,0.18), 0 4px 8px rgba(0,0,0,0.08);
+    --tr-sh-xl: 0 24px 56px rgba(0,0,0,0.28);
+    --tr-sh-gold-glow: 0 0 0 1px rgba(212,164,55,0.4), 0 8px 24px rgba(212,164,55,0.25);
+    --tr-sh-trophy: 0 30px 60px -20px rgba(0,0,0,0.55), 0 10px 20px -10px rgba(0,0,0,0.35);
+    --tr-sh-inset-gold: inset 0 1px 0 rgba(251,242,212,0.4), inset 0 -1px 0 rgba(61,44,4,0.5);
+
+    // ---------- MOTION ----------
+    --tr-ease:          cubic-bezier(0.2, 0.7, 0.1, 1);
     --tr-ease-out:      cubic-bezier(0, 0, 0.2, 1);
+    --tr-ease-in-out:   cubic-bezier(0.65, 0, 0.35, 1);
+    --tr-ease-emph:     cubic-bezier(0.16, 1, 0.3, 1);
     --tr-duration:      200ms;
-    --tr-duration-slow: 320ms;
+    --tr-duration-slow: 360ms;
     --tr-duration-fast: 120ms;
 
-    // Z-index
+    // ---------- Z-INDEX ----------
     --tr-z-header:   100;
     --tr-z-dropdown: 200;
-    --tr-z-overlay:   10;
-    --tr-z-whatsapp: 999;
+    --tr-z-overlay:  10;
+    --tr-z-whatsapp: 49;
+    --tr-z-drawer:   50;
 
-    // Header
-    --tr-header-h: 72px;
+    // ---------- HEADER ----------
+    --tr-header-h: 92px;
+
+    // ---------- Legacy color mappings (kept for unmodified snippet SCSS) ----------
+    --tr-navy:        var(--tr-black);
+    --tr-navy-soft:   var(--tr-onyx);
+    --tr-gold:        var(--tr-gold-400);
+    --tr-gold-dark:   var(--tr-gold-600);
+    --tr-gold-light:  var(--tr-gold-200);
+    --tr-gold-soft:   var(--tr-gold-50);
+    --tr-surface:       #ffffff;
+    --tr-surface-dark:  var(--tr-black);
+    --tr-surface-navy:  var(--tr-onyx);
+    --tr-surface-soft:  var(--tr-bone);
+    --tr-surface-muted: #f9f9f9;
+    --tr-ink:    var(--tr-black);
+    --tr-ink-2:  #2c2c2c;
+    --tr-ink-3:  var(--tr-fg-subtle);
+    --tr-ink-4:  #9a9a9a;
+    --tr-ink-5:  #cccccc;
+    --tr-line:      var(--tr-border);
+    --tr-line-soft: rgba(10,10,10,0.06);
+    --tr-line-dark: rgba(212,164,55,0.18);
+    --tr-primary:   var(--tr-black);
+    --tr-accent-fg: var(--tr-gold-800);
 }

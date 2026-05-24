@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_tr_categories" name="Trofeos Categorías de Productos">
+        <t t-set="tr_cats" t-value="request.env['product.public.category'].sudo().search([
+            ('parent_id', '=', False),
+            ('website_id', '=', website.id),
+            ('name', 'not in', ['Productos', 'Cintas 1.5 cm.', 'Cintas 2.5 cm.', 'Llegada Abril 2023'])
+        ], order='sequence asc')"/>
+        
+        <section class="s_tr_categories tr-section" data-snippet="s_tr_categories">
+            <div class="tr-section-head">
+                <span class="tr-eyebrow">Colección Completa</span>
+                <h2 class="tr-section-title">Explora por <span class="tr-gold-word">Categorías</span></h2>
+                <p class="tr-section-description">Encuentra el reconocimiento perfecto seleccionando entre nuestras principales líneas de productos corporativos, deportivos y educativos.</p>
+            </div>
+
+            <div class="container-fluid px-4 px-md-5">
+                <div class="tr-categories-grid">
+                    <t t-foreach="tr_cats" t-as="cat">
+                        <div class="tr-category-card">
+                            <a t-attf-href="/shop?category=#{cat.id}" class="tr-category-link">
+                                <div class="tr-category-image-wrap">
+                                    <img t-if="cat.image_1920" 
+                                         t-attf-src="/web/image/product.public.category/#{cat.id}/image_1920" 
+                                         t-att-alt="cat.name" 
+                                         class="tr-category-img" 
+                                         loading="lazy"/>
+                                    <div t-else="" class="tr-category-placeholder">
+                                        <span class="material-symbols-outlined">emoji_events</span>
+                                    </div>
+                                    <div class="tr-category-overlay">
+                                        <span class="tr-category-action-btn">
+                                            Ver Productos
+                                            <span class="material-symbols-outlined font-sm">arrow_forward</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="tr-category-info">
+                                    <h3 class="tr-category-name"><t t-esc="cat.name"/></h3>
+                                    <t t-set="cat_children" t-value="request.env['product.public.category'].sudo().search([('parent_id', '=', cat.id)], limit=4)"/>
+                                    <p t-if="cat_children" class="tr-category-sublist">
+                                        <t t-foreach="cat_children" t-as="sub">
+                                            <span><t t-esc="sub.name"/></span><t t-if="not sub_last"> • </t>
+                                        </t>
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>
