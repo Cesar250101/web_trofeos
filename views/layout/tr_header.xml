@@ -1,153 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <template id="tr_header" name="Trofeos — Header">
-        <t t-set="tr_categories" t-value="request.env['product.public.category'].sudo().search([('parent_id','=',False),('website_id','=',website.id)], order='sequence asc')"/>
-        <t t-set="tr_company" t-value="request.env.company.sudo()"/>
-        <header id="top" class="tr-header">
-            <!-- Heraldic top band -->
-            <div class="tr-header-band">
-                <span class="tr-header-band-item">
-                    <span class="material-symbols-outlined">local_shipping</span>
-                    Despacho 24-72 h a todo Chile
-                </span>
-                <span class="tr-header-band-item">
-                    <span class="material-symbols-outlined">verified</span>
-                    Importadores directos · Stock permanente
-                </span>
-                <span class="tr-header-band-item tr-header-band-contact" t-if="tr_company.phone or tr_company.email">
-                    <span class="material-symbols-outlined" t-if="tr_company.phone">call</span>
-                    <span t-if="tr_company.phone" t-esc="tr_company.phone"/>
-                    <span t-if="tr_company.phone and tr_company.email"> · </span>
-                    <span t-if="tr_company.email" t-esc="tr_company.email"/>
-                </span>
-            </div>
-            <nav class="tr-nav container-fluid">
-                <!-- Logo + wordmark -->
-                <a class="tr-logo-link" href="/trofeos" aria-label="Trofeos Home">
-                    <img t-att-src="'/web/image/website/%s/logo' % website.id"
-                         class="tr-header-logo"
-                         t-att-alt="website.name"/>
-                    <span class="tr-header-wordmark">
-                        <span class="tr-wordmark-word">TROFEOS</span>
-                        <span class="tr-wordmark-sub">PREMIUM · SpA</span>
-                    </span>
-                </a>
+    <template id="tr_header" inherit_id="website.layout" name="Trofeos — Header">
+        <xpath expr="//header" position="replace">
+            <t t-if="website.name == 'Trofeos'">
+                <header class="tr-header" id="top">
+                    <!-- Top bar -->
+                    <div class="tr-topbar">
+                        <div class="tr-topbar-inner container-fluid">
+                            <div class="tr-topbar-left">
+                                <span class="tr-topbar-item">
+                                    <span class="material-symbols-outlined">local_shipping</span>
+                                    Despacho 24-72 h a todo Chile
+                                </span>
+                                <span class="tr-topbar-item">
+                                    <span class="material-symbols-outlined">verified</span>
+                                    Importadores directos · Stock permanente
+                                </span>
+                            </div>
+                            <div class="tr-topbar-right">
+                                <a href="mailto:ventas@trofeospremiums.cl" class="tr-topbar-link">ventas@trofeospremiums.cl</a>
+                            </div>
+                        </div>
+                    </div>
 
-                <!-- Mobile toggle -->
-                <button class="tr-nav-toggle d-lg-none" data-bs-toggle="collapse" data-bs-target="#trNavMenu" aria-expanded="false" aria-label="Menú">
-                    <span class="material-symbols-outlined">menu</span>
-                </button>
+                    <nav class="tr-nav container-fluid">
+                        <!-- Logo only (wordmark is included in the SVG logo image) -->
+                        <a class="tr-logo-link" href="/trofeos" aria-label="Trofeos Home">
+                            <img t-att-src="'/web/image/website/%s/logo' % website.id"
+                                 class="tr-header-logo"
+                                 t-att-alt="website.name"/>
+                        </a>
 
-                <!-- Nav links -->
-                <div class="collapse navbar-collapse tr-nav-menu" id="trNavMenu">
-                    <!-- Invisible top_menu to satisfy native auto_hide_menu.js which expects a #top_menu element -->
-                    <ul id="top_menu" class="d-none o_no_autohide_item"/>
-                    <ul class="tr-nav-list">
-                        <li class="tr-nav-item">
-                            <a class="tr-nav-link" href="/trofeos">Inicio</a>
-                        </li>
-                        <!-- Categories with dropdowns -->
-                        <t t-set="productos_cats_raw" t-value="request.env['product.public.category'].sudo().search([('website_id','=',website.id), ('name', 'in', ['Copas', 'Trofeos', 'Medallas', 'Maderas', 'Cristales', 'Sublimación', 'Sublimacion', 'IMPRESIÓN DIRECTA COLOR', 'Impresión Directa Color', 'Impresion Directa Color', 'Insumos'])])"/>
-                        <t t-set="productos_names" t-value="['copas', 'trofeos', 'medallas', 'maderas', 'cristales', 'sublimacion', 'sublimación', 'impresion directa color', 'impresión directa color', 'insumos']"/>
-                        <t t-set="productos_cats" t-value="[]"/>
-                        <t t-foreach="productos_names" t-as="p_name">
-                            <t t-set="matched_cat" t-value="productos_cats_raw.filtered(lambda c: c.name.lower().strip() == p_name)"/>
-                            <t t-if="matched_cat">
-                                <t t-set="productos_cats" t-value="productos_cats + [matched_cat[0]]"/>
-                            </t>
-                        </t>
+                        <!-- Mobile toggle -->
+                        <button class="tr-nav-toggle d-lg-none" data-bs-toggle="collapse" data-bs-target="#trNavMenu" aria-expanded="false" aria-label="Menú">
+                            <span class="material-symbols-outlined">menu</span>
+                        </button>
 
-                        <t t-set="resto_cats" t-value="[]"/>
-                        <t t-foreach="tr_categories" t-as="cat">
-                            <t t-set="c_name" t-value="cat.name.lower().strip()"/>
-                            <t t-if="c_name not in ['copas', 'trofeos', 'medallas', 'maderas', 'sublimacion', 'sublimación', 'insumos', 'productos', 'cintas 1.5 cm.', 'cintas 2.5 cm.', 'llegada abril 2023', 'línea fútbol nacional', 'linea futbol nacional']">
-                                <t t-set="resto_cats" t-value="resto_cats + [cat]"/>
-                            </t>
-                        </t>
+                        <!-- Nav links -->
+                        <div class="collapse navbar-collapse tr-nav-menu" id="trNavMenu">
+                            <!-- Invisible top_menu to satisfy native auto_hide_menu.js which expects a #top_menu element -->
+                            <ul id="top_menu" class="d-none o_no_autohide_item"/>
 
-                        <!-- "Productos" Dropdown -->
-                        <li class="tr-nav-item tr-has-dropdown">
-                            <a class="tr-nav-link" href="#">
-                                Productos
-                                <span class="material-symbols-outlined tr-nav-arrow">expand_more</span>
-                            </a>
-                            <ul class="tr-dropdown tr-mega-dropdown">
-                                <t t-foreach="productos_cats" t-as="cat">
-                                    <t t-set="cat_children" t-value="request.env['product.public.category'].sudo().search([('parent_id','=',cat.id),('website_id','=',website.id)], order='sequence asc')"/>
-                                    <li class="tr-dropdown-subitem unicode-drop">
-                                        <a t-attf-href="/shop?category=#{cat.id}" class="tr-dropdown-link-parent">
-                                            <strong><t t-esc="cat.name"/></strong>
-                                        </a>
-                                        <ul t-if="cat_children" class="tr-dropdown-sub">
-                                            <li t-foreach="cat_children" t-as="sub">
-                                                <a t-attf-href="/shop?category=#{sub.id}" class="tr-dropdown-sublink">
-                                                    <t t-esc="sub.name"/>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
+                            <ul class="tr-nav-list">
+                                <t t-foreach="website.menu_id.child_id" t-as="menu">
+                                    <t t-if="menu.is_visible and menu.child_id">
+                                        <li class="tr-nav-item tr-has-dropdown">
+                                            <a t-att-href="menu.url or '#'" class="tr-nav-link tr-nav-dropdown-toggle">
+                                                <t t-esc="menu.name"/>
+                                                <span class="material-symbols-outlined tr-nav-chevron">expand_more</span>
+                                            </a>
+                                            <ul class="tr-dropdown">
+                                                <t t-foreach="menu.child_id" t-as="sub">
+                                                    <t t-if="sub.is_visible">
+                                                        <li class="tr-dropdown-item">
+                                                            <t t-if="sub.child_id">
+                                                                <span class="tr-dropdown-label"><t t-esc="sub.name"/></span>
+                                                                <ul class="tr-dropdown-sub">
+                                                                    <t t-foreach="sub.child_id" t-as="subsub">
+                                                                        <t t-if="subsub.is_visible">
+                                                                            <li><a t-att-href="subsub.url" class="tr-dropdown-sub-link"><t t-esc="subsub.name"/></a></li>
+                                                                        </t>
+                                                                    </t>
+                                                                </ul>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <a t-att-href="sub.url" class="tr-dropdown-link"><t t-esc="sub.name"/></a>
+                                                            </t>
+                                                        </li>
+                                                    </t>
+                                                </t>
+                                            </ul>
+                                        </li>
+                                    </t>
+                                    <t t-elif="menu.is_visible">
+                                        <li class="tr-nav-item">
+                                            <a t-att-href="menu.url" class="tr-nav-link"><t t-esc="menu.name"/></a>
+                                        </li>
+                                    </t>
                                 </t>
                             </ul>
-                        </li>
 
-                        <!-- Rest of Categories (Licenciaturas, Fiestas Patrias, Deportes) -->
-                        <t t-foreach="resto_cats" t-as="cat">
-                            <t t-set="cat_children" t-value="request.env['product.public.category'].sudo().search([('parent_id','=',cat.id),('website_id','=',website.id)], order='sequence asc')"/>
-                            <li t-attf-class="tr-nav-item #{cat_children and 'tr-has-dropdown' or ''}">
-                                <a t-attf-class="tr-nav-link" t-attf-href="/shop?category=#{cat.id}">
-                                    <t t-esc="cat.name"/>
-                                    <span t-if="cat_children" class="material-symbols-outlined tr-nav-arrow">expand_more</span>
+                            <!-- Right actions -->
+                            <div class="tr-nav-actions">
+                                <a href="/shop" class="tr-nav-icon" aria-label="Catálogo">
+                                    <span class="material-symbols-outlined">search</span>
                                 </a>
-                                <ul t-if="cat_children" class="tr-dropdown">
-                                    <li t-foreach="cat_children" t-as="sub">
-                                        <a t-attf-href="/shop?category=#{sub.id}" class="tr-dropdown-link">
-                                            <t t-esc="sub.name"/>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </t>
-                        <li class="tr-nav-item">
-                            <a t-attf-class="tr-nav-link #{request.httprequest.path == '/servicios-trofeos' and 'is-active' or ''}" href="/servicios-trofeos">Servicios</a>
-                        </li>
-                        <li class="tr-nav-item">
-                            <a t-attf-class="tr-nav-link #{request.httprequest.path == '/empresas-trofeos' and 'is-active' or ''}" href="/empresas-trofeos">Empresas</a>
-                        </li>
-                        <li class="tr-nav-item">
-                            <a t-attf-class="tr-nav-link #{request.httprequest.path == '/quienes-somos-trofeos' and 'is-active' or ''}" href="/quienes-somos-trofeos">Nosotros</a>
-                        </li>
-                        <li class="tr-nav-item">
-                            <a t-attf-class="tr-nav-link #{request.httprequest.path == '/contacto-trofeos' and 'is-active' or ''}" href="/contacto-trofeos">Contacto</a>
-                        </li>
-                    </ul>
-
-                    <!-- Header actions -->
-                    <div class="tr-nav-actions">
-                        <a href="/shop" class="tr-nav-icon" aria-label="Catálogo">
-                            <span class="material-symbols-outlined">search</span>
-                        </a>
-                        <a href="/web/login" class="tr-nav-icon" aria-label="Mi cuenta">
-                            <span class="material-symbols-outlined">person</span>
-                        </a>
-                        <a href="/contacto-trofeos" class="tr-btn tr-btn-primary tr-nav-cta">Cotizar</a>
-                    </div>
-                </div>
-            </nav>
-        </header>
-    </template>
-
-    <!-- Override native header when on Trofeos website -->
-    <template id="tr_header_override" inherit_id="website.layout" name="Trofeos — Header Override">
-        <xpath expr="//header[@id='top']" position="replace">
-            <t t-if="website.name == 'Trofeos'">
-                <t t-call="web_trofeos.tr_header"/>
+                                <a t-if="not request.env.user._is_public()" href="/web" class="tr-nav-icon" aria-label="Mi cuenta">
+                                    <span class="material-symbols-outlined">person</span>
+                                </a>
+                                <a t-else="" href="/web/login" class="tr-nav-icon" aria-label="Iniciar sesión">
+                                    <span class="material-symbols-outlined">person</span>
+                                </a>
+                                <a href="/contacto-trofeos" class="tr-btn tr-btn-primary tr-btn-sm">Cotizar</a>
+                            </div>
+                        </div>
+                    </nav>
+                </header>
             </t>
             <t t-else="">
-                <header t-if="not no_header" id="top" data-anchor="true">
-                    <nav>
-                        <ul id="top_menu" class="nav navbar-nav o_menu_loading"/>
-                    </nav>
+                <header t-att-class="'o_header_standard' + (' o_header_hide_title' if not website.is_homepage else '')" id="top" t-ignore="True">
+                    <t t-call="website.placeholder_header_brand"/>
+                    <t t-call="website.placeholder_header_call_to_action"/>
                 </header>
             </t>
         </xpath>
