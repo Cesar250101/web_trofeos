@@ -7,158 +7,149 @@ from odoo import api, SUPERUSER_ID
 
 _logger = logging.getLogger(__name__)
 
-# ─── WooCommerce REST API ─────────────────────────────────────────────────────
-# Credentials are read (in priority order) from:
-#   1. res.company fields: woo_url, woo_consumer_key, woo_consumer_secret, woo_version
-#      (company linked to website "Trofeos", or the first company with woo_integrar=True)
-#   2. Odoo System Parameters: web_trofeos.wc_url / wc_key / wc_secret / wc_version
-#   3. Hardcoded fallback defaults (used as last resort)
-
-_WC_DEFAULTS = {
-    'url':     'https://www.trofeospremiumsspa.cl/wp',
-    'key':     '',
-    'secret':  '',
-    'version': 'v2',
-}
+# ─── WordPress admin credentials ────────────────────────────────────────────
+# Categories are fetched from the WP admin panel (edit-tags.php).
+# Credentials can be overridden via ir.config_parameter:
+#   web_trofeos.wp_admin_url / wp_admin_user / wp_admin_pass
 
 
-# ─── Category fetch helpers ───────────────────────────────────────────────────
+# ─── Category fetch helpers ──────────────────────────────────────────────
 
-def _wc_config(env):
-    """Read WooCommerce credentials from res.company, then ir.config_parameter."""
-    # 1. Try res.company for the company linked to website Trofeos
-    Company = env['res.company'].sudo()
-    website = env['website'].search([('name', '=', 'Trofeos')], limit=1)
-    company = None
-    if website and website.company_id:
-        company = website.company_id
-    if not company:
-        # Fallback: first company with WC integration enabled
-        company = Company.search([('woo_integrar', '=', True)], limit=1)
-    if company and company.woo_consumer_key and company.woo_consumer_secret:
-        raw_version = (company.woo_version or 'V2').strip().lower().lstrip('v')
-        return {
-            'url':     (company.woo_url or _WC_DEFAULTS['url']).rstrip('/'),
-            'key':     company.woo_consumer_key,
-            'secret':  company.woo_consumer_secret,
-            'version': 'v' + raw_version,
-        }
-    # 2. Fallback to ir.config_parameter
-    ICP = env['ir.config_parameter'].sudo()
-    return {
-        'url':     ICP.get_param('web_trofeos.wc_url',     _WC_DEFAULTS['url']).rstrip('/'),
-        'key':     ICP.get_param('web_trofeos.wc_key',     _WC_DEFAULTS['key']),
-        'secret':  ICP.get_param('web_trofeos.wc_secret',  _WC_DEFAULTS['secret']),
-        'version': ICP.get_param('web_trofeos.wc_version', _WC_DEFAULTS['version']),
-    }
+_WP_ADMIN_URL  = 'https://www.trofeospremiumsspa.cl/wp/wp-admin'
+_WP_LOGIN_URL  = 'https://www.trofeospremiumsspa.cl/wp/wp-login.php'
+_WP_ADMIN_USER = 'premiums'
+_WP_ADMIN_PASS = 'Cx%Myz&dDOB*nZIO'
+_SKIP_SLUGS    = {'uncategorized', 'sin-categoria'}
 
 
-def _fetch_via_wc_api(cfg):
-    """
-    Primary: WooCommerce REST API (version read from res.company, default v2).
-    Returns list of raw dicts or [] on failure.
-    Fetches all pages (100 per page) to handle large category trees.
-    """
-    version = cfg.get('version', 'v2')
-    base_url = cfg['url'] + '/wp-json/wc/' + version + '/products/categories'
-    all_cats = []
-    page = 1
+def _wp_admin_session():
+    """Return an authenticated requests.Session against the WP admin."""
     try:
-        while True:
-            resp = requests.get(
-                base_url,
-                params={'per_page': 100, 'page': page, 'hide_empty': 'false'},
-                auth=(cfg['key'], cfg['secret']),
-                timeout=15,
-            )
-            if resp.status_code == 200:
-                data = resp.json()
-                if not data:
-                    break
-                all_cats.extend(data)
-                if len(data) < 100:
-                    break
-                page += 1
-            else:
-                _logger.warning(
-                    'web_trofeos: WC API HTTP %s — %s',
-                    resp.status_code, resp.text[:300],
-                )
-                return []
-        _logger.info('web_trofeos: WC API OK -> %d categorias', len(all_cats))
-        return all_cats
+        from bs4 import BeautifulSoup as _BS  # noqa — only needed here
+    except ImportError:
+        _BS = None
+
+    session = requests.Session()
+    session.headers.update({'User-Agent': 'Mozilla/5.0 (web_trofeos Odoo sync)'})
+    try:
+        session.get(_WP_LOGIN_URL, timeout=20)
+        session.post(_WP_LOGIN_URL, data={
+            'log': _WP_ADMIN_USER,
+            'pwd': _WP_ADMIN_PASS,
+            'wp-submit': 'Log+In',
+            'redirect_to': '/wp/wp-admin/',
+            'testcookie': '1',
+        }, timeout=20, allow_redirects=True)
     except Exception as exc:
-        _logger.warning('web_trofeos: WC API error: %s', exc)
-    return []
+        _logger.warning('web_trofeos: no se pudo autenticar en WP admin: %s', exc)
+        return None, None
+    return session, _BS
 
 
-def _fetch_via_html_scraping(cfg):
+def _fetch_via_wp_admin():
     """
-    Fallback: parse public WooCommerce category pages from the nav/shop sidebar.
-    Builds a flat+hierarchy list using /product-category/ URL patterns.
-    Returns same format as the WC API (id, name, slug, parent, menu_order).
-    """
-    base = cfg['url']
-    cats_by_slug = {}   # slug → {id, name, slug, parent_slug, menu_order}
-    fake_id = 1
+    Scrape the WP admin category list (edit-tags.php) to get the full
+    category tree with correct parent relationships.
 
-    def _scrape_page(url):
-        nonlocal fake_id
+    Returns a list of dicts: {id, name, slug, parent, menu_order}
+    where id/parent are the real WP term_IDs.
+    Duplicates (WP paginates the same parent row on multiple pages) are
+    deduplicated by slug.
+    """
+    session, BS = _wp_admin_session()
+    if not session:
+        return []
+    if BS is None:
+        _logger.warning('web_trofeos: beautifulsoup4 no está instalado, no se puede hacer scraping de WP admin.')
+        return []
+
+    seen_slugs = {}   # slug → dict  (dedup across pages)
+    page = 1
+    prev_rows = None  # detect when WP stops paginating
+
+    while True:
+        url = (
+            _WP_ADMIN_URL
+            + '/edit-tags.php?taxonomy=product_cat&post_type=product'
+            + f'&paged={page}'
+        )
         try:
-            r = requests.get(url, timeout=15, headers={'User-Agent': 'Mozilla/5.0'})
-            if r.status_code != 200:
-                return
-            html = r.text
-            # Grab all /product-category/SLUG/ hrefs with their anchor text
-            pattern = (
-                r'href=["\']' + re.escape(base) +
-                r'/product-category/([^/"\']+)/["\'][^>]*>\s*([^<]+?)\s*<'
-            )
-            for slug, name in re.findall(pattern, html):
-                name = re.sub(r'\s+', ' ', name).strip()
-                if slug not in cats_by_slug and name:
-                    cats_by_slug[slug] = {
-                        'id': fake_id,
-                        'name': name,
-                        'slug': slug,
-                        'parent': 0,
-                        'menu_order': fake_id * 10,
-                        '_parent_slug': None,
-                    }
-                    fake_id += 1
+            r = session.get(url, timeout=20)
         except Exception as exc:
-            _logger.debug('web_trofeos: scraping %s: %s', url, exc)
+            _logger.warning('web_trofeos: error al obtener página %d de categorías: %s', page, exc)
+            break
 
-    # Scrape main shop and home pages
-    _scrape_page(base + '/shop/')
-    _scrape_page(base + '/')
+        soup = BS(r.text, 'html.parser')
+        rows = soup.select('table.wp-list-table tbody tr')
+        if not rows or rows == prev_rows:
+            break
+        prev_rows = rows
 
-    # Scrape each known category page to find subcategories
-    for slug in list(cats_by_slug.keys()):
-        cat_url = base + '/product-category/' + slug + '/'
-        before = set(cats_by_slug.keys())
-        _scrape_page(cat_url)
-        new_slugs = set(cats_by_slug.keys()) - before
-        for new_slug in new_slugs:
-            cats_by_slug[new_slug]['parent'] = cats_by_slug[slug]['id']
+        raw_page = []
+        for row in rows:
+            name_el  = row.select_one('.column-name a.row-title')
+            slug_el  = row.select_one('.column-slug')
+            href     = name_el.get('href', '') if name_el else ''
+            m        = re.search(r'tag_ID=(\d+)', href)
+            term_id  = int(m.group(1)) if m else None
 
-    skip = {'uncategorized', 'sin-categoria'}
-    result = [c for c in cats_by_slug.values() if c['slug'] not in skip]
-    _logger.info('web_trofeos: scraping → %d categorías', len(result))
+            if not name_el or not term_id:
+                continue
+
+            raw_name = name_el.get_text(strip=True)
+            depth    = 0
+            display  = raw_name
+            while display.startswith('—'):
+                display = display[1:].strip()
+                depth  += 1
+
+            slug = slug_el.get_text(strip=True) if slug_el else display.lower()
+            if slug in _SKIP_SLUGS:
+                continue
+
+            raw_page.append({
+                'id':     term_id,
+                'name':   display,
+                'slug':   slug,
+                'depth':  depth,
+                'parent': 0,   # resolved below
+            })
+
+        # Resolve parent from indentation depth within this page
+        parent_stack = []  # [(depth, term_id)]
+        for cat in raw_page:
+            while parent_stack and parent_stack[-1][0] >= cat['depth']:
+                parent_stack.pop()
+            cat['parent'] = parent_stack[-1][1] if parent_stack else 0
+            parent_stack.append((cat['depth'], cat['id']))
+
+            if cat['slug'] not in seen_slugs:
+                cat['menu_order'] = len(seen_slugs) * 10
+                seen_slugs[cat['slug']] = cat
+
+        next_link = soup.select_one('.tablenav-pages a.next-page')
+        if not next_link:
+            break
+        page += 1
+
+    result = list(seen_slugs.values())
+    _logger.info('web_trofeos: WP admin scraping → %d categorías', len(result))
     return result
 
 
 def _get_wp_categories(env):
-    """Try WC REST API first; fall back to HTML scraping."""
-    cfg = _wc_config(env)
-    cats = _fetch_via_wc_api(cfg)
+    """Fetch categories from WP admin. Falls back to empty list on failure."""
+    cats = _fetch_via_wp_admin()
     if not cats:
-        _logger.info('web_trofeos: WC API no disponible, usando scraping HTML.')
-        cats = _fetch_via_html_scraping(cfg)
+        _logger.error(
+            'web_trofeos: No se pudieron obtener categorías desde WP admin (%s). '
+            'Verifica credenciales en hooks.py (_WP_ADMIN_USER / _WP_ADMIN_PASS).',
+            _WP_ADMIN_URL,
+        )
     return cats
 
 
-# ─── SVG Image Generation Helper ──────────────────────────────────────────────
+# ─── SVG Image Generation Helper ──────────────────────────────────────────────────────
 
 def _get_premium_svg(name):
     """
@@ -291,68 +282,81 @@ def _get_premium_svg(name):
     return base64.b64encode(svg_code.encode('utf-8')).decode('utf-8')
 
 
-# ─── Sync functions ───────────────────────────────────────────────────────────
+# ─── Sync functions ───────────────────────────────────────────────────────────────
 
 def _sync_categories(env, website):
     """
-    Full sync of product.public.category from WooCommerce for the given website.
+    Upsert product.public.category from WP admin for the given website.
 
     Strategy:
-      1. Fetch all categories from WP (API or scraping).
-      2. Delete ALL existing product.public.category for this website.
-      3. Recreate parents first, then children.
-      4. Duplicate prevention: we always delete & recreate, so no duplicates.
+      - Fetch categories from WP admin (edit-tags.php) via authenticated scraping.
+      - For each category (identified by slug):
+          * If it already exists for this website → do nothing (preserve any
+            manual edits made in Odoo).
+          * If it does not exist → create it with the SVG image.
+      - Parents are processed before children so parent_id FK is always valid.
+      - Never deletes existing categories.
     """
     Cat = env['product.public.category']
 
     wp_cats = _get_wp_categories(env)
     if not wp_cats:
-        _logger.error(
-            'web_trofeos: No se obtuvieron categorías de WooCommerce. '
-            'Verifica la URL y las credenciales API en Ajustes → '
-            'Parámetros del sistema (web_trofeos.wc_url / wc_key / wc_secret).'
-        )
         return
 
-    # Delete all existing categories for this website
-    Cat.search([('website_id', '=', website.id)]).unlink()
+    # Index existing categories by slug for fast lookup
+    existing = Cat.search([('website_id', '=', website.id)])
+    slug_to_odoo = {}   # slug → odoo record
+    for rec in existing:
+        slug = getattr(rec, 'website_slug', None) or re.sub(r'\s+', '-', rec.name.lower())
+        slug_to_odoo[slug] = rec
 
-    skip_slugs = {'uncategorized', 'sin-categoria'}
-    parents  = [
-        c for c in wp_cats
-        if c.get('parent', 0) == 0 and c.get('slug', '') not in skip_slugs
-    ]
-    children = [c for c in wp_cats if c.get('parent', 0) != 0]
+    # Also index by name (lower-stripped) as fallback
+    name_to_odoo = {rec.name.strip().lower(): rec for rec in existing}
 
-    wp_to_odoo = {}   # wp_category_id → new odoo category id
+    wp_to_odoo = {}   # wp term_id → odoo record id
 
-    for seq, wp_cat in enumerate(
-        sorted(parents, key=lambda c: (c.get('menu_order', 0), c['id'])), 1
-    ):
-        rec = Cat.create({
-            'name': wp_cat['name'],
+    # Process parents first, then children (sorted by depth then menu_order)
+    ordered = sorted(wp_cats, key=lambda c: (c.get('depth', 0), c.get('menu_order', 0), c['id']))
+
+    created = 0
+    skipped = 0
+
+    for wp_cat in ordered:
+        slug   = wp_cat['slug']
+        name   = wp_cat['name']
+        wp_id  = wp_cat['id']
+        seq    = wp_cat.get('menu_order', 0) or (len(wp_to_odoo) + 1) * 10
+
+        # Find existing record by slug or name
+        odoo_rec = slug_to_odoo.get(slug) or name_to_odoo.get(name.strip().lower())
+
+        if odoo_rec:
+            wp_to_odoo[wp_id] = odoo_rec.id
+            skipped += 1
+            continue
+
+        # Resolve parent
+        parent_wp_id   = wp_cat.get('parent', 0)
+        parent_odoo_id = wp_to_odoo.get(parent_wp_id)
+
+        vals = {
+            'name':       name,
             'website_id': website.id,
-            'sequence': seq * 10,
-            'image_1920': _get_premium_svg(wp_cat['name']),
-        })
-        wp_to_odoo[wp_cat['id']] = rec.id
+            'sequence':   seq,
+            'image_1920': _get_premium_svg(name),
+        }
+        if parent_odoo_id:
+            vals['parent_id'] = parent_odoo_id
 
-    for seq, wp_cat in enumerate(
-        sorted(children, key=lambda c: (c.get('menu_order', 0), c['id'])), 1
-    ):
-        parent_odoo_id = wp_to_odoo.get(wp_cat.get('parent'))
-        rec = Cat.create({
-            'name': wp_cat['name'],
-            'parent_id': parent_odoo_id,
-            'website_id': website.id,
-            'sequence': seq * 10,
-            'image_1920': _get_premium_svg(wp_cat['name']),
-        })
-        wp_to_odoo[wp_cat['id']] = rec.id
+        new_rec = Cat.create(vals)
+        wp_to_odoo[wp_id]          = new_rec.id
+        slug_to_odoo[slug]         = new_rec
+        name_to_odoo[name.lower()] = new_rec
+        created += 1
 
     _logger.info(
-        'web_trofeos: %d categorías sincronizadas con imágenes de alta calidad (%d padres + %d hijas).',
-        len(wp_to_odoo), len(parents), len(children),
+        'web_trofeos: categorías — %d creadas, %d ya existían (sin cambios).',
+        created, skipped,
     )
 
 
@@ -378,7 +382,7 @@ def _sync_menus(env, website):
     if not top_menu:
         return
 
-    # ── Static menus — create only if missing ─────────────────────────────
+    # ── Static menus — create only if missing ───────────────────────────────────────────
     for label, url, seq in [
         ('Inicio',    '/trofeos',               5),
         ('Servicios', '/servicios-trofeos',    20),
@@ -395,7 +399,7 @@ def _sync_menus(env, website):
                 'sequence': seq,
             })
 
-    # ── Dynamic category menus — delete all, then recreate ────────────────
+    # ── Dynamic category menus — delete all, then recreate ────────────────────────
     Menu.search([
         ('website_id', '=', website.id),
         '|', '|',
@@ -438,8 +442,7 @@ def _sync_menus(env, website):
             })
         return m
 
-    # ── "Productos" parent dropdown (top-level, sequence=50) ──────────────
-    # Categories listed under Productos in display order
+    # ── "Productos" parent dropdown (top-level, sequence=50) ──────────────────────
     bajo_productos = [
         'copas',
         'trofeos',
@@ -466,7 +469,7 @@ def _sync_menus(env, website):
             continue
         make_menu(cat, productos_menu.id, idx * 10)
 
-    # ── Remaining top-level menus ──────────────────────────────────────────
+    # ── Remaining top-level menus ────────────────────────────────────────────────
     for idx, name_norm in enumerate(['licenciaturas', 'fiestas patrias', 'deportes'], 1):
         cat = find_cat(name_norm)
         if not cat:
@@ -474,7 +477,68 @@ def _sync_menus(env, website):
         make_menu(cat, top_menu.id, 60 + idx * 10)
 
 
-# ─── Hook entry points ────────────────────────────────────────────────────────
+# ─── Company access fix ──────────────────────────────────────────────────────────────
+
+def _fix_company_access(env, website):
+    """
+    Ensures the website 'Trofeos' has the correct company assigned (Trofeos Premiums Spa, id=47)
+    and that all users who manage the website belong to that company.
+
+    Root cause: Odoo's "Product multi-company" ir.rule restricts product.template
+    records to company_ids active in the user's session. When a product belongs to
+    company 47 but the user's session only has company 1 active, publishing raises 403.
+
+    Fix: ensure the public user and manager users all belong to company 47, and that
+    the website itself points to company 47.
+    """
+    TROFEOS_COMPANY_ID = 47
+
+    company = env['res.company'].sudo().browse(TROFEOS_COMPANY_ID)
+    if not company.exists():
+        _logger.warning('web_trofeos: Compañía id=47 no encontrada, omitiendo fix de acceso.')
+        return
+
+    # Ensure the website points to the correct company
+    if website.company_id.id != TROFEOS_COMPANY_ID:
+        website.sudo().write({'company_id': TROFEOS_COMPANY_ID})
+        _logger.info(
+            'web_trofeos: website "%s" corregido a compañía "%s".',
+            website.name, company.name,
+        )
+
+    # Ensure manager users belong to the Trofeos company
+    manager_group_xmlids = [
+        'base.group_system',
+        'website.group_website_publisher',
+        'website.group_website_designer',
+    ]
+    for xmlid in manager_group_xmlids:
+        try:
+            group = env.ref(xmlid, raise_if_not_found=False)
+            if not group:
+                continue
+            for user in group.users:
+                if company not in user.company_ids:
+                    user.sudo().write({'company_ids': [(4, TROFEOS_COMPANY_ID)]})
+                    _logger.info(
+                        'web_trofeos: compañía "%s" agregada al usuario "%s".',
+                        company.name, user.login,
+                    )
+        except Exception:
+            pass
+
+    # CRITICAL: the public user (anonymous visitors) must belong to the Trofeos
+    # company so Odoo's api.companies check does not raise 403 Forbidden.
+    public_user = website.user_id
+    if public_user and company not in public_user.company_ids:
+        public_user.sudo().write({'company_ids': [(4, TROFEOS_COMPANY_ID)]})
+        _logger.info(
+            'web_trofeos: compañía "%s" agregada al usuario público "%s" del sitio.',
+            company.name, public_user.login,
+        )
+
+
+# ─── Hook entry points ───────────────────────────────────────────────────────────────
 
 def _run_sync(cr, registry):
     """Shared core used by post_init_hook and post_update_hook."""
@@ -483,6 +547,7 @@ def _run_sync(cr, registry):
     if not website:
         _logger.warning('web_trofeos: No se encontró el sitio "Trofeos". Hook omitido.')
         return
+    _fix_company_access(env, website)
     _sync_categories(env, website)
     _sync_menus(env, website)
 
@@ -502,6 +567,7 @@ def post_init_hook(cr, registry):
         vals['language_ids'] = [(6, 0, [lang.id])]
         vals['default_lang_id'] = lang.id
     website.write(vals)
+    _fix_company_access(env, website)
     _sync_categories(env, website)
     _sync_menus(env, website)
 
@@ -516,4 +582,3 @@ def uninstall_hook(cr, registry):
     website = env['website'].search([('name', '=', 'Trofeos')], limit=1)
     if website:
         env['product.public.category'].search([('website_id', '=', website.id)]).unlink()
-

@@ -27,8 +27,9 @@
                                                 <a t-att-href="product.website_url" class="tr-card-link">
                                                     <div class="tr-card-img">
                                                         <img t-if="product.image_1920"
-                                                             t-attf-src="/web/image/product.template/#{product.id}/image_1920"
-                                                             t-att-alt="product.name" loading="lazy"/>
+                                                             t-attf-src="/web/image/product.template/#{product.id}/image_512"
+                                                             t-att-alt="product.name"
+                                                             width="512" height="512"/>
                                                         <div t-else="" class="tr-card-img-placeholder">
                                                             <span class="material-symbols-outlined">emoji_events</span>
                                                         </div>
@@ -61,7 +62,7 @@
                         <span class="visually-hidden">Siguiente</span>
                     </button>
 
-                    <!-- Puntos indicadores: clase propia (sin carousel-indicators para evitar gestión Bootstrap) -->
+                    <!-- Puntos indicadores -->
                     <div class="tr-npc-dots">
                         <t t-foreach="range(0, len(tr_featured), tr_per_page)" t-as="group_start">
                             <button type="button"
