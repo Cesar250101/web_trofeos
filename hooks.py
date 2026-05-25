@@ -7,13 +7,13 @@ from odoo import api, SUPERUSER_ID
 
 _logger = logging.getLogger(__name__)
 
-# ─── WordPress admin credentials ────────────────────────────────────────────
+# ─── WordPress admin credentials ───────────────────────────────────────────────────────
 # Categories are fetched from the WP admin panel (edit-tags.php).
 # Credentials can be overridden via ir.config_parameter:
 #   web_trofeos.wp_admin_url / wp_admin_user / wp_admin_pass
 
 
-# ─── Category fetch helpers ──────────────────────────────────────────────
+# ─── Category fetch helpers ─────────────────────────────────────────────────────────────
 
 _WP_ADMIN_URL  = 'https://www.trofeospremiumsspa.cl/wp/wp-admin'
 _WP_LOGIN_URL  = 'https://www.trofeospremiumsspa.cl/wp/wp-login.php'
@@ -149,7 +149,7 @@ def _get_wp_categories(env):
     return cats
 
 
-# ─── SVG Image Generation Helper ──────────────────────────────────────────────────────
+# ─── SVG Image Generation Helper ────────────────────────────────────────────────────────
 
 def _get_premium_svg(name):
     """
@@ -307,10 +307,11 @@ def _sync_categories(env, website):
     existing = Cat.search([('website_id', '=', website.id)])
     slug_to_odoo = {}   # slug → odoo record
     for rec in existing:
+        # Use the 'website_slug' field if it exists, otherwise derive from name
         slug = getattr(rec, 'website_slug', None) or re.sub(r'\s+', '-', rec.name.lower())
         slug_to_odoo[slug] = rec
 
-    # Also index by name (lower-stripped) as fallback
+    # Also index by name (lower-stripped) as fallback for records without slug
     name_to_odoo = {rec.name.strip().lower(): rec for rec in existing}
 
     wp_to_odoo = {}   # wp term_id → odoo record id
@@ -322,10 +323,10 @@ def _sync_categories(env, website):
     skipped = 0
 
     for wp_cat in ordered:
-        slug   = wp_cat['slug']
-        name   = wp_cat['name']
-        wp_id  = wp_cat['id']
-        seq    = wp_cat.get('menu_order', 0) or (len(wp_to_odoo) + 1) * 10
+        slug    = wp_cat['slug']
+        name    = wp_cat['name']
+        wp_id   = wp_cat['id']
+        seq     = wp_cat.get('menu_order', 0) or (len(wp_to_odoo) + 1) * 10
 
         # Find existing record by slug or name
         odoo_rec = slug_to_odoo.get(slug) or name_to_odoo.get(name.strip().lower())
@@ -336,7 +337,7 @@ def _sync_categories(env, website):
             continue
 
         # Resolve parent
-        parent_wp_id   = wp_cat.get('parent', 0)
+        parent_wp_id  = wp_cat.get('parent', 0)
         parent_odoo_id = wp_to_odoo.get(parent_wp_id)
 
         vals = {
@@ -349,8 +350,8 @@ def _sync_categories(env, website):
             vals['parent_id'] = parent_odoo_id
 
         new_rec = Cat.create(vals)
-        wp_to_odoo[wp_id]          = new_rec.id
-        slug_to_odoo[slug]         = new_rec
+        wp_to_odoo[wp_id]        = new_rec.id
+        slug_to_odoo[slug]       = new_rec
         name_to_odoo[name.lower()] = new_rec
         created += 1
 
@@ -382,7 +383,7 @@ def _sync_menus(env, website):
     if not top_menu:
         return
 
-    # ── Static menus — create only if missing ───────────────────────────────────────────
+    # ── Static menus — create only if missing ─────────────────────────────────────────
     for label, url, seq in [
         ('Inicio',    '/trofeos',               5),
         ('Servicios', '/servicios-trofeos',    20),
@@ -442,7 +443,8 @@ def _sync_menus(env, website):
             })
         return m
 
-    # ── "Productos" parent dropdown (top-level, sequence=50) ──────────────────────
+    # ── "Productos" parent dropdown (top-level, sequence=50) ─────────────────────
+    # Categories listed under Productos in display order
     bajo_productos = [
         'copas',
         'trofeos',
@@ -469,7 +471,7 @@ def _sync_menus(env, website):
             continue
         make_menu(cat, productos_menu.id, idx * 10)
 
-    # ── Remaining top-level menus ────────────────────────────────────────────────
+    # ── Remaining top-level menus ───────────────────────────────────────────────
     for idx, name_norm in enumerate(['licenciaturas', 'fiestas patrias', 'deportes'], 1):
         cat = find_cat(name_norm)
         if not cat:
@@ -477,19 +479,12 @@ def _sync_menus(env, website):
         make_menu(cat, top_menu.id, 60 + idx * 10)
 
 
-# ─── Company access fix ──────────────────────────────────────────────────────────────
+# ─── Company access fix ────────────────────────────────────────────────────────────────
 
 def _fix_company_access(env, website):
     """
     Ensures the website 'Trofeos' has the correct company assigned (Trofeos Premiums Spa, id=47)
     and that all users who manage the website belong to that company.
-
-    Root cause: Odoo's "Product multi-company" ir.rule restricts product.template
-    records to company_ids active in the user's session. When a product belongs to
-    company 47 but the user's session only has company 1 active, publishing raises 403.
-
-    Fix: ensure the public user and manager users all belong to company 47, and that
-    the website itself points to company 47.
     """
     TROFEOS_COMPANY_ID = 47
 
@@ -527,8 +522,7 @@ def _fix_company_access(env, website):
         except Exception:
             pass
 
-    # CRITICAL: the public user (anonymous visitors) must belong to the Trofeos
-    # company so Odoo's api.companies check does not raise 403 Forbidden.
+    # CRITICAL: The website's public user must belong to the Trofeos company.
     public_user = website.user_id
     if public_user and company not in public_user.company_ids:
         public_user.sudo().write({'company_ids': [(4, TROFEOS_COMPANY_ID)]})
@@ -537,8 +531,34 @@ def _fix_company_access(env, website):
             company.name, public_user.login,
         )
 
+    # Set the website logo from the module's static SVG if not already set
+    _set_website_logo(env, website)
 
-# ─── Hook entry points ───────────────────────────────────────────────────────────────
+
+def _set_website_logo(env, website):
+    """Upload logo.svg from static/src/img/ as the website logo if not set."""
+    import base64
+    import os
+
+    if website.logo:
+        return  # already has a logo, don't overwrite
+
+    logo_path = os.path.join(
+        os.path.dirname(__file__),
+        'static', 'src', 'img', 'logo.svg',
+    )
+    if not os.path.exists(logo_path):
+        _logger.warning('web_trofeos: logo.svg no encontrado en %s', logo_path)
+        return
+
+    with open(logo_path, 'rb') as f:
+        logo_b64 = base64.b64encode(f.read()).decode()
+
+    website.sudo().write({'logo': logo_b64})
+    _logger.info('web_trofeos: logo.svg configurado como logo del sitio "%s".', website.name)
+
+
+# ─── Hook entry points ────────────────────────────────────────────────────────────────
 
 def _run_sync(cr, registry):
     """Shared core used by post_init_hook and post_update_hook."""

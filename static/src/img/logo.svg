@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 60" width="160" height="60">
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f0c040"/>
+      <stop offset="50%" style="stop-color:#d4a437"/>
+      <stop offset="100%" style="stop-color:#a87820"/>
+    </linearGradient>
+    <linearGradient id="goldText" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5d060"/>
+      <stop offset="100%" style="stop-color:#c49020"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Trophy icon -->
+  <g transform="translate(6, 4)">
+    <!-- Cup body -->
+    <path d="M14 4 h20 v14 c0,8 -5,13 -10,15 c-5,-2 -10,-7 -10,-15 Z"
+          fill="url(#gold)" stroke="#a87820" stroke-width="0.5"/>
+    <!-- Left handle -->
+    <path d="M14 8 h-4 c-2,0 -3,1.5 -3,4 v2 c0,2.5 1,3.5 3,3.5 h4"
+          fill="none" stroke="url(#gold)" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- Right handle -->
+    <path d="M34 8 h4 c2,0 3,1.5 3,4 v2 c0,2.5 -1,3.5 -3,3.5 h-4"
+          fill="none" stroke="url(#gold)" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- Stem -->
+    <rect x="21" y="33" width="6" height="6" rx="1" fill="url(#gold)"/>
+    <!-- Base -->
+    <rect x="16" y="39" width="16" height="3" rx="1.5" fill="url(#gold)" stroke="#a87820" stroke-width="0.4"/>
+    <!-- Star on cup -->
+    <path d="M24 10 l1.2 3.6 h3.8 l-3.1 2.2 1.2 3.6 -3.1-2.2 -3.1 2.2 1.2-3.6 -3.1-2.2 h3.8 Z"
+          fill="#fff" opacity="0.35"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="54" y="28" fill="url(#goldText)"
+        font-family="'Barlow Condensed','Arial Narrow',sans-serif"
+        font-size="22" font-weight="800" letter-spacing="2" text-anchor="start">TROFEOS</text>
+  <text x="55" y="42" fill="#c9a84c"
+        font-family="'Barlow Condensed','Arial Narrow',sans-serif"
+        font-size="10" font-weight="500" letter-spacing="3" text-anchor="start">PREMIUM · SpA</text>
+</svg>
