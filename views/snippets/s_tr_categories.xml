@@ -4,7 +4,7 @@
     <template id="s_tr_categories" name="Trofeos Categorías de Productos">
         <t t-set="tr_cats" t-value="request.env['product.public.category'].sudo().search([
             ('parent_id', '=', False),
-            ('website_id', '=', website.id),
+            ('website_id', '=', request.env['website'].get_current_website().id),
             ('name', 'not in', ['Productos', 'Cintas 1.5 cm.', 'Cintas 2.5 cm.', 'Llegada Abril 2023'])
         ], order='sequence asc')"/>
         
