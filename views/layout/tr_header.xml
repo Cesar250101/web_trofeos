@@ -23,11 +23,15 @@
                 </span>
             </div>
             <nav class="tr-nav container-fluid">
-                <!-- Logo (SVG already contains the wordmark text) -->
+                <!-- Logo + wordmark -->
                 <a class="tr-logo-link" href="/trofeos" aria-label="Trofeos Home">
                     <img t-att-src="'/web/image/website/%s/logo' % website.id"
                          class="tr-header-logo"
                          t-att-alt="website.name"/>
+                    <span class="tr-header-wordmark">
+                        <span class="tr-wordmark-word">TROFEOS</span>
+                        <span class="tr-wordmark-sub">PREMIUM · SpA</span>
+                    </span>
                 </a>
 
                 <!-- Mobile toggle -->
@@ -135,17 +139,15 @@
 
     <!-- Override native header when on Trofeos website -->
     <template id="tr_header_override" inherit_id="website.layout" name="Trofeos — Header Override">
-        <xpath expr="//header[@id='top']" position="replace">
+        <!-- Insert Trofeos header before the native one (only visible for Trofeos) -->
+        <xpath expr="//header[@id='top']" position="before">
             <t t-if="website.name == 'Trofeos'">
                 <t t-call="web_trofeos.tr_header"/>
             </t>
-            <t t-else="">
-                <header t-if="not no_header" id="top" data-anchor="true">
-                    <nav>
-                        <ul id="top_menu" class="nav navbar-nav o_menu_loading"/>
-                    </nav>
-                </header>
-            </t>
+        </xpath>
+        <!-- Hide native header on Trofeos website; leave it intact for all other sites -->
+        <xpath expr="//header[@id='top']" position="attributes">
+            <attribute name="t-if">website.name != 'Trofeos'</attribute>
         </xpath>
     </template>
 
