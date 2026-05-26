@@ -26,7 +26,7 @@
                 <!-- Logo + wordmark -->
                 <a class="tr-logo-link" href="/trofeos" aria-label="Trofeos Home">
                     <img t-att-src="'/web/image/website/%s/logo' % website.id"
-                         class="tr-header-logo"
+                         class="tr-header-logo d-none"
                          t-att-alt="website.name"/>
                     <span class="tr-header-wordmark">
                         <span class="tr-wordmark-word">TROFEOS</span>

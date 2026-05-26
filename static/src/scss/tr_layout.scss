@@ -502,3 +502,8 @@
         svg { width: 18px; height: 18px; }
     }
 }
+
+// Ocultar el botón flotante de WhatsApp del addon website_floating_whatsapp_icon
+// ya que el sitio Trofeos usa su propio botón (s_tr_whatsapp)
+.tr-body .cy_whatsapp_web { display: none !important; }
+
