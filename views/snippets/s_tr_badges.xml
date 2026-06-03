@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_tr_badges" name="Trofeos — Insignias de Confianza">
+        <section class="s_tr_badges tr-badges" data-snippet="s_tr_badges">
+            <div class="tr-badges-inner">
+
+                <a href="/shop" class="tr-badge-card">
+                    <div class="tr-badge-icon">
+                        <span class="material-symbols-outlined">local_shipping</span>
+                    </div>
+                    <div class="tr-badge-body">
+                        <div class="tr-badge-title">Despacho a todo Chile</div>
+                        <div class="tr-badge-sub">Stock real en bodega · Entrega en 24-72 h con transportistas asociados</div>
+                    </div>
+                    <span class="tr-badge-arrow material-symbols-outlined">arrow_forward</span>
+                </a>
+
+                <a href="/empresas-trofeos" class="tr-badge-card tr-badge-card--b2b">
+                    <div class="tr-badge-icon">
+                        <span class="material-symbols-outlined">handshake</span>
+                    </div>
+                    <div class="tr-badge-body">
+                        <div class="tr-badge-title">Venta especial a comerciantes</div>
+                        <div class="tr-badge-sub">Precios mayoristas para distribuidores, clubes, colegios y empresas</div>
+                    </div>
+                    <span class="tr-badge-arrow material-symbols-outlined">arrow_forward</span>
+                </a>
+
+                <div class="tr-badge-card tr-badge-card--plain">
+                    <div class="tr-badge-icon">
+                        <span class="material-symbols-outlined">auto_awesome</span>
+                    </div>
+                    <div class="tr-badge-body">
+                        <div class="tr-badge-title">Grabado láser</div>
+                        <div class="tr-badge-sub">Personalizamos plaquetas, medallas y galvanos en planta propia</div>
+                    </div>
+                </div>
+
+                <div class="tr-badge-card tr-badge-card--plain">
+                    <div class="tr-badge-icon">
+                        <span class="material-symbols-outlined">emoji_events</span>
+                    </div>
+                    <div class="tr-badge-body">
+                        <div class="tr-badge-title">Cotización en 24 h</div>
+                        <div class="tr-badge-sub">Envíanos tu requerimiento y recibes propuesta formal al día siguiente</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </template>
+
+</odoo>

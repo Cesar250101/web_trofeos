@@ -5,20 +5,6 @@
         <section class="s_tr_trust_bar tr-trust-bar" data-snippet="s_tr_trust_bar">
             <div class="tr-trust-inner">
                 <div class="tr-pillar">
-                    <span class="tr-pillar-icon"><span class="material-symbols-outlined">local_shipping</span></span>
-                    <div class="tr-pillar-text">
-                        <div class="tr-pillar-title">Despacho 24-72 h</div>
-                        <div class="tr-pillar-desc">Stock real en bodega. A todo Chile con transportistas asociados.</div>
-                    </div>
-                </div>
-                <div class="tr-pillar">
-                    <span class="tr-pillar-icon"><span class="material-symbols-outlined">verified</span></span>
-                    <div class="tr-pillar-text">
-                        <div class="tr-pillar-title">Importadores directos</div>
-                        <div class="tr-pillar-desc">Sin intermediarios. Precio mayorista para clubes, colegios y empresas.</div>
-                    </div>
-                </div>
-                <div class="tr-pillar">
                     <span class="tr-pillar-icon"><span class="material-symbols-outlined">auto_awesome</span></span>
                     <div class="tr-pillar-text">
                         <div class="tr-pillar-title">Grabado láser</div>

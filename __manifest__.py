@@ -17,6 +17,7 @@
         'views/layout/tr_footer.xml',
         # snippets home
         'views/snippets/s_tr_hero.xml',
+        'views/snippets/s_tr_badges.xml',
         'views/snippets/s_tr_trust_bar.xml',
         'views/snippets/s_tr_featured_products.xml',
         'views/snippets/s_tr_categories.xml',
@@ -51,6 +52,7 @@
             'web_trofeos/static/src/scss/tr_layout.scss',
             'web_trofeos/static/src/scss/tr_section_common.scss',
             'web_trofeos/static/src/scss/snippets/s_tr_hero.scss',
+            'web_trofeos/static/src/scss/snippets/s_tr_badges.scss',
             'web_trofeos/static/src/scss/snippets/s_tr_trust_bar.scss',
             'web_trofeos/static/src/scss/snippets/s_tr_featured_products.scss',
             'web_trofeos/static/src/scss/snippets/s_tr_categories.scss',

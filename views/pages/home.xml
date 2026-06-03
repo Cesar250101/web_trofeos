@@ -7,7 +7,7 @@
             <div id="wrap" class="tr-site">
                 <main id="oe_structure_tr_home_main" class="oe_structure">
                     <t t-call="web_trofeos.s_tr_hero"/>
-                    <t t-call="web_trofeos.s_tr_trust_bar"/>
+                    <t t-call="web_trofeos.s_tr_badges"/>
                     <t t-call="web_trofeos.s_tr_featured_products"/>
                     <t t-call="web_trofeos.s_tr_categories"/>
                     <t t-call="web_trofeos.s_tr_services"/>

@@ -68,6 +68,10 @@
                                         <span class="material-symbols-outlined">language</span>
                                         <a t-att-href="tr_company.website" target="_blank" t-esc="tr_company.website"/>
                                     </li>
+                                    <li class="tr-footer-horario">
+                                        <span class="material-symbols-outlined">schedule</span>
+                                        <span>Lun – Vie: 9:30 – 18:00 hrs</span>
+                                    </li>
                                 </ul>
                             </div>
                         </div>

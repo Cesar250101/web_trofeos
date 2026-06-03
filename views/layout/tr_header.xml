@@ -21,6 +21,11 @@
                     <span class="material-symbols-outlined">storefront</span>
                     Venta especial a comerciantes
                 </span>
+                <span class="tr-header-band-sep">|</span>
+                <span class="tr-header-band-item tr-header-band-horario">
+                    <span class="material-symbols-outlined">schedule</span>
+                    Lun – Vie: 9:30 – 18:00 hrs
+                </span>
                 <span class="tr-header-band-item tr-header-band-contact" t-if="tr_company.phone or tr_company.email">
                     <span class="material-symbols-outlined" t-if="tr_company.phone">call</span>
                     <span t-if="tr_company.phone" t-esc="tr_company.phone"/>
