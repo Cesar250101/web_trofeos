@@ -130,8 +130,7 @@
 
                                 <div class="tr-info-hours">
                                     <h4>Horario de atención</h4>
-                                    <p>Lunes a Viernes: 9:00 – 18:00</p>
-                                    <p>Sábado: 9:00 – 13:00</p>
+                                    <p>Lunes a Viernes: 9:30 – 18:00</p>
                                 </div>
 
                                 <div class="tr-info-whatsapp" t-if="company.phone">

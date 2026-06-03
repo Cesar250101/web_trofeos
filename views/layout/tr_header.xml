@@ -11,9 +11,15 @@
                     <span class="material-symbols-outlined">local_shipping</span>
                     Despacho 24-72 h a todo Chile
                 </span>
+                <span class="tr-header-band-sep">|</span>
                 <span class="tr-header-band-item">
                     <span class="material-symbols-outlined">verified</span>
-                    Importadores directos · Stock permanente
+                    Importadores y distribuidores · Stock permanente
+                </span>
+                <span class="tr-header-band-sep">|</span>
+                <span class="tr-header-band-item tr-header-band-highlight">
+                    <span class="material-symbols-outlined">storefront</span>
+                    Venta especial a comerciantes
                 </span>
                 <span class="tr-header-band-item tr-header-band-contact" t-if="tr_company.phone or tr_company.email">
                     <span class="material-symbols-outlined" t-if="tr_company.phone">call</span>
