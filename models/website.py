@@ -34,3 +34,19 @@ class Website(models.Model):
             return
         _hooks._sync_categories(self.env, trofeos)
         _hooks._sync_menus(self.env, trofeos)
+
+    @api.model
+    def action_sync_woo_categories(self):
+        """Sincroniza public_categ_ids de los productos desde WooCommerce (REST).
+
+        Descarga las categorías y productos de la tienda WooCommerce, mapea cada
+        categoría a su ``product.public.category`` y asigna ``public_categ_ids`` a
+        los productos de Odoo emparejando por SKU (default_code).
+
+        Se ejecuta automáticamente en cada ``--update=web_trofeos`` (post_update_hook)
+        y puede lanzarse manualmente desde el shell o una acción de servidor.
+        """
+        trofeos = self.search([('name', '=', 'Trofeos')], limit=1)
+        if not trofeos:
+            return
+        _hooks._sync_woo_public_categs(self.env, trofeos)

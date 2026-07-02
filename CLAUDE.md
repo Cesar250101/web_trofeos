@@ -75,6 +75,41 @@ The `/contacto-trofeos` route accepts `?tipo=` and `?cantidad=` query params (pr
 
 `models/website.py` exposes `action_sync_wp_categories()` on the `website` model to trigger the sync manually (also called from `data/sync_categories.xml` on every update).
 
+### WooCommerce → `public_categ_ids` sync (REST API)
+
+Separate from the scraping-based category sync above, `hooks.py` also assigns the
+e-commerce **public category** to each product using the official WooCommerce REST
+API. It runs synchronously at the end of `post_init_hook` and `_run_sync`
+(post_update_hook), wrapped in try/except so a slow/down API never aborts the upgrade.
+
+Flow (`_sync_woo_public_categs`):
+1. `_get_wc_api` builds the `woocommerce.API` client from `res.company` id 47
+   (`woo_url`/`woo_consumer_key`/`woo_consumer_secret`), normalizing a malformed
+   `woo_version` (e.g. `"V2"`) to `wc/v3`. Falls back to the `_WC_*` constants in `hooks.py`.
+2. `_sync_wc_categories_rest` pulls `products/categories` (paginated) and upserts
+   `product.public.category`, keyed by the new `woo_category_id` field. Existing
+   categories (created by the scraping sync) are matched by name and back-filled.
+   Returns `{str(wc_cat_id): odoo_public_categ_id}`.
+3. `_sync_wc_product_public_categs` builds a one-shot `default_code → product_tmpl_id`
+   index from `product.product` (company 47), then iterates `products`. For each WC
+   product it collects SKUs (simple: `sku`; **variable: fetches `products/<id>/variations`**
+   to read each variation SKU), resolves the target template(s), and sets
+   `public_categ_ids = [(6, 0, ids)]` (replace, union across duplicate matches).
+
+**Runtime:** ~25 min for ~883 products — the per-variable-product variations call
+dominates. It's a full-catalog resync on every `-u web_trofeos`.
+
+**Manual run:** `website.action_sync_woo_categories()` (from a server action / shell),
+or the standalone `scripts/sync_woo_categories.py` piped into `odoo-bin shell`:
+```powershell
+.\.venv\Scripts\python.exe odoo-bin shell -c odoo.conf -d clicksale --no-http `
+    < addons\web_trofeos\scripts\sync_woo_categories.py
+```
+
+**Matching notes:** products are matched by SKU (`woo_product_id` is empty for the
+Trofeos catalog). Duplicate Odoo products that share a SKU only get the category on
+the first indexed template; WC products with no SKU match in Odoo are skipped.
+
 ### Header navigation
 
 `tr_header.xml` builds the nav dynamically: it queries `product.public.category` and separates categories into a fixed "Productos" mega-dropdown (Copas, Trofeos, Medallas, Maderas, Cristales, Sublimación, IMPRESIÓN DIRECTA COLOR, Insumos) and remaining top-level categories (Licenciaturas, Fiestas Patrias, Deportes). A hidden `<ul id="top_menu" class="d-none">` satisfies Odoo's native `auto_hide_menu.js`.
