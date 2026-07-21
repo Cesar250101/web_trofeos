@@ -45,6 +45,7 @@
         'views/pages/empresas.xml',
         'views/pages/contacto.xml',
         'views/pages/categoria.xml',
+        'views/pages/product_page.xml',
     ],
     'assets': {
         'web.assets_frontend': [

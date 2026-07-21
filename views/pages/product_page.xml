@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+      Página de detalle de producto — Trofeos.
+      Reemplaza el <p t-field="product.description_sale"> estándar por el HTML
+      computado (tr_web_description), que convierte el listado columnar de
+      dimensiones en una tabla. Guardado por website.name == 'Trofeos' para no
+      afectar los demás sitios del mismo Odoo.
+    -->
+    <template id="tr_product_description"
+              inherit_id="website_sale.product"
+              name="Trofeos — Descripción como tabla">
+        <xpath expr="//p[@t-field='product.description_sale']" position="replace">
+            <t t-if="website.name == 'Trofeos'">
+                <div class="tr-product-desc my-2" t-out="product.tr_web_description"/>
+            </t>
+            <t t-else="">
+                <p t-field="product.description_sale" class="text-muted my-2"
+                   placeholder="A short description that will also appear on documents."/>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>
