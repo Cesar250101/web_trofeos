@@ -149,6 +149,67 @@ def _get_premium_svg(name):
     return base64.b64encode(svg_code.encode('utf-8')).decode('utf-8')
 
 
+_PUBLIC_PRICELIST_PARAM = 'web_trofeos.public_pricelist_id'
+_PUBLIC_PRICELIST_NAME = 'Trofeos Público +60%'
+_PUBLIC_SURCHARGE = 0.60  # +60% over the current sale price
+
+
+def _ensure_public_pricelist(env, website):
+    """Create/refresh the anonymous +60% pricelist and store its id in config.
+
+    A single global rule multiplies the current sale price by (1 + 0.60) for
+    every product. The website override (``get_current_pricelist``) forces this
+    pricelist for the public user only; logged-in users keep normal prices.
+    """
+    Pricelist = env['product.pricelist'].sudo()
+    Item = env['product.pricelist.item'].sudo()
+    company_id = website.company_id.id
+
+    pricelist = Pricelist.search([
+        ('name', '=', _PUBLIC_PRICELIST_NAME),
+        ('company_id', '=', company_id),
+    ], limit=1)
+    # IMPORTANT: website_id and selectable stay False on purpose.
+    #  - website_id=False keeps this pricelist OUT of the site's "available"
+    #    list, so logged-in users (whose partner pricelist is the normal one)
+    #    never fall back to it.
+    #  - selectable=False hides it from the public pricelist selector.
+    # The website override forces it for the public user only, returning it
+    # directly without going through `_is_available_on_website`.
+    if not pricelist:
+        pricelist = Pricelist.create({
+            'name': _PUBLIC_PRICELIST_NAME,
+            'company_id': company_id,
+            'website_id': False,
+            'selectable': False,
+        })
+    elif pricelist.website_id:
+        pricelist.write({'website_id': False, 'selectable': False})
+
+    # One global surcharge rule based on the product's sale price.
+    rule_vals = {
+        'pricelist_id': pricelist.id,
+        'applied_on': '3_global',
+        'compute_price': 'formula',
+        'base': 'list_price',
+        'price_discount': -_PUBLIC_SURCHARGE * 100,  # -(-60) => +60% markup
+        'price_round': 10.0,
+    }
+    existing_rule = Item.search([
+        ('pricelist_id', '=', pricelist.id),
+        ('applied_on', '=', '3_global'),
+    ], limit=1)
+    if existing_rule:
+        existing_rule.write(rule_vals)
+    else:
+        Item.create(rule_vals)
+
+    env['ir.config_parameter'].sudo().set_param(
+        _PUBLIC_PRICELIST_PARAM, str(pricelist.id))
+    _logger.info('web_trofeos: pricelist público +60%% id=%s lista.', pricelist.id)
+    return pricelist
+
+
 def _sync_categories(env, website):
     Cat = env['product.public.category']
     wp_cats = _get_wp_categories(env)
@@ -268,6 +329,7 @@ def _run_sync(cr, registry):
         _logger.warning('web_trofeos: No se encontró el sitio "Trofeos". Hook omitido.')
         return
     _fix_company_access(env, website)
+    _ensure_public_pricelist(env, website)
     _sync_categories(env, website)
     _sync_menus(env, website)
 
@@ -285,6 +347,7 @@ def post_init_hook(cr, registry):
         vals['default_lang_id'] = lang.id
     website.write(vals)
     _fix_company_access(env, website)
+    _ensure_public_pricelist(env, website)
     _sync_categories(env, website)
     _sync_menus(env, website)
 

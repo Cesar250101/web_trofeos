@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- noupdate="0": re-run on every module update so the +60% public
+     pricelist and its surcharge rule always exist and stay in sync. -->
+<odoo noupdate="0">
+    <function model="website" name="action_setup_public_pricelist"/>
+</odoo>

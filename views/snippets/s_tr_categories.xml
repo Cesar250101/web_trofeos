@@ -18,13 +18,14 @@
             <div class="container-fluid px-4 px-md-5">
                 <div class="tr-categories-grid">
                     <t t-foreach="tr_cats" t-as="cat">
+                        <t t-set="showcase" t-value="cat.tr_get_showcase_product()"/>
                         <div class="tr-category-card">
                             <a t-attf-href="/shop?category=#{cat.id}" class="tr-category-link">
                                 <div class="tr-category-image-wrap">
-                                    <img t-if="cat.image_1920" 
-                                         t-attf-src="/web/image/product.public.category/#{cat.id}/image_1920" 
-                                         t-att-alt="cat.name" 
-                                         class="tr-category-img" 
+                                    <img t-if="showcase"
+                                         t-attf-src="/web/image/product.template/#{showcase.id}/image_1920"
+                                         t-att-alt="cat.name"
+                                         class="tr-category-img"
                                          loading="lazy"/>
                                     <div t-else="" class="tr-category-placeholder">
                                         <span class="material-symbols-outlined">emoji_events</span>

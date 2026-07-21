@@ -10,6 +10,7 @@
     'data': [
         'security/ir.model.access.csv',
         'data/website_data.xml',
+        'data/setup_pricelist.xml',
         'data/sync_categories.xml',
         # layout
         'views/layout/tr_layout.xml',

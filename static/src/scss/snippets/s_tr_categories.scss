@@ -67,9 +67,11 @@
     .tr-category-image-wrap {
         position: relative;
         aspect-ratio: 1 / 1;
+        // Light stage so real product photos (usually shot on white) blend
+        // cleanly; the icon placeholder keeps a dark backdrop below.
         background:
-            radial-gradient(ellipse at 50% 30%, rgba(212, 164, 55, 0.10) 0%, rgba(10, 10, 10, 0) 50%),
-            linear-gradient(180deg, #1f1f1f, #0a0a0a);
+            radial-gradient(ellipse at 50% 30%, rgba(212, 164, 55, 0.08) 0%, rgba(255, 255, 255, 0) 55%),
+            linear-gradient(180deg, #ffffff, #f4f0e6);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -79,9 +81,8 @@
     .tr-category-img {
         width: 100%;
         height: 100%;
-        object-fit: contain;
-        padding: 16px;
-        filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+        // Real product photos fill the frame edge-to-edge for a catalog look.
+        object-fit: cover;
         transition: transform 360ms var(--tr-ease);
     }
 
@@ -90,10 +91,15 @@
     }
 
     .tr-category-placeholder {
+        position: absolute;
+        inset: 0;
         color: var(--tr-gold-300);
         display: flex;
         align-items: center;
         justify-content: center;
+        background:
+            radial-gradient(ellipse at 50% 30%, rgba(212, 164, 55, 0.12) 0%, rgba(10, 10, 10, 0) 55%),
+            linear-gradient(180deg, #1f1f1f, #0a0a0a);
 
         .material-symbols-outlined { font-size: 56px; }
     }
