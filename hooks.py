@@ -9,9 +9,16 @@ _logger = logging.getLogger(__name__)
 
 _WP_ADMIN_URL  = 'https://www.trofeospremiumsspa.cl/wp/wp-admin'
 _WP_LOGIN_URL  = 'https://www.trofeospremiumsspa.cl/wp/wp-login.php'
-_WP_ADMIN_USER = 'premiums'
-_WP_ADMIN_PASS = 'Cx%Myz&dDOB*nZIO'
+_WP_ADMIN_USER = ''
+_WP_ADMIN_PASS = ''
 _SKIP_SLUGS    = {'uncategorized', 'sin-categoria'}
+
+# --- WooCommerce REST defaults; credentials must be configured in Odoo. ---
+_WC_URL     = 'https://www.trofeospremiums.cl/wp/'
+_WC_KEY     = ''
+_WC_SECRET  = ''
+_WC_VERSION = 'wc/v3'
+_TROFEOS_COMPANY_ID = 47
 
 
 def _wp_admin_session():
@@ -286,6 +293,232 @@ def _sync_menus(env, website):
         if cat: make_menu(cat, top_menu.id, 60 + idx * 10)
 
 
+# ======================================================================
+# Sincronización de public_categ_ids desde WooCommerce (REST API)
+# ----------------------------------------------------------------------
+# A diferencia de _sync_categories (scraping WP admin, que sólo crea las
+# product.public.category), esto usa la REST API oficial para:
+#   1) mapear cada categoría WC a su product.public.category (keyed por
+#      woo_category_id, backfilleando las ya creadas por nombre), y
+#   2) asignar public_categ_ids a cada producto de Odoo emparejando por SKU
+#      (default_code). Para productos WC "variable" el SKU vive en las
+#      variaciones, así que se descargan y se mapean todas.
+# ======================================================================
+
+def _wc_norm_txt(s):
+    import unicodedata
+    return unicodedata.normalize('NFD', s or '').encode('ascii', 'ignore').decode().lower().strip()
+
+
+def _get_wc_api(env):
+    """Construye el cliente WooCommerce REST.
+
+    Prefiere las credenciales de la compañía Trofeos (id=47); si faltan, usa
+    las constantes del módulo. Normaliza woo_version (a veces mal configurado,
+    p.ej. "V2") al formato válido ``wc/vN``.
+    """
+    try:
+        from woocommerce import API
+    except ImportError:
+        _logger.error('web_trofeos: paquete "woocommerce" no instalado; no se puede sincronizar public_categ_ids.')
+        return None
+
+    company = env['res.company'].sudo().browse(_TROFEOS_COMPANY_ID)
+    exists = company.exists()
+    url     = (company.woo_url if exists else '') or _WC_URL
+    key     = company.woo_consumer_key if exists else ''
+    secret  = company.woo_consumer_secret if exists else ''
+    if not key or not secret:
+        _logger.error('web_trofeos: configure WooCommerce credentials on the Trofeos company.')
+        return None
+    version = (company.woo_version if exists else '') or ''
+    if not re.match(r'^wc/v\d+$', version or ''):
+        version = _WC_VERSION
+
+    return API(
+        url=url,
+        consumer_key=key,
+        consumer_secret=secret,
+        version=version,
+        timeout=60,
+        query_string_auth=True,
+    )
+
+
+def _wc_get_all(wcapi, endpoint, params=None):
+    """Recorre todas las páginas de un endpoint WC (per_page=100)."""
+    params = dict(params or {})
+    params.setdefault('per_page', 100)
+    results = []
+    page = 1
+    while True:
+        params['page'] = page
+        try:
+            resp = wcapi.get(endpoint, params=params)
+        except Exception as exc:
+            _logger.warning('web_trofeos: error WC GET %s (page %d): %s', endpoint, page, exc)
+            break
+        if resp.status_code != 200:
+            _logger.warning('web_trofeos: WC GET %s (page %d) status %s', endpoint, page, resp.status_code)
+            break
+        batch = resp.json()
+        if not batch:
+            break
+        results.extend(batch)
+        try:
+            total_pages = int(resp.headers.get('X-WP-TotalPages', page))
+        except (TypeError, ValueError):
+            total_pages = page
+        if page >= total_pages:
+            break
+        page += 1
+    return results
+
+
+def _sync_wc_categories_rest(env, website, wcapi):
+    """Mapea las categorías WC → product.public.category (por woo_category_id).
+
+    Devuelve dict ``{str(wc_cat_id): odoo_public_categ_id}``.
+    """
+    Cat = env['product.public.category']
+    wc_cats = _wc_get_all(wcapi, 'products/categories')
+    if not wc_cats:
+        _logger.warning('web_trofeos: la REST API no devolvió categorías WC.')
+        return {}
+
+    existing = Cat.with_context(active_test=False).search([('website_id', '=', website.id)])
+    by_woo_id = {c.woo_category_id: c for c in existing if c.woo_category_id}
+    by_name   = {_wc_norm_txt(c.name): c for c in existing}
+
+    # Ordenar padres antes que hijos para poder enlazar parent_id.
+    idmap = {c['id']: c for c in wc_cats}
+
+    def _depth(cat):
+        d, cur, seen = 0, cat, set()
+        while cur.get('parent') and cur['parent'] in idmap and cur['id'] not in seen:
+            seen.add(cur['id'])
+            cur = idmap[cur['parent']]
+            d += 1
+        return d
+
+    wc_cats_sorted = sorted(wc_cats, key=lambda c: (_depth(c), c.get('menu_order', 0), c['id']))
+
+    wc_id_to_odoo = {}
+    created = updated = 0
+    for wc in wc_cats_sorted:
+        wc_id = str(wc['id'])
+        name = (wc.get('name') or '').strip()
+        if not name or wc.get('slug') in _SKIP_SLUGS:
+            continue
+        parent_odoo = wc_id_to_odoo.get(str(wc.get('parent') or '0'))
+        rec = by_woo_id.get(wc_id) or by_name.get(_wc_norm_txt(name))
+        if rec:
+            upd = {}
+            if rec.woo_category_id != wc_id:
+                upd['woo_category_id'] = wc_id
+            if parent_odoo and rec.parent_id.id != parent_odoo:
+                upd['parent_id'] = parent_odoo
+            if upd:
+                rec.write(upd)
+                updated += 1
+        else:
+            vals = {
+                'name': name,
+                'website_id': website.id,
+                'woo_category_id': wc_id,
+                'sequence': wc.get('menu_order', 0) or 0,
+                'image_1920': _get_premium_svg(name),
+            }
+            if parent_odoo:
+                vals['parent_id'] = parent_odoo
+            rec = Cat.create(vals)
+            created += 1
+        wc_id_to_odoo[wc_id] = rec.id
+        by_woo_id[wc_id] = rec
+        by_name[_wc_norm_txt(name)] = rec
+
+    _logger.info('web_trofeos: categorías WC (REST) — %d creadas, %d actualizadas, %d mapeadas.',
+                 created, updated, len(wc_id_to_odoo))
+    return wc_id_to_odoo
+
+
+def _sync_wc_product_public_categs(env, website, wcapi, wc_id_to_odoo):
+    """Asigna public_categ_ids a los productos de Odoo según la categoría del
+    producto en WooCommerce. Emparejamiento por SKU (default_code).
+    """
+    if not wc_id_to_odoo:
+        _logger.warning('web_trofeos: sin mapa de categorías WC; se omite asignación a productos.')
+        return
+
+    company_id = website.company_id.id or _TROFEOS_COMPANY_ID
+
+    # Índice SKU -> product_tmpl_id, construido de una sola vez (variantes).
+    ProductProduct = env['product.product']
+    variants = ProductProduct.with_context(active_test=False).search([
+        ('company_id', 'in', [company_id, False]),
+        ('default_code', '!=', False),
+    ])
+    sku_to_tmpl = {}
+    for v in variants:
+        sku = (v.default_code or '').strip()
+        if sku and sku not in sku_to_tmpl:
+            sku_to_tmpl[sku] = v.product_tmpl_id.id
+    _logger.info('web_trofeos: índice de %d SKU de Odoo (compañía %s).', len(sku_to_tmpl), company_id)
+
+    products = _wc_get_all(wcapi, 'products')
+    total = len(products)
+    _logger.info('web_trofeos: %d productos WC a procesar.', total)
+
+    # Acumular tmpl_id -> set(odoo_public_categ_id) (unión si varios coinciden).
+    tmpl_categs = {}
+    for i, p in enumerate(products, 1):
+        odoo_categ_ids = {
+            wc_id_to_odoo[str(c.get('id'))]
+            for c in (p.get('categories') or [])
+            if str(c.get('id')) in wc_id_to_odoo
+        }
+        if not odoo_categ_ids:
+            continue
+
+        skus = set()
+        top_sku = (p.get('sku') or '').strip()
+        if top_sku:
+            skus.add(top_sku)
+        if p.get('type') == 'variable':
+            for var in _wc_get_all(wcapi, 'products/%s/variations' % p['id']):
+                vsku = (var.get('sku') or '').strip()
+                if vsku:
+                    skus.add(vsku)
+
+        for sku in skus:
+            tmpl_id = sku_to_tmpl.get(sku)
+            if tmpl_id:
+                tmpl_categs.setdefault(tmpl_id, set()).update(odoo_categ_ids)
+
+        if i % 50 == 0:
+            _logger.info('web_trofeos: %d/%d productos WC procesados...', i, total)
+
+    Template = env['product.template']
+    written = 0
+    for tmpl_id, categ_ids in tmpl_categs.items():
+        try:
+            Template.browse(tmpl_id).write({'public_categ_ids': [(6, 0, list(categ_ids))]})
+            written += 1
+        except Exception as exc:
+            _logger.warning('web_trofeos: no se pudo asignar public_categ_ids al template %s: %s', tmpl_id, exc)
+    _logger.info('web_trofeos: public_categ_ids asignado a %d productos (%d productos WC sin match por SKU).',
+                 written, total - len(tmpl_categs))
+
+
+def _sync_woo_public_categs(env, website):
+    """Orquesta el sync REST: categorías WC + asignación de public_categ_ids."""
+    wcapi = _get_wc_api(env)
+    if not wcapi:
+        return
+    wc_id_to_odoo = _sync_wc_categories_rest(env, website, wcapi)
+    _sync_wc_product_public_categs(env, website, wcapi, wc_id_to_odoo)
+
+
 def _fix_company_access(env, website):
     TROFEOS_COMPANY_ID = 47
     company = env['res.company'].sudo().browse(TROFEOS_COMPANY_ID)
@@ -332,6 +565,10 @@ def _run_sync(cr, registry):
     _ensure_public_pricelist(env, website)
     _sync_categories(env, website)
     _sync_menus(env, website)
+    try:
+        _sync_woo_public_categs(env, website)
+    except Exception as exc:  # nunca abortar el upgrade por la API externa
+        _logger.exception('web_trofeos: fallo en sync WooCommerce → public_categ_ids: %s', exc)
 
 
 def post_init_hook(cr, registry):
@@ -350,6 +587,10 @@ def post_init_hook(cr, registry):
     _ensure_public_pricelist(env, website)
     _sync_categories(env, website)
     _sync_menus(env, website)
+    try:
+        _sync_woo_public_categs(env, website)
+    except Exception as exc:
+        _logger.exception('web_trofeos: fallo en sync WooCommerce → public_categ_ids: %s', exc)
 
 
 def post_update_hook(cr, registry):

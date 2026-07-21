@@ -1,22 +1,22 @@
-from odoo import models
+from odoo import fields, models
 
 
 class ProductPublicCategory(models.Model):
     _inherit = 'product.public.category'
 
+    woo_category_id = fields.Char(
+        string='WooCommerce Category ID',
+        index=True,
+        copy=False,
+        help='ID de la categoría en WooCommerce. Se usa para mapear de forma '
+             'estable las categorías del ecommerce con las de la tienda WooCommerce '
+             'y asignar public_categ_ids a los productos.',
+    )
+
     def tr_get_showcase_product(self):
-        """Return the first published product with a real image for this category.
-
-        Used by the "Explora por Categorías" snippet to display a real product
-        photo instead of the generated placeholder SVG. Searches the category
-        itself first, then any descendant categories (many root categories such
-        as Trofeos, Medallas or Deportes only hold products in their children).
-
-        Returns a ``product.template`` recordset (empty if none found).
-        """
+        """Return the first published product with a real image for this category."""
         self.ensure_one()
         Template = self.env['product.template'].sudo()
-        # All descendant categories (including self), resolved via parent_path.
         cat_ids = self.search([('id', 'child_of', self.id)]).ids or [self.id]
         return Template.search([
             ('public_categ_ids', 'in', cat_ids),
